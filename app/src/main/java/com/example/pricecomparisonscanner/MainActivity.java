@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
                             System.out.println("lololol");
                             URL url = new URL("https://api.upcitemdb.com/prod/trial/lookup?upc=" + intentResult.getContents());
                             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                            conn.setRequestMethod("GET");
+                            conn.setRequestMethod("GET"); // testtest
                             conn.connect();
 
                             int responseCode = conn.getResponseCode();
@@ -80,7 +80,9 @@ public class MainActivity extends AppCompatActivity {
                             JSONArray jsonArray = jsonObject.getJSONArray("items").getJSONObject(0).getJSONArray("offers");
                             Double price1 = jsonArray.getJSONObject(0).getDouble("price");
 
-                            textView.setText(price1 + "");
+                            //textView.setText(price1 + "");
+                            String name = jsonArray.getJSONObject(0).getString("title").replaceAll(" ", "+");
+                            textView.setText("\n\n" + name  + "\n\n" + WebScraper.getProductInformation(name) + "");
 
                         } catch (Exception e) {
                         }
