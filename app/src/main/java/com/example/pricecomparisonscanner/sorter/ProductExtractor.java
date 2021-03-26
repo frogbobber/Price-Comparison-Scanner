@@ -1,6 +1,6 @@
-package com.example.pricecomparisonscanner.Sorter;
+package com.example.pricecomparisonscanner.sorter;
 
-import com.example.pricecomparisonscanner.ProductInformation;
+import com.example.pricecomparisonscanner.information.ProductInformation;
 
 import org.jsoup.nodes.Document;
 

@@ -1,6 +1,8 @@
 package com.example.pricecomparisonscanner;
 
-import com.example.pricecomparisonscanner.Sorter.AmazonExtractor;
+import com.example.pricecomparisonscanner.information.AllProductInformation;
+import com.example.pricecomparisonscanner.information.ProductInformation;
+import com.example.pricecomparisonscanner.sorter.AmazonExtractor;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -10,9 +12,12 @@ import java.util.ArrayList;
 
 public class WebScraper {
 
-    public static ArrayList<ProductInformation> getProductInformation(String name) throws IOException {
-
-        return getAmazonProductInformation("https://www.amazon.com/s?k=" + name + "&ref=nb_sb_noss");
+    public static AllProductInformation getProductInformation(String name) throws IOException {
+        return new AllProductInformation(
+                getAmazonProductInformation("https://www.amazon.com/s?k=" + name + "&ref=nb_sb_noss"),
+                getWalmartProductInformation("https://www.walmart.com/search/?cat_id=0&query=" + name),
+                getTargetProductInformation("https://www.target.com/s?searchTerm=" + name)    // Target Information
+        );
     }
 
     private static ArrayList<ProductInformation> getAmazonProductInformation(String url) throws IOException {
@@ -23,6 +28,12 @@ public class WebScraper {
                 .get();
 
         return new AmazonExtractor().extractProducts(document);
+    }
+    private static ArrayList<ProductInformation> getWalmartProductInformation(String url) throws IOException {
+        return null;
+    }
+    private static ArrayList<ProductInformation> getTargetProductInformation(String url) throws IOException {
+        return null;
     }
 
 }

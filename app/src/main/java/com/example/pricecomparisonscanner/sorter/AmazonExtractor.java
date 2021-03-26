@@ -1,6 +1,6 @@
-package com.example.pricecomparisonscanner.Sorter;
+package com.example.pricecomparisonscanner.sorter;
 
-import com.example.pricecomparisonscanner.ProductInformation;
+import com.example.pricecomparisonscanner.information.ProductInformation;
 
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
@@ -11,7 +11,7 @@ public class AmazonExtractor extends ProductExtractor {
     //private String cssQuery = "span[id*=priceblock_ourprice], span[class*=a-offscreen],span[class*=visuallyhidden],span[class*=a-price],span[id*=saleprice],span.a-size-large.a-color-price.guild_priceblock_ourprice";
     @Override
     public  ArrayList<ProductInformation> extractProducts(Document document) {
-        ArrayList<ProductInformation> products = new ArrayList();
+        ArrayList<ProductInformation> products = new ArrayList<>();
 
         Elements elements = document.select("div[class*=a-section a-spacing-medium]");
 

@@ -1,4 +1,4 @@
-package com.example.pricecomparisonscanner;
+package com.example.pricecomparisonscanner.information;
 
 public class ProductInformation {
     String url;
@@ -37,6 +37,6 @@ public class ProductInformation {
                 "url='" + url + '\'' +
                 ", name='" + name + '\'' +
                 ", price='" + price + '\'' +
-                '}';
+                "}\n";
     }
 }

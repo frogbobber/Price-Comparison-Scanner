@@ -83,6 +83,7 @@ public class MainActivity extends AppCompatActivity {
                             //textView.setText(price1 + "");
                             String name = jsonArray.getJSONObject(0).getString("title").replaceAll(" ", "+");
                             textView.setText("\n\n" + name  + "\n\n" + WebScraper.getProductInformation(name) + "");
+                            //System.out.println(WebScraper.getProductInformation(name) + "");
 
                         } catch (Exception e) {
                         }
