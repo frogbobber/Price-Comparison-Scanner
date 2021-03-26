@@ -68,10 +68,12 @@ public class MainActivity extends AppCompatActivity {
                                 throw new RuntimeException("yuh oh, bad response");
                             } else {
                                 Scanner scanner = new Scanner(url.openStream());
-
+                                StringBuilder builder = new StringBuilder();
                                 while (scanner.hasNext()) {
-                                    inline += scanner.nextLine();
+                                    builder.append(scanner.nextLine());
                                 }
+
+                                inline = builder.toString();
 
                                 scanner.close();
                             }
