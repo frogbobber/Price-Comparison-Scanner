@@ -16,7 +16,8 @@ public class WebScraper {
         return new AllProductInformation(
                 getAmazonProductInformation("https://www.amazon.com/s?k=" + name + "&ref=nb_sb_noss"),
                 getWalmartProductInformation("https://www.walmart.com/search/?cat_id=0&query=" + name),
-                getTargetProductInformation("https://www.target.com/s?searchTerm=" + name)    // Target Information
+                getTargetProductInformation("https://www.target.com/s?searchTerm=" + name),    // Target Information
+                null
         );
     }
 
