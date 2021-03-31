@@ -15,6 +15,7 @@
         android:layout_marginTop="580dp"
         android:onClick="ScanButton"
         android:text="@string/scan"
+        app:iconTint="#DC0C0C"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
