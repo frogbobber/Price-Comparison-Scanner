@@ -11,6 +11,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
+import com.example.pricecomparisonscanner.analysis.DataProcessor;
 import com.example.pricecomparisonscanner.information.AllProductInformation;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
@@ -87,8 +88,10 @@ public class MainActivity extends AppCompatActivity {
                             JSONObject jsonObject = new JSONObject(inline);
                             JSONArray jsonArray = jsonObject.getJSONArray("items").getJSONObject(0).getJSONArray("offers");
                             Double price1 = jsonArray.getJSONObject(0).getDouble("price");
+                            DataProcessor dp = new DataProcessor(jsonArray);
+                            System.out.println(dp.getBestListing());
 
-                            //textView.setText(price1 + "");
+                            //textView.setText("\n\n" + jsonArray.toString() + "");
                             String name = jsonArray.getJSONObject(0).getString("title").replaceAll(" ", "+");
                             AllProductInformation info = WebScraper.getProductInformation(name);
                             info.setUpciteProducts(jsonObject);
