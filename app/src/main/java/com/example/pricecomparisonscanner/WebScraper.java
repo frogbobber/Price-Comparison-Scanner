@@ -28,24 +28,24 @@ public class WebScraper {
 
     private static ArrayList<ProductInformation> getAmazonProductInformation(String url) throws IOException {
 
-        /*Document document = Jsoup.connect(url)
+        Document document = Jsoup.connect(url)
                 .userAgent("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.61 Safari/537.36")
                 .referrer("https://www.amazon.com/")
-                .get();*/
+                .get();
 
         //System.out.println(url);
-        //return new AmazonExtractor().extractProducts(document);
-        return null;
+        return new AmazonExtractor().extractProducts(document);
+        //return null;
     }
     private static ArrayList<ProductInformation> getWalmartProductInformation(String url) throws IOException {
-        /*Document document = Jsoup.connect(url)
+        Document document = Jsoup.connect(url)
                 .userAgent("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.61 Safari/537.36")
                 .referrer("https://www.walmart.com/")
-                .get();*/
+                .get();
 
         //System.out.println(document);
-        //return new WalmartExtractor().extractProducts(document);
-        return null;
+        return new WalmartExtractor().extractProducts(document);
+        //return null;
     }
     private static ArrayList<ProductInformation> getTargetProductInformation(String url) throws IOException {
 

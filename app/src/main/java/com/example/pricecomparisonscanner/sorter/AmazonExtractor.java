@@ -17,13 +17,13 @@ public class AmazonExtractor extends ProductExtractor {
 
         elements.forEach(e -> {
             products.add(new ProductInformation(
-                    e.select("a[class*=a-link-normal a-text-normal]").attr("abs:href"), // todo make this get the url
+                    e.select("a[class*=a-link-normal a-text-normal]").attr("abs:href"),
                     e.select("span[class*=a-size-base-plus a-color-base a-text-normal]").html(),
                     e.select("span[class*=a-offscreen]").html()
             ));
         });
 
-        System.out.println(products);
+        //System.out.println(products);
         return products;
     }
 }

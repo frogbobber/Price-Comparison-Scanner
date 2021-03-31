@@ -91,9 +91,9 @@ public class MainActivity extends AppCompatActivity {
                             //textView.setText(price1 + "");
                             String name = jsonArray.getJSONObject(0).getString("title").replaceAll(" ", "+");
                             //to here
-                            //add this -> String name = "MONOPOLY+Game";
+                            //String name = "MONOPOLY+Game";//add this ->
                             AllProductInformation info = WebScraper.getProductInformation(name);
-                            info.setUpciteProducts(jsonObject);//and this one too
+                            //info.setUpciteProducts(jsonObject);//and this one too
                             textView.setText("\n\n" + name  + "\n\n" + info + "");
                             System.out.println(WebScraper.getProductInformation(name) + "");
 
