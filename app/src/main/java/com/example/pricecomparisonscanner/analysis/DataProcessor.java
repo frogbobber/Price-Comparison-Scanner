@@ -18,6 +18,16 @@ public class DataProcessor {
     private double q3;
 
     public DataProcessor(JSONArray jsonArray) throws JSONException {
+        initStats(jsonArray);
+        this.bestListing = calculateBestListing(jsonArray);
+    }
+
+    public DataProcessor(JSONArray jsonArray, boolean includeOutliers, boolean includeShipping) throws JSONException {
+        initStats(jsonArray);
+        this.bestListing = calculateBestListing(jsonArray, includeOutliers, includeShipping);
+    }
+
+    private void initStats(JSONArray jsonArray) throws JSONException {
         this.priceArray = createPriceArray(jsonArray);
         this.mean = calculateMean();
         this.variance = calculateVariance();
@@ -27,7 +37,6 @@ public class DataProcessor {
         this.q3 = tmp[1];
         this.iqr = tmp[2];
         this.median = calculateMedian(priceArray);
-        this.bestListing = calculateBestListing(jsonArray);
     }
 
     protected List<Double> createPriceArray(JSONArray jsonArray) throws JSONException {
@@ -83,7 +92,7 @@ public class DataProcessor {
     }
 
     protected JSONObject calculateBestListing(JSONArray jsonArray) throws JSONException {
-        return calculateBestListing(jsonArray, false);
+        return calculateBestListing(jsonArray, false, false);
     }
 
 
@@ -93,14 +102,20 @@ public class DataProcessor {
      * 2. Get index 0 of priceArray
      * 3. Reverse search by price
      */
-    protected JSONObject calculateBestListing(JSONArray jsonArray, Boolean includeOutliers) throws JSONException {
+    protected JSONObject calculateBestListing(JSONArray jsonArray, Boolean includeOutliers, Boolean includeShipping) throws JSONException {
         int bestLoc = 0;
         double currentMin = 0.0;
+        double currentPrice = 0.0;
 
-        if(includeOutliers) {
+        if(!includeOutliers) {
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
-                double currentPrice = jsonObject.getDouble("price");
+                if(includeShipping) {
+                    // todo fix this, shipping don't work
+                    currentPrice = jsonObject.getDouble("price") + jsonObject.getDouble("shipping");
+                } else {
+                    currentPrice = jsonObject.getDouble("price");
+                }
 
                 if (i == 0) {
                     currentMin = currentPrice;
@@ -112,10 +127,15 @@ public class DataProcessor {
                     }
                 }
             }
+
         } else {
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
-                double currentPrice = jsonObject.getDouble("price");
+                if(includeShipping) {
+                    currentPrice = jsonObject.getDouble("price") + jsonObject.getDouble("shipping");
+                } else{
+                    currentPrice = jsonObject.getDouble("price");
+                }
 
                 if (i == 0) {
                     if(isOutlier(currentPrice)){
