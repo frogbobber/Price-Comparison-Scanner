@@ -13,6 +13,7 @@ public class DataProcessor {
     private double variance;
     private List<Double> priceArray; //just used to make the other calculations more time efficient
     private double median;
+
     private double iqr;
     private double q1;
     private double q3;
@@ -194,4 +195,44 @@ public class DataProcessor {
     public void setVariance(double variance) {
         this.variance = variance;
     }
+    public List<Double> getPriceArray() {
+        return priceArray;
+    }
+
+    public void setPriceArray(List<Double> priceArray) {
+        this.priceArray = priceArray;
+    }
+
+    public double getMedian() {
+        return median;
+    }
+
+    public void setMedian(double median) {
+        this.median = median;
+    }
+
+    public double getIqr() {
+        return iqr;
+    }
+
+    public void setIqr(double iqr) {
+        this.iqr = iqr;
+    }
+
+    public double getQ1() {
+        return q1;
+    }
+
+    public void setQ1(double q1) {
+        this.q1 = q1;
+    }
+
+    public double getQ3() {
+        return q3;
+    }
+
+    public void setQ3(double q3) {
+        this.q3 = q3;
+    }
+
 }
