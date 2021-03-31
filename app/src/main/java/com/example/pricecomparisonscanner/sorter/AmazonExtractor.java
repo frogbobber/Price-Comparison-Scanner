@@ -13,16 +13,17 @@ public class AmazonExtractor extends ProductExtractor {
     public  ArrayList<ProductInformation> extractProducts(Document document) {
         ArrayList<ProductInformation> products = new ArrayList<>();
 
-        Elements elements = document.select("div[class*=a-section a-spacing-medium]");
+        Elements elements = document.select("div[class*=a-section a-spacing-medium]");//class="sg-col-inner"
 
         elements.forEach(e -> {
             products.add(new ProductInformation(
-                    e.select("span[class*=a-link-normal a-text-normal]").html(), // todo make this get the url
+                    e.select("a[class*=a-link-normal a-text-normal]").attr("abs:href"), // todo make this get the url
                     e.select("span[class*=a-size-base-plus a-color-base a-text-normal]").html(),
                     e.select("span[class*=a-offscreen]").html()
             ));
         });
 
+        System.out.println(products);
         return products;
     }
 }
