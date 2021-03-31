@@ -51,6 +51,7 @@ public class AllProductInformation {
         } catch (JSONException e) {
             //error - idk what to do lol
         }
+        this.upciteProducts = products;
     }
 
     public AllProductInformation(ArrayList<ProductInformation> amazonProducts, ArrayList<ProductInformation> walmartProducts, ArrayList<ProductInformation> targetProducts, ArrayList<ProductInformation> upciteProducts) {
@@ -74,10 +75,22 @@ public class AllProductInformation {
     }
 
     public AllProductInformation(int n, AllProductInformation productInformation) {
-        ArrayList<ProductInformation> nAmazon = (ArrayList<ProductInformation>) productInformation.getAmazonProducts().stream().limit(n).collect(Collectors.toList());
-        ArrayList<ProductInformation> nWalmart = (ArrayList<ProductInformation>) productInformation.getWalmartProducts().stream().limit(n).collect(Collectors.toList());
-        ArrayList<ProductInformation> nTarget = (ArrayList<ProductInformation>) productInformation.getTargetProducts().stream().limit(n).collect(Collectors.toList());
-        ArrayList<ProductInformation> nUpcite = (ArrayList<ProductInformation>) productInformation.getUpciteProducts().stream().limit(n).collect(Collectors.toList());
+//        ArrayList<ProductInformation> nAmazon = (ArrayList<ProductInformation>) productInformation.getAmazonProducts().stream().limit(n).collect(Collectors.toList());
+//        ArrayList<ProductInformation> nWalmart = (ArrayList<ProductInformation>) productInformation.getWalmartProducts().stream().limit(n).collect(Collectors.toList());
+//        ArrayList<ProductInformation> nTarget = (ArrayList<ProductInformation>) productInformation.getTargetProducts().stream().limit(n).collect(Collectors.toList());
+//        ArrayList<ProductInformation> nUpcite = (ArrayList<ProductInformation>) productInformation.getUpciteProducts().stream().limit(n).collect(Collectors.toList());
+
+        ArrayList<ProductInformation> nAmazon = new ArrayList();
+        ArrayList<ProductInformation> nWalmart = new ArrayList();
+        ArrayList<ProductInformation> nTarget = new ArrayList();
+        ArrayList<ProductInformation> nUpcite = new ArrayList();
+
+        for (int i = 0; i < n; i++) {
+            nAmazon.add(productInformation.getAmazonProducts().get(i));
+            nWalmart.add(productInformation.getWalmartProducts().get(i));
+            nTarget.add(productInformation.getTargetProducts().get(i));
+            nUpcite.add(productInformation.getUpciteProducts().get(i));
+        }
 
         this.amazonProducts = nAmazon;
         this.walmartProducts = nWalmart;

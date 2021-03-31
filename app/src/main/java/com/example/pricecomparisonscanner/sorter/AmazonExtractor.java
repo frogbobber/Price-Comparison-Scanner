@@ -23,6 +23,8 @@ public class AmazonExtractor extends ProductExtractor {
             ));
         });
 
+        System.out.println("Sorted Amazon");
+
         //System.out.println(products);
         return products;
     }
