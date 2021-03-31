@@ -119,37 +119,42 @@ public class MainActivity extends AppCompatActivity {
                             StringBuilder outputBuilder = new StringBuilder();
                             
                             outputBuilder.append("Broad Sweep Database: \n");
-
                             ArrayList<ProductInformation> products = info.getUpciteProducts();
                             for (int i = 0; i < products.size(); i++) {
                                 outputBuilder.append(
-                                        products.get(i).getName() + "\n" +
-                                                products.get(i).getPrice() + "\n" +
-                                                products.get(i).getUrl() + "\n\n"
+                                        products.get(i).getName().substring(0, Math.min(products.get(i).getName().length(), 20)) + "\n" +
+                                                products.get(i).getPrice().substring(0, Math.min(products.get(i).getPrice().length(), 20)) + "\n" +
+                                                products.get(i).getUrl().substring(0, Math.min(products.get(i).getUrl().length(), 20)) + "\n\n"
                                 );
                             }
+
+                            outputBuilder.append("Top Walmart Listings: \n");
                             products = info.getWalmartProducts();
                             for (int i = 0; i < products.size(); i++) {
                                 outputBuilder.append(
-                                        products.get(i).getName() + "\n" +
-                                                products.get(i).getPrice() + "\n" +
-                                                products.get(i).getUrl() + "\n\n"
+                                        products.get(i).getName().substring(0, Math.min(products.get(i).getName().length(), 20)) + "\n" +
+                                                products.get(i).getPrice().substring(0, Math.min(products.get(i).getPrice().length(), 20)) + "\n" +
+                                                products.get(i).getUrl().substring(0, Math.min(products.get(i).getUrl().length(), 20)) + "\n\n"
                                 );
                             }
+
+                            outputBuilder.append("Top Amazon Listings: \n");
                             products = info.getAmazonProducts();
                             for (int i = 0; i < products.size(); i++) {
                                 outputBuilder.append(
-                                        products.get(i).getName() + "\n" +
-                                                products.get(i).getPrice() + "\n" +
-                                                products.get(i).getUrl() + "\n\n"
+                                        products.get(i).getName().substring(0, Math.min(products.get(i).getName().length(), 20)) + "\n" +
+                                                products.get(i).getPrice().substring(0, Math.min(products.get(i).getPrice().length(), 20)) + "\n" +
+                                                products.get(i).getUrl().substring(0, Math.min(products.get(i).getUrl().length(), 20)) + "\n\n"
                                 );
                             }
+
+                            outputBuilder.append("Top Best Buy Listings: \n");
                             products = info.getTargetProducts();
                             for (int i = 0; i < products.size(); i++) {
                                 outputBuilder.append(
-                                        products.get(i).getName() + "\n" +
-                                                products.get(i).getPrice() + "\n" +
-                                                products.get(i).getUrl() + "\n\n"
+                                        products.get(i).getName().substring(0, Math.min(products.get(i).getName().length(), 20)) + "\n" +
+                                                products.get(i).getPrice().substring(0, Math.min(products.get(i).getPrice().length(), 20)) + "\n" +
+                                                products.get(i).getUrl().substring(0, Math.min(products.get(i).getUrl().length(), 20)) + "\n\n"
                                 );
                             }
                             
