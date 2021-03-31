@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/scrollView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
@@ -10,11 +11,13 @@
     <Button
         android:id="@+id/button"
         android:layout_width="176dp"
-        android:layout_height="62dp"
+        android:layout_height="100dp"
         android:layout_marginStart="116dp"
-        android:layout_marginTop="580dp"
+        android:layout_marginTop="650dp"
         android:onClick="ScanButton"
+        android:rotation="0"
         android:text="@string/scan"
+        android:translationY="-50dp"
         app:iconTint="#DC0C0C"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -23,6 +26,13 @@
         android:id="@+id/button2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="See Results" />
+        android:onClick="ViewAnalytics"
+        android:text="@string/viewAnalytics" />
+
+    <TextView
+        android:id="@+id/resultsTextView"
+        android:layout_width="match_parent"
+        android:layout_height="555dp"
+        android:translationY="50dp"></TextView>
 
 </RelativeLayout>

@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -13,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import com.example.pricecomparisonscanner.information.AllProductInformation;
+import com.example.pricecomparisonscanner.information.ProductInformation;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
@@ -21,10 +23,12 @@ import org.json.JSONObject;
 
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class MainActivity extends AppCompatActivity {
 
+    private ScrollView scrollView;
     private TextView textView;
     private Button button;
 
@@ -33,12 +37,18 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        textView = findViewById(R.id.textView);
+        textView = findViewById(R.id.resultsTextView);
 
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, PackageManager.PERMISSION_GRANTED);
     }
 
     public void ScanButton(View view) {
+        IntentIntegrator intentIntegrator = new IntentIntegrator(this);
+        intentIntegrator.initiateScan();
+
+    }
+
+    public void ViewAnalytics(View view) {
         IntentIntegrator intentIntegrator = new IntentIntegrator(this);
         intentIntegrator.initiateScan();
 
@@ -84,6 +94,8 @@ public class MainActivity extends AppCompatActivity {
                                 scanner.close();
                             }
 
+                            textView.setText("retrived from upcitemdb");
+
                             textView.setText("Got Response: ");
 
                             JSONObject jsonObject = new JSONObject(inline);
@@ -93,14 +105,60 @@ public class MainActivity extends AppCompatActivity {
 
                             //textView.setText(price1 + "");
                             String name = jsonArray.getJSONObject(0).getString("title").replaceAll(" ", "+");
+//                            AllProductInformation allProductInformation = WebScraper.getProductInformation(name);
+//                            textView.setText("\n\n" + name  + "\n\n" + allProductInformation + "");
+//                            System.out.println(allProductInformation + "");
                             //to here
                             //String name = "MONOPOLY+Game";//add this ->
                             AllProductInformation info = WebScraper.getProductInformation(name);
-                            //info.setUpciteProducts(jsonObject);//and this one too
-                            textView.setText("\n\n" + name  + "\n\n" + info + "");
-                            System.out.println(WebScraper.getProductInformation(name) + "");
+                            info.setUpciteProducts(jsonObject);//and this one too
+                            info = new AllProductInformation(4, info);
+                            
+                            // textView.setText("\n\n" + name  + "\n\n" + info + ""); //Old Method
+                            
+                            StringBuilder outputBuilder = new StringBuilder();
+                            
+                            outputBuilder.append("Broad Sweep Database: \n");
+
+                            ArrayList<ProductInformation> products = info.getUpciteProducts();
+                            for (int i = 0; i < products.size(); i++) {
+                                outputBuilder.append(
+                                        products.get(i).getName() + "\n" +
+                                                products.get(i).getPrice() + "\n" +
+                                                products.get(i).getUrl() + "\n\n"
+                                );
+                            }
+                            products = info.getWalmartProducts();
+                            for (int i = 0; i < products.size(); i++) {
+                                outputBuilder.append(
+                                        products.get(i).getName() + "\n" +
+                                                products.get(i).getPrice() + "\n" +
+                                                products.get(i).getUrl() + "\n\n"
+                                );
+                            }
+                            products = info.getAmazonProducts();
+                            for (int i = 0; i < products.size(); i++) {
+                                outputBuilder.append(
+                                        products.get(i).getName() + "\n" +
+                                                products.get(i).getPrice() + "\n" +
+                                                products.get(i).getUrl() + "\n\n"
+                                );
+                            }
+                            products = info.getTargetProducts();
+                            for (int i = 0; i < products.size(); i++) {
+                                outputBuilder.append(
+                                        products.get(i).getName() + "\n" +
+                                                products.get(i).getPrice() + "\n" +
+                                                products.get(i).getUrl() + "\n\n"
+                                );
+                            }
+                            
+                            textView.setText(outputBuilder.toString());
+                            
+                            System.out.println("\n\nnew info - \n" + info + "\n - end info\n\n");
 
                         } catch (Exception e) {
+                            e.printStackTrace();
                         }
                     }
                 });
