@@ -28,10 +28,6 @@ android {
     }
 }
 
-repositories {
-    maven { url 'https://jitpack.io' }
-}
-
 dependencies {
 
     implementation 'androidx.appcompat:appcompat:1.1.0'
@@ -45,5 +41,4 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
     implementation 'com.journeyapps:zxing-android-embedded:4.0.2'
-    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 }
