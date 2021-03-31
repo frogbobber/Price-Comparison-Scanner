@@ -61,12 +61,12 @@ public class MainActivity extends AppCompatActivity {
                         try {
                             String inline = "";
                             System.out.println("lololol");
+                            //if run out of scams comment out here
                             URL url = new URL("https://api.upcitemdb.com/prod/trial/lookup?upc=" + intentResult.getContents());
                             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                             conn.setRequestMethod("GET"); // testtest
                             textView.setText("Connecting");
                             conn.connect();
-
 
                             int responseCode = conn.getResponseCode();
                             if (responseCode != 200) {
@@ -84,19 +84,21 @@ public class MainActivity extends AppCompatActivity {
                                 scanner.close();
                             }
 
-
                             textView.setText("Got Response: ");
 
                             JSONObject jsonObject = new JSONObject(inline);
                             JSONArray jsonArray = jsonObject.getJSONArray("items").getJSONObject(0).getJSONArray("offers");
                             Double price1 = jsonArray.getJSONObject(0).getDouble("price");
 
+
                             //textView.setText(price1 + "");
                             String name = jsonArray.getJSONObject(0).getString("title").replaceAll(" ", "+");
+                            //to here
+                            //add this -> String name = "MONOPOLY+Game";
                             AllProductInformation info = WebScraper.getProductInformation(name);
-                            info.setUpciteProducts(jsonObject);
+                            info.setUpciteProducts(jsonObject);//and this one too
                             textView.setText("\n\n" + name  + "\n\n" + info + "");
-                            //System.out.println(WebScraper.getProductInformation(name) + "");
+                            System.out.println(WebScraper.getProductInformation(name) + "");
 
                         } catch (Exception e) {
                         }
