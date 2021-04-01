@@ -13,6 +13,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
+import com.example.pricecomparisonscanner.analysis.DataProcessor;
 import com.example.pricecomparisonscanner.information.AllProductInformation;
 import com.example.pricecomparisonscanner.information.ProductInformation;
 import com.google.zxing.integration.android.IntentIntegrator;
@@ -30,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
 
     private ScrollView scrollView;
     private TextView textView;
+    private TextView textView1;
     private TextView textView2;
     private TextView textView3;
     private TextView textView4;
@@ -41,7 +43,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        textView = findViewById(R.id.resultsTextView);
+        textView = findViewById(R.id.textView);
+        textView1 = findViewById(R.id.resultsTextView1);
         textView2 = findViewById(R.id.resultsTextView2);
         textView3 = findViewById(R.id.resultsTextView3);
         textView4 = findViewById(R.id.resultsTextView4);
@@ -56,13 +59,50 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void ViewAnalytics(View view) {
-        textView.setText("Coffee Coffee Coffee");
+
+        try {
+            if (allProductInformation != null) {
+                DataProcessor dp = new DataProcessor(allProductInformation);
+                textView.setText("");
+                textView1.setText("");
+                textView2.setText("");
+                textView3.setText("");
+                textView4.setText("");
+
+                StringBuilder builder = new StringBuilder();
+
+                builder.append("   Price Analytics: \n\n");
+                builder.append("Best Value Product: \n" + dp.getBestListing().getName() + " " + dp.getBestListing().getPrice() + "\nat: " + dp.getBestListing().getUrl() + "\n\n");
+                builder.append("Average Price: " + dp.getMean() + "\n");
+                builder.append("Median Price: " + dp.getMedian() + "\n");
+                builder.append("Variance: " + dp.getVariance() + "\n");
+
+                textView.setText(builder.toString());
+            } else {
+                textView.setText("   Please scan a barcode first.");
+                textView1.setText("");
+                textView2.setText("");
+                textView3.setText("");
+                textView4.setText("");
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         IntentResult intentResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+
+        textView.setText("");
+        textView1.setText("");
+        textView2.setText("");
+        textView3.setText("");
+        textView4.setText("");
 
         if (intentResult != null) {
             if (intentResult.getContents() == null) {
@@ -115,8 +155,8 @@ public class MainActivity extends AppCompatActivity {
 //                            System.out.println(allProductInformation + "");
                             //to here */
                             //String name = "MONOPOLY+Game";//add this ->
-                            AllProductInformation info = WebScraper.getProductInformation(name);
-                            allProductInformation = info;
+                            allProductInformation = WebScraper.getProductInformation(name);
+                            AllProductInformation info = allProductInformation;
                             info.setUpciteProducts(jsonObject);//and this one too
                             info = new AllProductInformation(4, info);
                             
@@ -133,8 +173,8 @@ public class MainActivity extends AppCompatActivity {
                             for (int i = 0; i < products.size(); i++) {
                                 outputBuilder.append(
                                         products.get(i).getName().substring(0, Math.min(products.get(i).getName().length(), 20)) + "\n" +
-                                                products.get(i).getPrice().substring(0, Math.min(products.get(i).getPrice().length(), 20)) + "\n" +
-                                                products.get(i).getUrl().substring(0, Math.min(products.get(i).getUrl().length(), 20)) + "\n\n"
+                                        products.get(i).getPrice().substring(0, Math.min(products.get(i).getPrice().length(), 20)) + "  " +
+                                        products.get(i).getUrl().substring(0, Math.min(products.get(i).getUrl().length(), 16)) + "\n\n"
                                 );
                             }
 
@@ -143,32 +183,33 @@ public class MainActivity extends AppCompatActivity {
                             for (int i = 0; i < products.size(); i++) {
                                 outputBuilder2.append(
                                         products.get(i).getName().substring(0, Math.min(products.get(i).getName().length(), 20)) + "\n" +
-                                                products.get(i).getPrice().substring(0, Math.min(products.get(i).getPrice().length(), 20)) + "\n" +
-                                                products.get(i).getUrl().substring(0, Math.min(products.get(i).getUrl().length(), 20)) + "\n\n"
+                                        products.get(i).getPrice().substring(0, Math.min(products.get(i).getPrice().length(), 20)) + "  " +
+                                        products.get(i).getUrl().substring(0, Math.min(products.get(i).getUrl().length(), 16)) + "\n\n"
                                 );
                             }
 
                             outputBuilder3.append("Top Amazon Listings: \n");
                             products = info.getAmazonProducts();
                             for (int i = 0; i < products.size(); i++) {
-                                outputBuilder3.append(
+                                outputBuilder3.append( "\n" +
                                         products.get(i).getName().substring(0, Math.min(products.get(i).getName().length(), 20)) + "\n" +
-                                                products.get(i).getPrice().substring(0, Math.min(products.get(i).getPrice().length(), 20)) + "\n" +
-                                                products.get(i).getUrl().substring(0, Math.min(products.get(i).getUrl().length(), 20)) + "\n\n"
+                                        products.get(i).getPrice().substring(0, Math.min(products.get(i).getPrice().length(), 20)) + "  " +
+                                        products.get(i).getUrl().substring(0, Math.min(products.get(i).getUrl().length(), 16)) + "\n\n"
                                 );
                             }
 
                             outputBuilder4.append("Top Best Buy Listings: \n");
                             products = info.getTargetProducts();
                             for (int i = 0; i < products.size(); i++) {
-                                outputBuilder4.append(
+                                outputBuilder4.append( "\n" +
                                         products.get(i).getName().substring(0, Math.min(products.get(i).getName().length(), 20)) + "\n" +
-                                                products.get(i).getPrice().substring(0, Math.min(products.get(i).getPrice().length(), 20)) + "\n" +
-                                                products.get(i).getUrl().substring(0, Math.min(products.get(i).getUrl().length(), 20)) + "\n\n"
+                                        products.get(i).getPrice().substring(0, Math.min(products.get(i).getPrice().length(), 20)) + "  " +
+                                        products.get(i).getUrl().substring(0, Math.min(products.get(i).getUrl().length(), 16)) + "\n\n"
                                 );
                             }
-                            
-                            textView.setText(outputBuilder.toString());
+
+                            textView.setText(".");
+                            textView1.setText(outputBuilder.toString());
                             textView2.setText(outputBuilder2.toString());
                             textView3.setText(outputBuilder3.toString());
                             textView4.setText(outputBuilder4.toString());
