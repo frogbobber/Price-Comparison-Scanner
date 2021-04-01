@@ -31,8 +31,40 @@
 
     <TextView
         android:id="@+id/resultsTextView"
-        android:layout_width="match_parent"
-        android:layout_height="555dp"
-        android:translationY="50dp"></TextView>
+        android:layout_width="202dp"
+        android:layout_height="276dp"
+        android:textSize="14sp"
+        android:translationY="50dp"
+        app:autoSizeTextType="none"></TextView>
+
+    <TextView
+        android:id="@+id/resultsTextView2"
+        android:layout_width="206dp"
+        android:layout_height="276dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="2dp"
+        android:textSize="14sp"
+        android:translationY="50dp"
+        app:autoSizeTextType="none"></TextView>
+
+    <TextView
+        android:id="@+id/resultsTextView3"
+        android:layout_width="206dp"
+        android:layout_height="276dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="206dp"
+        android:textSize="14sp"
+        android:translationY="326dp"
+        app:autoSizeTextType="none"></TextView>
+
+    <TextView
+        android:id="@+id/resultsTextView4"
+        android:layout_width="206dp"
+        android:layout_height="276dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="0dp"
+        android:textSize="14sp"
+        android:translationY="326dp"
+        app:autoSizeTextType="none"></TextView>
 
 </RelativeLayout>

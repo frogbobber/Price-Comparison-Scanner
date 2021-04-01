@@ -30,7 +30,11 @@ public class MainActivity extends AppCompatActivity {
 
     private ScrollView scrollView;
     private TextView textView;
+    private TextView textView2;
+    private TextView textView3;
+    private TextView textView4;
     private Button button;
+    private AllProductInformation allProductInformation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +42,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         textView = findViewById(R.id.resultsTextView);
+        textView2 = findViewById(R.id.resultsTextView2);
+        textView3 = findViewById(R.id.resultsTextView3);
+        textView4 = findViewById(R.id.resultsTextView4);
 
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, PackageManager.PERMISSION_GRANTED);
     }
@@ -49,9 +56,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void ViewAnalytics(View view) {
-        IntentIntegrator intentIntegrator = new IntentIntegrator(this);
-        intentIntegrator.initiateScan();
-
+        textView.setText("Coffee Coffee Coffee");
     }
 
     @Override
@@ -108,18 +113,23 @@ public class MainActivity extends AppCompatActivity {
 //                            AllProductInformation allProductInformation = WebScraper.getProductInformation(name);
 //                            textView.setText("\n\n" + name  + "\n\n" + allProductInformation + "");
 //                            System.out.println(allProductInformation + "");
-                            //to here
+                            //to here */
                             //String name = "MONOPOLY+Game";//add this ->
                             AllProductInformation info = WebScraper.getProductInformation(name);
+                            allProductInformation = info;
                             info.setUpciteProducts(jsonObject);//and this one too
                             info = new AllProductInformation(4, info);
                             
                             // textView.setText("\n\n" + name  + "\n\n" + info + ""); //Old Method
                             
                             StringBuilder outputBuilder = new StringBuilder();
+                            StringBuilder outputBuilder2 = new StringBuilder();
+                            StringBuilder outputBuilder3 = new StringBuilder();
+                            StringBuilder outputBuilder4 = new StringBuilder();
                             
                             outputBuilder.append("Broad Sweep Database: \n");
                             ArrayList<ProductInformation> products = info.getUpciteProducts();
+                            ArrayList<ProductInformation> products2 = info.getWalmartProducts();
                             for (int i = 0; i < products.size(); i++) {
                                 outputBuilder.append(
                                         products.get(i).getName().substring(0, Math.min(products.get(i).getName().length(), 20)) + "\n" +
@@ -128,30 +138,30 @@ public class MainActivity extends AppCompatActivity {
                                 );
                             }
 
-                            outputBuilder.append("Top Walmart Listings: \n");
-                            products = info.getWalmartProducts();
+                            outputBuilder2.append("Top Walmart Listings: \n");
+                            //ArrayList<ProductInformation> products2 = info.getWalmartProducts();
                             for (int i = 0; i < products.size(); i++) {
-                                outputBuilder.append(
+                                outputBuilder2.append(
                                         products.get(i).getName().substring(0, Math.min(products.get(i).getName().length(), 20)) + "\n" +
                                                 products.get(i).getPrice().substring(0, Math.min(products.get(i).getPrice().length(), 20)) + "\n" +
                                                 products.get(i).getUrl().substring(0, Math.min(products.get(i).getUrl().length(), 20)) + "\n\n"
                                 );
                             }
 
-                            outputBuilder.append("Top Amazon Listings: \n");
+                            outputBuilder3.append("Top Amazon Listings: \n");
                             products = info.getAmazonProducts();
                             for (int i = 0; i < products.size(); i++) {
-                                outputBuilder.append(
+                                outputBuilder3.append(
                                         products.get(i).getName().substring(0, Math.min(products.get(i).getName().length(), 20)) + "\n" +
                                                 products.get(i).getPrice().substring(0, Math.min(products.get(i).getPrice().length(), 20)) + "\n" +
                                                 products.get(i).getUrl().substring(0, Math.min(products.get(i).getUrl().length(), 20)) + "\n\n"
                                 );
                             }
 
-                            outputBuilder.append("Top Best Buy Listings: \n");
+                            outputBuilder4.append("Top Best Buy Listings: \n");
                             products = info.getTargetProducts();
                             for (int i = 0; i < products.size(); i++) {
-                                outputBuilder.append(
+                                outputBuilder4.append(
                                         products.get(i).getName().substring(0, Math.min(products.get(i).getName().length(), 20)) + "\n" +
                                                 products.get(i).getPrice().substring(0, Math.min(products.get(i).getPrice().length(), 20)) + "\n" +
                                                 products.get(i).getUrl().substring(0, Math.min(products.get(i).getUrl().length(), 20)) + "\n\n"
@@ -159,6 +169,9 @@ public class MainActivity extends AppCompatActivity {
                             }
                             
                             textView.setText(outputBuilder.toString());
+                            textView2.setText(outputBuilder2.toString());
+                            textView3.setText(outputBuilder3.toString());
+                            textView4.setText(outputBuilder4.toString());
                             
                             System.out.println("\n\nnew info - \n" + info + "\n - end info\n\n");
 
