@@ -1,4 +1,7 @@
 package com.example.pricecomparisonscanner.analysis;
+import com.example.pricecomparisonscanner.information.AllProductInformation;
+import com.example.pricecomparisonscanner.information.ProductInformation;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -7,29 +10,28 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class DataProcessor {
-    private JSONObject bestListing;
+    private ProductInformation bestListing;
     private double mean;
     private double standardDeviation;
     private double variance;
     private List<Double> priceArray; //just used to make the other calculations more time efficient
     private double median;
-
     private double iqr;
     private double q1;
     private double q3;
 
-    public DataProcessor(JSONArray jsonArray) throws JSONException {
-        initStats(jsonArray);
-        this.bestListing = calculateBestListing(jsonArray);
+    public DataProcessor(AllProductInformation allProductInformation) throws JSONException {
+        initStats(allProductInformation);
+        this.bestListing = calculateBestListing(allProductInformation);
     }
 
-    public DataProcessor(JSONArray jsonArray, boolean includeOutliers, boolean includeShipping) throws JSONException {
-        initStats(jsonArray);
-        this.bestListing = calculateBestListing(jsonArray, includeOutliers, includeShipping);
+    public DataProcessor(AllProductInformation allProductInformation, boolean includeOutliers, boolean includeShipping) throws JSONException {
+        initStats(allProductInformation);
+        this.bestListing = calculateBestListing(allProductInformation, includeOutliers, includeShipping);
     }
 
-    private void initStats(JSONArray jsonArray) throws JSONException {
-        this.priceArray = createPriceArray(jsonArray);
+    private void initStats(AllProductInformation allProductInformation) throws JSONException {
+        this.priceArray = createPriceArray(allProductInformation);
         this.mean = calculateMean();
         this.variance = calculateVariance();
         this.standardDeviation = Math.sqrt(variance);
@@ -40,11 +42,15 @@ public class DataProcessor {
         this.median = calculateMedian(priceArray);
     }
 
-    protected List<Double> createPriceArray(JSONArray jsonArray) throws JSONException {
+    protected List<Double> createPriceArray(AllProductInformation allProductInformation) throws JSONException {
         List<Double> priceArray = new ArrayList<>();
-        for(int i=0;i<jsonArray.length();i++) {
-            priceArray.add(jsonArray.getJSONObject(i).getDouble("price"));
+        ArrayList<ProductInformation> listings = mergeProductInfo(allProductInformation);
+
+        // todo abstract into seperate generic function
+        for(ProductInformation p : listings) {
+            priceArray.add(Double.parseDouble(p.getPrice()));
         }
+
         Collections.sort(priceArray);
         return priceArray;
     }
@@ -92,8 +98,8 @@ public class DataProcessor {
             return arr.get(arr.size() / 2);
     }
 
-    protected JSONObject calculateBestListing(JSONArray jsonArray) throws JSONException {
-        return calculateBestListing(jsonArray, false, false);
+    protected ProductInformation calculateBestListing(AllProductInformation allProductInformation) throws JSONException {
+        return calculateBestListing(allProductInformation, false, false);
     }
 
 
@@ -103,25 +109,26 @@ public class DataProcessor {
      * 2. Get index 0 of priceArray
      * 3. Reverse search by price
      */
-    protected JSONObject calculateBestListing(JSONArray jsonArray, Boolean includeOutliers, Boolean includeShipping) throws JSONException {
+    protected ProductInformation calculateBestListing(AllProductInformation allProductInformation, Boolean includeOutliers, Boolean includeShipping) throws JSONException {
         int bestLoc = 0;
         double currentMin = 0.0;
         double currentPrice = 0.0;
 
+        ArrayList<ProductInformation> listings = mergeProductInfo(allProductInformation);
+
         if(!includeOutliers) {
-            for (int i = 0; i < jsonArray.length(); i++) {
-                JSONObject jsonObject = jsonArray.getJSONObject(i);
+            for (int i = 0; i < listings.size(); i++) {
                 if(includeShipping) {
                     // todo fix this, shipping don't work
-                    currentPrice = jsonObject.getDouble("price") + jsonObject.getDouble("shipping");
+                    currentPrice = Double.parseDouble(listings.get(i).getPrice());
                 } else {
-                    currentPrice = jsonObject.getDouble("price");
+                    currentPrice = Double.parseDouble(listings.get(i).getPrice());
                 }
 
                 if (i == 0) {
                     currentMin = currentPrice;
                 } else {
-                    System.out.println(jsonObject.get("price"));
+                    System.out.println(Double.parseDouble(listings.get(i).getPrice()));
                     if (currentMin > currentPrice) {
                         currentMin = currentPrice;
                         bestLoc = i;
@@ -130,12 +137,11 @@ public class DataProcessor {
             }
 
         } else {
-            for (int i = 0; i < jsonArray.length(); i++) {
-                JSONObject jsonObject = jsonArray.getJSONObject(i);
+            for (int i = 0; i < listings.size(); i++) {
                 if(includeShipping) {
-                    currentPrice = jsonObject.getDouble("price") + jsonObject.getDouble("shipping");
-                } else{
-                    currentPrice = jsonObject.getDouble("price");
+                    currentPrice = Double.parseDouble(listings.get(i).getPrice());
+                } else {
+                    currentPrice = Double.parseDouble(listings.get(i).getPrice());
                 }
 
                 if (i == 0) {
@@ -145,7 +151,7 @@ public class DataProcessor {
                         currentMin = currentPrice;
                     }
                 } else {
-                    System.out.println(jsonObject.get("price"));
+                    System.out.println(Double.parseDouble(listings.get(i).getPrice()));
                     if (currentMin > currentPrice && !(isOutlier(currentPrice))) {
                         currentMin = currentPrice;
                         bestLoc = i;
@@ -154,7 +160,17 @@ public class DataProcessor {
             }
         }
 
-        return jsonArray.getJSONObject(bestLoc);
+        return listings.get(bestLoc);
+    }
+
+    private ArrayList<ProductInformation> mergeProductInfo(AllProductInformation allProductInformation){
+        ArrayList<ProductInformation> combinedList = new ArrayList<>();
+        combinedList.addAll(allProductInformation.getAmazonProducts());
+        combinedList.addAll(allProductInformation.getWalmartProducts());
+        combinedList.addAll(allProductInformation.getTargetProducts());
+        combinedList.addAll(allProductInformation.getUpciteProducts());
+        return combinedList;
+
     }
 
     private boolean isOutlier(double price){
@@ -164,11 +180,11 @@ public class DataProcessor {
         return false;
     }
 
-    public JSONObject getBestListing() {
+    public ProductInformation getBestListing() {
         return bestListing;
     }
 
-    public void setBestListing(JSONObject bestListing) {
+    public void setBestListing(ProductInformation bestListing) {
         this.bestListing = bestListing;
     }
 
