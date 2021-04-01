@@ -48,7 +48,9 @@ public class DataProcessor {
 
         // todo abstract into seperate generic function
         for(ProductInformation p : listings) {
-            priceArray.add(Double.parseDouble(p.getPrice()));
+            try {
+                priceArray.add(Double.parseDouble(p.getPrice().replace("$", "").split("-")[0]));
+            } catch (Exception e){}
         }
 
         Collections.sort(priceArray);
@@ -120,15 +122,15 @@ public class DataProcessor {
             for (int i = 0; i < listings.size(); i++) {
                 if(includeShipping) {
                     // todo fix this, shipping don't work
-                    currentPrice = Double.parseDouble(listings.get(i).getPrice());
+                    currentPrice = doublify(listings.get(i).getPrice().replace("$", "").split("-")[0]);
                 } else {
-                    currentPrice = Double.parseDouble(listings.get(i).getPrice());
+                    currentPrice = doublify(listings.get(i).getPrice());
                 }
 
                 if (i == 0) {
                     currentMin = currentPrice;
                 } else {
-                    System.out.println(Double.parseDouble(listings.get(i).getPrice()));
+                    System.out.println(doublify(listings.get(i).getPrice()));
                     if (currentMin > currentPrice) {
                         currentMin = currentPrice;
                         bestLoc = i;
@@ -139,9 +141,9 @@ public class DataProcessor {
         } else {
             for (int i = 0; i < listings.size(); i++) {
                 if(includeShipping) {
-                    currentPrice = Double.parseDouble(listings.get(i).getPrice());
+                    currentPrice = doublify(listings.get(i).getPrice());
                 } else {
-                    currentPrice = Double.parseDouble(listings.get(i).getPrice());
+                    currentPrice = doublify(listings.get(i).getPrice());
                 }
 
                 if (i == 0) {
@@ -151,7 +153,7 @@ public class DataProcessor {
                         currentMin = currentPrice;
                     }
                 } else {
-                    System.out.println(Double.parseDouble(listings.get(i).getPrice()));
+                    System.out.println(doublify(listings.get(i).getPrice()));
                     if (currentMin > currentPrice && !(isOutlier(currentPrice))) {
                         currentMin = currentPrice;
                         bestLoc = i;
@@ -249,6 +251,14 @@ public class DataProcessor {
 
     public void setQ3(double q3) {
         this.q3 = q3;
+    }
+
+    private Double doublify(String s) {
+        try {
+            return Double.parseDouble(s.replace("$", "").split("-")[0]);
+        } catch (Exception e) {
+            return 66.6;
+        }
     }
 
 }
