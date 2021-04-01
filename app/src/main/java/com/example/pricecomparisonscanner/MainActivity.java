@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ScrollView;
@@ -103,6 +104,10 @@ public class MainActivity extends AppCompatActivity {
         textView2.setText("");
         textView3.setText("");
         textView4.setText("");
+        textView1.setMovementMethod(new ScrollingMovementMethod());
+        textView2.setMovementMethod(new ScrollingMovementMethod());
+        textView3.setMovementMethod(new ScrollingMovementMethod());
+        textView4.setMovementMethod(new ScrollingMovementMethod());
 
         if (intentResult != null) {
             if (intentResult.getContents() == null) {
@@ -158,7 +163,7 @@ public class MainActivity extends AppCompatActivity {
                             allProductInformation = WebScraper.getProductInformation(name);
                             AllProductInformation info = allProductInformation;
                             info.setUpciteProducts(jsonObject);//and this one too
-                            info = new AllProductInformation(4, info);
+                            info = new AllProductInformation(10, info);
                             
                             // textView.setText("\n\n" + name  + "\n\n" + info + ""); //Old Method
                             
@@ -169,7 +174,7 @@ public class MainActivity extends AppCompatActivity {
                             
                             outputBuilder.append("Broad Sweep Database: \n");
                             ArrayList<ProductInformation> products = info.getUpciteProducts();
-                            ArrayList<ProductInformation> products2 = info.getWalmartProducts();
+                            //ArrayList<ProductInformation> products2 = info.getWalmartProducts();
                             for (int i = 0; i < products.size(); i++) {
                                 outputBuilder.append(
                                         products.get(i).getName().substring(0, Math.min(products.get(i).getName().length(), 20)) + "\n" +
@@ -179,7 +184,7 @@ public class MainActivity extends AppCompatActivity {
                             }
 
                             outputBuilder2.append("Top Walmart Listings: \n");
-                            //ArrayList<ProductInformation> products2 = info.getWalmartProducts();
+                            products = info.getWalmartProducts();
                             for (int i = 0; i < products.size(); i++) {
                                 outputBuilder2.append(
                                         products.get(i).getName().substring(0, Math.min(products.get(i).getName().length(), 20)) + "\n" +
@@ -207,13 +212,11 @@ public class MainActivity extends AppCompatActivity {
                                         products.get(i).getUrl().substring(0, Math.min(products.get(i).getUrl().length(), 16)) + "\n\n"
                                 );
                             }
-
                             textView.setText(".");
                             textView1.setText(outputBuilder.toString());
                             textView2.setText(outputBuilder2.toString());
                             textView3.setText(outputBuilder3.toString());
                             textView4.setText(outputBuilder4.toString());
-                            
                             System.out.println("\n\nnew info - \n" + info + "\n - end info\n\n");
 
                         } catch (Exception e) {
