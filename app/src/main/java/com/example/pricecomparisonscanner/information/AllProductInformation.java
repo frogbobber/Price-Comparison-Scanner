@@ -61,7 +61,7 @@ public class AllProductInformation {
                 ));
             }
         } catch (JSONException e) {
-            //error - idk what to do lol
+            e.printStackTrace();
         }
         this.upciteProducts = products;
     }
@@ -101,17 +101,25 @@ public class AllProductInformation {
         ArrayList<ProductInformation> nTarget = new ArrayList();
         ArrayList<ProductInformation> nUpcite = new ArrayList();
 
-        for (int i = 0; i < n && i < productInformation.getAmazonProducts().size(); i++) {
-            nAmazon.add(productInformation.getAmazonProducts().get(i));
+        if (productInformation.getAmazonProducts() != null) {
+            for (int i = 0; i < n && i < productInformation.getAmazonProducts().size(); i++) {
+                nAmazon.add(productInformation.getAmazonProducts().get(i));
+            }
         }
-        for (int i = 0; i < n && i < productInformation.getWalmartProducts().size(); i++) {
-            nWalmart.add(productInformation.getWalmartProducts().get(i));
+        if (productInformation.getWalmartProducts() != null) {
+            for (int i = 0; i < n && i < productInformation.getWalmartProducts().size(); i++) {
+                nWalmart.add(productInformation.getWalmartProducts().get(i));
+            }
         }
-        for (int i = 0; i < n && i < productInformation.getTargetProducts().size(); i++) {
-            nTarget.add(productInformation.getTargetProducts().get(i));
+        if (productInformation.getTargetProducts() != null) {
+            for (int i = 0; i < n && i < productInformation.getTargetProducts().size(); i++) {
+                nTarget.add(productInformation.getTargetProducts().get(i));
+            }
         }
-        for (int i = 0; i < n && i < productInformation.getUpciteProducts().size(); i++) {
-            nUpcite.add(productInformation.getUpciteProducts().get(i));
+        if (productInformation.getUpciteProducts() != null) {
+            for (int i = 0; i < n && i < productInformation.getUpciteProducts().size(); i++) {
+                nUpcite.add(productInformation.getUpciteProducts().get(i));
+            }
         }
 
         this.amazonProducts = nAmazon;

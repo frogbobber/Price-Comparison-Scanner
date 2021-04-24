@@ -15,35 +15,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import com.example.pricecomparisonscanner.Database.ConnectionHelper;
-import com.example.pricecomparisonscanner.Database.Login;
 import com.example.pricecomparisonscanner.analysis.DataProcessor;
 import com.example.pricecomparisonscanner.information.AllProductInformation;
 import com.example.pricecomparisonscanner.information.ProductInformation;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
-import com.mongodb.BasicDBObject;
-import com.mongodb.DBCursor;
-import com.mongodb.DBObject;
-import com.mongodb.Mongo;
-import com.mongodb.MongoClient;
-import com.mongodb.MongoClientURI;
-import com.mongodb.client.FindIterable;
-import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoCursor;
-import com.mongodb.client.MongoDatabase;
 
-import com.google.gson.Gson;
-import com.mongodb.util.JSON;
-
-import org.bson.Document;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -134,180 +116,115 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 textView.setText(intentResult.getContents());
 
-                Thread thread = new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            String inline = "";
-                            System.out.println("lololol");
-                            //if run out of scams comment out here
-                            URL url = new URL("https://api.upcitemdb.com/prod/trial/lookup?upc=" + intentResult.getContents());
-                            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                            conn.setRequestMethod("GET"); // testtest
-                            textView.setText("Connecting");
-                            conn.connect();
+                Thread thread = new Thread(() -> {
+                    try {
+                        String inline = "";
+                        String upc = intentResult.getContents();
+                        String name = upc;
+                        URL url = new URL("https://api.upcitemdb.com/prod/trial/lookup?upc=" + upc);
 
-                            int responseCode = conn.getResponseCode();
-                            if (responseCode != 200) {
-                                textView.setText(responseCode);
-                                throw new RuntimeException("yuh oh, bad response");
-                            } else {
-                                Scanner scanner = new Scanner(url.openStream());
-                                StringBuilder builder = new StringBuilder();
-                                while (scanner.hasNext()) {
-                                    builder.append(scanner.nextLine());
-                                }
+                        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                        conn.setRequestMethod("GET");
+                        textView.setText("Connecting");
+                        conn.connect();
 
-                                inline = builder.toString();
+                        int responseCode = conn.getResponseCode();
+                        JSONObject jsonObject = null;
 
-                                scanner.close();
+                        if (responseCode != 200) {
+                            textView.setText(responseCode + "");
+                        } else {
+                            Scanner scanner = new Scanner(url.openStream());
+                            StringBuilder builder = new StringBuilder();
+                            while (scanner.hasNext()) {
+                                builder.append(scanner.nextLine());
                             }
 
-                            textView.setText("retrived from upcitemdb");
+                            inline = builder.toString();
+                            scanner.close();
 
-                            textView.setText("Got Response: ");
+                            textView.setText("Received Response: ");
 
-                            JSONObject jsonObject = new JSONObject(inline);
+                            jsonObject = new JSONObject(inline);
                             JSONArray jsonArray = jsonObject.getJSONArray("items").getJSONObject(0).getJSONArray("offers");
                             Double price1 = jsonArray.getJSONObject(0).getDouble("price");
-
-
-                            //textView.setText(price1 + "");
-                            String name = jsonArray.getJSONObject(0).getString("title").replaceAll(" ", "+");
-//                            AllProductInformation allProductInformation = WebScraper.getProductInformation(name);
-//                            textView.setText("\n\n" + name  + "\n\n" + allProductInformation + "");
-//                            System.out.println(allProductInformation + "");
-                            //to here */
-                            //String name = "MONOPOLY+Game";//add this ->
-                            allProductInformation = WebScraper.getProductInformation(name, intentResult.getContents());
-                            AllProductInformation info = allProductInformation;
-                            info.setUpciteProducts(jsonObject);//and this one too
-                            info = new AllProductInformation(10, info);
-                            
-                            // textView.setText("\n\n" + name  + "\n\n" + info + ""); //Old Method
-                            
-                            StringBuilder outputBuilder = new StringBuilder();
-                            StringBuilder outputBuilder2 = new StringBuilder();
-                            StringBuilder outputBuilder3 = new StringBuilder();
-                            StringBuilder outputBuilder4 = new StringBuilder();
-                            
-                            outputBuilder.append("Broad Sweep Database: \n");
-                            ArrayList<ProductInformation> products = info.getUpciteProducts();
-                            //ArrayList<ProductInformation> products2 = info.getWalmartProducts();
-                            for (int i = 0; i < products.size(); i++) {
-                                outputBuilder.append(
-                                        products.get(i).getName().substring(0, Math.min(products.get(i).getName().length(), 20)) + "\n" +
-                                        products.get(i).getPrice().substring(0, Math.min(products.get(i).getPrice().length(), 20)) + "  " +
-                                        products.get(i).getUrl().substring(0, Math.min(products.get(i).getUrl().length(), 16)) + "\n\n"
-                                );
-                            }
-
-                            outputBuilder2.append("Top Walmart Listings: \n");
-                            products = info.getWalmartProducts();
-                            for (int i = 0; i < products.size(); i++) {
-                                outputBuilder2.append(
-                                        products.get(i).getName().substring(0, Math.min(products.get(i).getName().length(), 20)) + "\n" +
-                                        products.get(i).getPrice().substring(0, Math.min(products.get(i).getPrice().length(), 20)) + "  " +
-                                        products.get(i).getUrl().substring(0, Math.min(products.get(i).getUrl().length(), 16)) + "\n\n"
-                                );
-                            }
-
-                            outputBuilder3.append("Top Amazon Listings: \n");
-                            products = info.getAmazonProducts();
-                            for (int i = 0; i < products.size(); i++) {
-                                outputBuilder3.append( "\n" +
-                                        products.get(i).getName().substring(0, Math.min(products.get(i).getName().length(), 20)) + "\n" +
-                                        products.get(i).getPrice().substring(0, Math.min(products.get(i).getPrice().length(), 20)) + "  " +
-                                        products.get(i).getUrl().substring(0, Math.min(products.get(i).getUrl().length(), 16)) + "\n\n"
-                                );
-                            }
-
-                            outputBuilder4.append("Top Best Buy Listings: \n");
-                            products = info.getTargetProducts();
-                            for (int i = 0; i < products.size(); i++) {
-                                outputBuilder4.append( "\n" +
-                                        products.get(i).getName().substring(0, Math.min(products.get(i).getName().length(), 20)) + "\n" +
-                                        products.get(i).getPrice().substring(0, Math.min(products.get(i).getPrice().length(), 20)) + "  " +
-                                        products.get(i).getUrl().substring(0, Math.min(products.get(i).getUrl().length(), 16)) + "\n\n"
-                                );
-                            }
-                            textView.setText(".");
-                            textView1.setText(outputBuilder.toString());
-                            textView2.setText(outputBuilder2.toString());
-                            textView3.setText(outputBuilder3.toString());
-                            textView4.setText(outputBuilder4.toString());
-                            System.out.println("\n\nnew info - \n" + info + "\n - end info\n\n");
-
-                            AllProductInformation finalInfo = info;
-                            Thread mongoThread = new Thread(new Runnable() {
-                                @Override
-                                public void run() {
-
-                                    MongoClientURI uri = new MongoClientURI(Login.getMongo());
-                                    MongoClient client = new MongoClient(uri);
-                                    MongoDatabase db = client.getDatabase(uri.getDatabase());
-                                    MongoCollection collection = db.getCollection("newDB");
-
-                                    Gson gson = new Gson();
-                                    BasicDBObject dbObject = (BasicDBObject) JSON.parse(gson.toJson(finalInfo));
-                                    collection.insertOne(new Document(dbObject.toMap()));
-
-                                    MongoCursor cursor = collection.find(new BasicDBObject("upc", "043000204313")).iterator();
-
-                                    try {
-                                        while (cursor.hasNext()) {
-                                            Document doc = (Document) cursor.next();
-
-                                            System.out.println(doc.toJson());
-                                            //AllProductInformation p = new Gson().fromJson(doc.toJson(), AllProductInformation.class);
-
-                                        }
-                                    } finally {
-                                        cursor.close();
-                                    }
-
-                                    client.close();
-
-                                }
-                            });
-
-                            mongoThread.start();
-
-                        } catch (Exception e) {
-                            e.printStackTrace();
+                            name = jsonArray.getJSONObject(0).getString("title").replaceAll(" ", "+");
                         }
+
+                        allProductInformation = WebScraper.getProductInformation(name, upc);
+                        AllProductInformation info = allProductInformation;
+
+                        if (jsonObject != null) {
+                            info.setUpciteProducts(jsonObject);
+                        }
+
+                        info = new AllProductInformation(10, allProductInformation);
+
+                        StringBuilder outputBuilder = new StringBuilder();
+                        StringBuilder outputBuilder2 = new StringBuilder();
+                        StringBuilder outputBuilder3 = new StringBuilder();
+                        StringBuilder outputBuilder4 = new StringBuilder();
+
+                        outputBuilder.append("Broad Sweep Database: \n");
+                        ArrayList<ProductInformation> products = info.getUpciteProducts();
+                        for (int i = 0; i < products.size(); i++) {
+                            outputBuilder.append(
+                                    products.get(i).getName().substring(0, Math.min(products.get(i).getName().length(), 20)) + "\n" +
+                                    products.get(i).getPrice().substring(0, Math.min(products.get(i).getPrice().length(), 20)) + "  " +
+                                    products.get(i).getUrl().substring(0, Math.min(products.get(i).getUrl().length(), 16)) + "\n\n"
+                            );
+                        }
+
+                        outputBuilder2.append("Top Walmart Listings: \n");
+                        products = info.getWalmartProducts();
+                        for (int i = 0; i < products.size(); i++) {
+                            outputBuilder2.append(
+                                    products.get(i).getName().substring(0, Math.min(products.get(i).getName().length(), 20)) + "\n" +
+                                    products.get(i).getPrice().substring(0, Math.min(products.get(i).getPrice().length(), 20)) + "  " +
+                                    products.get(i).getUrl().substring(0, Math.min(products.get(i).getUrl().length(), 16)) + "\n\n"
+                            );
+                        }
+
+                        outputBuilder3.append("Top Amazon Listings: \n");
+                        products = info.getAmazonProducts();
+                        for (int i = 0; i < products.size(); i++) {
+                            outputBuilder3.append( "\n" +
+                                    products.get(i).getName().substring(0, Math.min(products.get(i).getName().length(), 20)) + "\n" +
+                                    products.get(i).getPrice().substring(0, Math.min(products.get(i).getPrice().length(), 20)) + "  " +
+                                    products.get(i).getUrl().substring(0, Math.min(products.get(i).getUrl().length(), 16)) + "\n\n"
+                            );
+                        }
+
+                        outputBuilder4.append("Top Best Buy Listings: \n");
+                        products = info.getTargetProducts();
+                        for (int i = 0; i < products.size(); i++) {
+                            outputBuilder4.append( "\n" +
+                                    products.get(i).getName().substring(0, Math.min(products.get(i).getName().length(), 20)) + "\n" +
+                                    products.get(i).getPrice().substring(0, Math.min(products.get(i).getPrice().length(), 20)) + "  " +
+                                    products.get(i).getUrl().substring(0, Math.min(products.get(i).getUrl().length(), 16)) + "\n\n"
+                            );
+                        }
+                        textView.setText(".");
+                        textView1.setText(outputBuilder.toString());
+                        textView2.setText(outputBuilder2.toString());
+                        textView3.setText(outputBuilder3.toString());
+                        textView4.setText(outputBuilder4.toString());
+                        System.out.println("\n\nnew info - \n" + info + "\n - end info\n\n");
+
+                        AllProductInformation finalInfo = info;
+                        Thread mongoThread = new Thread(() -> {
+                            ConnectionHelper.sendPrices(finalInfo);
+                            System.out.println(ConnectionHelper.retrievePrices(upc));
+                        });
+
+                        mongoThread.start();
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
                 });
 
                 thread.start();
-
-
-
-//                Connection connection;
-//                String ConnectionResult = "";
-//
-//                System.out.println("BBBB");
-//                try {
-//                    ConnectionHelper connectionHelper = new ConnectionHelper();
-//                    connection = connectionHelper.connectionClass();
-//
-//                    if(connection != null) {
-//                        String query = "Select * from TestDB";
-//                        Statement statement = connection.createStatement();
-//                        ResultSet resultSet = statement.executeQuery(query);
-//
-//                        while (resultSet.next()) {
-//                            System.out.println(resultSet.getString(2));
-//                        }
-//                    } else {
-//                        textView4.setText("EEEE");
-//                    }
-//                } catch (Exception e) {
-//                    System.out.println(e.getMessage());
-//                }
-
-
-
             }
         }
     }
