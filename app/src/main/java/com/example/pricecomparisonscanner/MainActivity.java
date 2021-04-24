@@ -14,17 +14,36 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
+import com.example.pricecomparisonscanner.Database.ConnectionHelper;
+import com.example.pricecomparisonscanner.Database.Login;
 import com.example.pricecomparisonscanner.analysis.DataProcessor;
 import com.example.pricecomparisonscanner.information.AllProductInformation;
 import com.example.pricecomparisonscanner.information.ProductInformation;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
+import com.mongodb.BasicDBObject;
+import com.mongodb.DBCursor;
+import com.mongodb.DBObject;
+import com.mongodb.Mongo;
+import com.mongodb.MongoClient;
+import com.mongodb.MongoClientURI;
+import com.mongodb.client.FindIterable;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoCursor;
+import com.mongodb.client.MongoDatabase;
 
+import com.google.gson.Gson;
+import com.mongodb.util.JSON;
+
+import org.bson.Document;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -160,7 +179,7 @@ public class MainActivity extends AppCompatActivity {
 //                            System.out.println(allProductInformation + "");
                             //to here */
                             //String name = "MONOPOLY+Game";//add this ->
-                            allProductInformation = WebScraper.getProductInformation(name);
+                            allProductInformation = WebScraper.getProductInformation(name, intentResult.getContents());
                             AllProductInformation info = allProductInformation;
                             info.setUpciteProducts(jsonObject);//and this one too
                             info = new AllProductInformation(10, info);
@@ -219,6 +238,41 @@ public class MainActivity extends AppCompatActivity {
                             textView4.setText(outputBuilder4.toString());
                             System.out.println("\n\nnew info - \n" + info + "\n - end info\n\n");
 
+                            AllProductInformation finalInfo = info;
+                            Thread mongoThread = new Thread(new Runnable() {
+                                @Override
+                                public void run() {
+
+                                    MongoClientURI uri = new MongoClientURI(Login.getMongo());
+                                    MongoClient client = new MongoClient(uri);
+                                    MongoDatabase db = client.getDatabase(uri.getDatabase());
+                                    MongoCollection collection = db.getCollection("newDB");
+
+                                    Gson gson = new Gson();
+                                    BasicDBObject dbObject = (BasicDBObject) JSON.parse(gson.toJson(finalInfo));
+                                    collection.insertOne(new Document(dbObject.toMap()));
+
+                                    MongoCursor cursor = collection.find(new BasicDBObject("upc", "043000204313")).iterator();
+
+                                    try {
+                                        while (cursor.hasNext()) {
+                                            Document doc = (Document) cursor.next();
+
+                                            System.out.println(doc.toJson());
+                                            //AllProductInformation p = new Gson().fromJson(doc.toJson(), AllProductInformation.class);
+
+                                        }
+                                    } finally {
+                                        cursor.close();
+                                    }
+
+                                    client.close();
+
+                                }
+                            });
+
+                            mongoThread.start();
+
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
@@ -226,6 +280,33 @@ public class MainActivity extends AppCompatActivity {
                 });
 
                 thread.start();
+
+
+
+//                Connection connection;
+//                String ConnectionResult = "";
+//
+//                System.out.println("BBBB");
+//                try {
+//                    ConnectionHelper connectionHelper = new ConnectionHelper();
+//                    connection = connectionHelper.connectionClass();
+//
+//                    if(connection != null) {
+//                        String query = "Select * from TestDB";
+//                        Statement statement = connection.createStatement();
+//                        ResultSet resultSet = statement.executeQuery(query);
+//
+//                        while (resultSet.next()) {
+//                            System.out.println(resultSet.getString(2));
+//                        }
+//                    } else {
+//                        textView4.setText("EEEE");
+//                    }
+//                } catch (Exception e) {
+//                    System.out.println(e.getMessage());
+//                }
+
+
 
             }
         }

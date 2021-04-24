@@ -14,12 +14,13 @@ import java.util.ArrayList;
 
 public class WebScraper {
 
-    public static AllProductInformation getProductInformation(String name) throws IOException {
+    public static AllProductInformation getProductInformation(String name, String upc) throws IOException {
         AllProductInformation p = new AllProductInformation(
                 getAmazonProductInformation("https://www.amazon.com/s?k=" + name + "&ref=nb_sb_noss"),
                 getWalmartProductInformation("https://www.walmart.com/search/?cat_id=0&query=" + name),
                 getTargetProductInformation("https://www.bestbuy.com/site/searchpage.jsp?st=" + name),    // <-- actually best buy, Target Information: https://www.target.com/s?searchTerm=
-                null
+                null,
+                upc
         );
         return p;
     }
