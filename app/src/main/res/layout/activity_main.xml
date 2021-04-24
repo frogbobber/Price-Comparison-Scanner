@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/scrollView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
@@ -10,19 +11,69 @@
     <Button
         android:id="@+id/button"
         android:layout_width="176dp"
-        android:layout_height="62dp"
+        android:layout_height="100dp"
         android:layout_marginStart="116dp"
-        android:layout_marginTop="580dp"
+        android:layout_marginTop="650dp"
         android:onClick="ScanButton"
+        android:rotation="0"
         android:text="@string/scan"
-        app:iconTint="#DC0C0C"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:translationY="-50dp"
+        app:iconTint="#DC0C0C" />
 
     <Button
         android:id="@+id/button2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="See Results" />
+        android:onClick="ViewAnalytics"
+        android:text="@string/viewAnalytics" />
+
+    <TextView
+        android:id="@+id/resultsTextView1"
+        android:layout_width="202dp"
+        android:layout_height="276dp"
+        android:scrollbars="vertical"
+        android:textSize="14sp"
+        android:translationY="50dp"
+        app:autoSizeTextType="none"></TextView>
+
+    <TextView
+        android:id="@+id/resultsTextView2"
+        android:layout_width="206dp"
+        android:layout_height="276dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="2dp"
+        android:scrollbars="vertical"
+        android:textSize="14sp"
+        android:translationY="50dp"
+        app:autoSizeTextType="none"></TextView>
+
+    <TextView
+        android:id="@+id/resultsTextView3"
+        android:layout_width="206dp"
+        android:layout_height="276dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="206dp"
+        android:scrollbars="vertical"
+        android:textSize="14sp"
+        android:translationY="326dp"
+        app:autoSizeTextType="none"></TextView>
+
+    <TextView
+        android:id="@+id/resultsTextView4"
+        android:layout_width="206dp"
+        android:layout_height="276dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="0dp"
+        android:scrollbars="vertical"
+        android:textSize="14sp"
+        android:translationY="326dp"
+        app:autoSizeTextType="none"></TextView>
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="412dp"
+        android:layout_height="550dp"
+        android:textSize="24sp"
+        android:translationY="50dp" />
 
 </RelativeLayout>
