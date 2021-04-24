@@ -39,19 +39,25 @@ public class WebScraper {
         //return null;
     }
     private static ArrayList<ProductInformation> getWalmartProductInformation(String url) throws IOException {
-        Document document = Jsoup.connect(url)
-                .userAgent("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.61 Safari/537.36")
-                .referrer("https://www.walmart.com/")
-                .get();
-
-        //System.out.println(document);
-        return new WalmartExtractor().extractProducts(document);
-        //return null;
+//        Document document = Jsoup.connect(url)
+//                .userAgent("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.61 Safari/537.36")
+//                .header("Accept", "text/html,application/xhtml+xml,application/xml")
+//                .header("Accept-Language", "en")
+//                .header("Accept-Encoding", "gzip,deflate,sdch")
+//                .header("Connection", "keep-alive")
+//                .header("Upgrade-Insecure-Requests", "1")
+//                .header("TE", "Trailers")
+//                .referrer("https://www.walmart.com/")
+//                .get();
+//
+//        //System.out.println(document);
+//        return new WalmartExtractor().extractProducts(document);
+        return new ArrayList<>();
     }
     private static ArrayList<ProductInformation> getTargetProductInformation(String url) throws IOException {
 
         System.out.println(url);
-        Document document = Jsoup.connect("https://www.bestbuy.com/site/searchpage.jsp?st=MONOPOLY+Game")
+        Document document = Jsoup.connect(url)
                 .header("Accept", "text/html,application/xhtml+xml,application/xml")
                 .header("Accept-Language", "en")
                 .header("Accept-Encoding", "gzip,deflate,sdch")
