@@ -85,10 +85,18 @@ public class AllProductInformation {
         ArrayList<ProductInformation> nTarget = new ArrayList();
         ArrayList<ProductInformation> nUpcite = new ArrayList();
 
-        for (int i = 0; i < n; i++) {
+
+
+        for (int i = 0; i < n && i < productInformation.getAmazonProducts().size(); i++) {
             nAmazon.add(productInformation.getAmazonProducts().get(i));
+        }
+        for (int i = 0; i < n && i < productInformation.getWalmartProducts().size(); i++) {
             nWalmart.add(productInformation.getWalmartProducts().get(i));
+        }
+        for (int i = 0; i < n && i < productInformation.getTargetProducts().size(); i++) {
             nTarget.add(productInformation.getTargetProducts().get(i));
+        }
+        for (int i = 0; i < n && i < productInformation.getUpciteProducts().size(); i++) {
             nUpcite.add(productInformation.getUpciteProducts().get(i));
         }
 
