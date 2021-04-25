@@ -1,27 +1,123 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.pricecomparisonscanner">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.qr.code.generate">
 
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="28"/>
+
+    <uses-sdk tools:overrideLibrary="com.google.zxing.client.android" />
 
     <application
+        android:installLocation="preferExternal"
+        android:hardwareAccelerated="true"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/logo"
+        android:roundIcon="@drawable/logo"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.PriceComparisonScanner">
-        <activity android:name=".Activity2"></activity>
-        <activity android:name=".MainActivity">
+        android:theme="@style/AppTheme"
+        tools:ignore="GoogleAppIndexingWarning"
+        android:fullBackupContent="false">
+        <activity
+            android:name=".ui.activities.SplashActivity"
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".ui.activities.ScannerActivity"
+            android:label="@string/app_name"
+            android:clearTaskOnLaunch="true"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ui.activities.HistoryActivity"
+            android:label="@string/history"
+            android:parentActivityName=".ui.activities.ScannerActivity" />
+        <activity
+            android:name=".ui.activities.HelpActivity"
+            android:label="@string/help"
+            android:parentActivityName=".ui.activities.ScannerActivity" />
+        <activity
+            android:name=".ui.activities.generator.QrGeneratorOverviewActivity"
+            android:label="@string/QRGenerator"
+            android:parentActivityName=".ui.activities.ScannerActivity" />
+        <activity
+            android:name=".ui.activities.TutorialActivity"
+            android:parentActivityName=".ui.activities.ScannerActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".ui.activities.SettingsActivity"
+            android:parentActivityName=".ui.activities.ScannerActivity"
+            android:label="@string/Settings"/>
+        <activity android:name=".ui.activities.ResultActivity" />
+        <activity
+            android:name=".ui.activities.generator.QrGeneratorDisplayActivity"
+            android:label="URL"
+            android:parentActivityName=".ui.activities.generator.QrGeneratorOverviewActivity" />
+        <activity
+            android:name=".ui.activities.generator.MailEnterActivity"
+            android:label="E-Mail"
+            android:parentActivityName=".ui.activities.generator.QrGeneratorOverviewActivity" />
+        <activity
+            android:name=".ui.activities.generator.TelEnterActivity"
+            android:label="Phone number"
+            android:parentActivityName=".ui.activities.generator.QrGeneratorOverviewActivity" />
+        <activity
+            android:name=".ui.activities.generator.UrlEnterActivity"
+            android:label="URL"
+            android:parentActivityName=".ui.activities.generator.QrGeneratorOverviewActivity" />
+        <activity
+            android:name=".ui.activities.generator.SmsEnterActivity"
+            android:label="SMS"
+            android:parentActivityName=".ui.activities.generator.QrGeneratorOverviewActivity" />
+        <activity
+            android:name=".ui.activities.generator.GeoLocationEnterActivity"
+            android:label="Geo location"
+            android:parentActivityName=".ui.activities.generator.QrGeneratorOverviewActivity" />
+        <activity
+            android:name=".ui.activities.generator.MeCardEnterActivity"
+            android:label="MeCard"
+            android:parentActivityName=".ui.activities.generator.QrGeneratorOverviewActivity" />
+        <activity
+            android:name=".ui.activities.generator.BizCardEnterActivity"
+            android:label="BizCard"
+            android:parentActivityName=".ui.activities.generator.QrGeneratorOverviewActivity" />
+        <activity
+            android:name=".ui.activities.generator.MmsEnterActivity"
+            android:label="MMS"
+            android:parentActivityName=".ui.activities.generator.QrGeneratorOverviewActivity" />
+        <activity
+            android:name=".ui.activities.generator.WifiEnterActivity"
+            android:label="WIFI"
+            android:parentActivityName=".ui.activities.generator.QrGeneratorOverviewActivity" />
+        <activity
+            android:name=".ui.activities.generator.VcardEnterActivity"
+            android:label="vcard"
+            android:parentActivityName=".ui.activities.generator.QrGeneratorOverviewActivity" />
+        <activity
+            android:name=".ui.activities.generator.MarketEnterActivity"
+            android:label="Market"
+            android:parentActivityName=".ui.activities.generator.QrGeneratorOverviewActivity"/>
+        <activity
+            android:name=".ui.activities.generator.TextEnterActivity"
+            android:label="Text"
+            android:parentActivityName=".ui.activities.generator.QrGeneratorOverviewActivity"/>
+
+        <activity android:name=".ui.AboutActivity"/>
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="org.secuso.qrscanner.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/fileprovider_path" />
+        </provider>
     </application>
 
-    <uses-permission android:name="android.permission.INTERNET" />
 </manifest>

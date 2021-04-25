@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+
+    <PreferenceCategory android:title="Why SCANAMOS?">
+    <Preference
+        android:selectable="false"
+        android:persistent="false"
+        android:title=""
+        android:summary="@string/help_intro"
+        /></PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/help_category_example">
+        <Preference android:title=""
+            android:summary="@string/usability_hint2"
+            android:selectable="false"/></PreferenceCategory>
+
+
+
+
+</PreferenceScreen>
