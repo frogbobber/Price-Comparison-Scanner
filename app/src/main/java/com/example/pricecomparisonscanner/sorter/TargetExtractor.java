@@ -12,9 +12,10 @@ public class TargetExtractor extends ProductExtractor{
     public ArrayList<ProductInformation> extractProducts(Document document) { // actually for bestbuy
         ArrayList<ProductInformation> products = new ArrayList<>();
 
-        Elements elements = document.select("li[class*=sku-item]");//class="sg-col-inner"
+        Elements elements = document.getElementsByTag("script");//document.select("li[class*=sku-item]");//class="sg-col-inner"
 
-        System.out.println(elements.size());
+        System.out.println("size " + elements.size());
+        System.out.println(elements);
 
         elements.forEach(e -> {
             products.add(new ProductInformation(

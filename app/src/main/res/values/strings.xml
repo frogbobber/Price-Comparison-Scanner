@@ -3,4 +3,10 @@
     <string name="results_appear_here">Results Appear Here ...</string>
     <string name="scan">Scan</string>
     <string name="viewAnalytics">View Analytics</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="qr_scanner">QR Scanner</string>
+    <string name="title_activity_qrscanner">QR Scanner</string>
+    <string name="title_activity_qr_scanner">QR Scanner</string>
+    <string name="QRScanner">QR Scanner</string>
 </resources>
