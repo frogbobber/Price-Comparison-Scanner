@@ -23,7 +23,7 @@ public class TargetExtractor extends ProductExtractor{
                     e.select("div[class*=priceView-hero-price priceView-customer-price]").select("span").first().html() // price
             ));
         });
-        //System.out.println(products);
+        //System.out.println(document);
         return products;
     }
 }

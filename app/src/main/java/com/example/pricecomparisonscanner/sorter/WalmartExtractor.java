@@ -12,6 +12,7 @@ public class WalmartExtractor extends ProductExtractor{
     public ArrayList<ProductInformation> extractProducts(Document document) {
         ArrayList<ProductInformation> products = new ArrayList<>();
 
+        System.out.println(products);
         Elements elements = document.select("div[class*=search-result-gridview-item clearfix arrange-fill]");//search-result-listview-item Grid
 
         elements.forEach(e -> {
@@ -21,6 +22,9 @@ public class WalmartExtractor extends ProductExtractor{
                     e.select("span[class*=price display-inline-block arrange-fit price price-main]").select("span[class*=visuallyhidden]").html() // price
             ));
         });
+
+        System.out.println("Sorted Walmart");
+
         //System.out.println("Test"+products);
         return products;
     }
