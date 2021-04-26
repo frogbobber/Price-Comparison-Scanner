@@ -26,7 +26,7 @@ public class ConnectionHelper {
         Gson gson = new Gson();
         BasicDBObject dbObject = (BasicDBObject) JSON.parse(gson.toJson(finalInfo));
         collection.insertOne(new Document(dbObject.toMap()));
-
+//
         MongoCursor cursor = collection.find(new BasicDBObject("upc", "043000204313")).iterator();
 
         try {
@@ -36,7 +36,7 @@ public class ConnectionHelper {
         } finally {
             cursor.close();
         }
-
+//
         client.close();
     }
 
