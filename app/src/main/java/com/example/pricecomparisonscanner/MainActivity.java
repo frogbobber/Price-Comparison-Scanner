@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     protected void onCreate(Bundle savedInstanceState) {
 
 
-       //textView = findViewById(R.id.textView);
+       textView = findViewById(R.id.textview);
        // textView1 = findViewById(R.id.resultsTextView1);
        // textView2 = findViewById(R.id.resultsTextView2);
        // textView3 = findViewById(R.id.resultsTextView3);
@@ -77,30 +77,60 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter); //giving adapter to the spinner
         spinner.setOnItemSelectedListener(this);
+        spinner.setEnabled(false);
+
+        TextView textView=findViewById(R.id.textview);
+        textView.setText("Press scan button to start.");
     }
 //+ allProductInformation.getAmazonProducts().get(0).getName() + " Prices " + allProductInformation.getAmazonProducts().get(0).getPrice()
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         TextView textView=findViewById(R.id.textview);
+        if (allProductInformation == null) {
+            return;
+        }
         if(position==0)
         {
-            textView.setText("Amazon Prices") ;
+            try {
+                textView.setText(allProductInformation.getAmazonProducts().get(0).getName() + " " + allProductInformation.getAmazonProducts().get(0).getPrice());
+            } catch (Exception e) {
+                textView.setText("No Amazon Information, please try another source.");
+            }
         }
         else if(position==1)
         {
-            textView.setText("Walmart Prices");
+            try {
+                textView.setText(allProductInformation.getWalmartProducts().get(0).getName() + " " + allProductInformation.getWalmartProducts().get(0).getPrice());
+            } catch (Exception e) {
+                textView.setText("No Walmart Information, please try another source.");
+            }
         }
         else if(position==2)
         {
-            textView.setText("Target Prices");
+            try {
+                textView.setText(allProductInformation.getTargetProducts().get(0).getName() + " " + allProductInformation.getTargetProducts().get(0).getPrice());
+            } catch (Exception e) {
+                textView.setText("No Target Information, please try another source.");
+            }
         }
         else if(position==3)
         {
-            textView.setText("BestBuy Prices");
+            try {
+                textView.setText(allProductInformation.getTargetProducts().get(0).getName() + " " + allProductInformation.getTargetProducts().get(0).getPrice());
+            } catch (Exception e) {
+                textView.setText("No BestBuy Information, please try another source.");
+            }
         }
         else if(position==4)
         {
-            textView.setText("BroadSweep DataBase Prices");
+            try {
+                textView.setText(allProductInformation.getUpciteProducts().get(0).getName() + " " + allProductInformation.getUpciteProducts().get(0).getPrice());
+            } catch (Exception e) {
+                textView.setText("No Broad Sweep Information, please try another source.");
+            }
+        }
+        if (textView.getText().equals(" ") || textView.getText().equals("")) {
+            textView.setText("Collecting Information, \nPlease try again in a few seconds.");
         }
     }
 
@@ -117,15 +147,15 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 
     public void ViewAnalytics(View view) {
-
+        textView = findViewById(R.id.textview);
         try {
             if (allProductInformation != null) {
                 DataProcessor dp = new DataProcessor(allProductInformation);
                 textView.setText("");
-                textView1.setText("");
-                textView2.setText("");
-                textView3.setText("");
-                textView4.setText("");
+//                textView1.setText("");
+//                textView2.setText("");
+//                textView3.setText("");
+//                textView4.setText("");
 
                 StringBuilder builder = new StringBuilder();
 
@@ -138,10 +168,10 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 textView.setText(builder.toString());
             } else {
                 textView.setText("   Please scan a barcode first.");
-                textView1.setText("");
-                textView2.setText("");
-                textView3.setText("");
-                textView4.setText("");
+//                textView1.setText("");
+//                textView2.setText("");
+//                textView3.setText("");
+//                textView4.setText("");
             }
 
         } catch (Exception e) {
@@ -156,21 +186,26 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         super.onActivityResult(requestCode, resultCode, data);
         IntentResult intentResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
 
-        textView.setText("");
-        textView1.setText("");
-        textView2.setText("");
-        textView3.setText("");
-        textView4.setText("");
-        textView1.setMovementMethod(new ScrollingMovementMethod());
-        textView2.setMovementMethod(new ScrollingMovementMethod());
-        textView3.setMovementMethod(new ScrollingMovementMethod());
-        textView4.setMovementMethod(new ScrollingMovementMethod());
+        Spinner spinner=findViewById(R.id.Spinner);
+        textView = findViewById(R.id.textview);
+        spinner.setEnabled(true);
+
+//        textView.setText("");
+//        textView1.setText("");
+//        textView2.setText("");
+//        textView3.setText("");
+//        textView4.setText("");
+//        textView1.setMovementMethod(new ScrollingMovementMethod());
+//        textView2.setMovementMethod(new ScrollingMovementMethod());
+//        textView3.setMovementMethod(new ScrollingMovementMethod());
+//        textView4.setMovementMethod(new ScrollingMovementMethod());
+        textView.setText("Please wait while results are collected.");
 
         if (intentResult != null) {
             if (intentResult.getContents() == null) {
-                textView.setText("Cancelled");
+//                textView.setText("Cancelled");
             } else {
-                textView.setText(intentResult.getContents());
+//                textView.setText(intentResult.getContents());
 
                 Thread thread = new Thread(() -> {
                     try {
@@ -181,14 +216,14 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
                         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                         conn.setRequestMethod("GET");
-                        textView.setText("Connecting");
+//                        textView.setText("Connecting");
                         conn.connect();
 
                         int responseCode = conn.getResponseCode();
                         JSONObject jsonObject = null;
 
                         if (responseCode != 200) {
-                            textView.setText(responseCode + "");
+//                            textView.setText(responseCode + "");
                         } else {
                             Scanner scanner = new Scanner(url.openStream());
                             StringBuilder builder = new StringBuilder();
@@ -199,7 +234,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                             inline = builder.toString();
                             scanner.close();
 
-                            textView.setText("Received Response: ");
+//                            textView.setText("Received Response: ");
 
                             jsonObject = new JSONObject(inline);
                             JSONArray jsonArray = jsonObject.getJSONArray("items").getJSONObject(0).getJSONArray("offers");
@@ -260,11 +295,11 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                                     products.get(i).getUrl().substring(0, Math.min(products.get(i).getUrl().length(), 16)) + "\n\n"
                             );
                         }
-                        textView.setText(".");
-                        textView1.setText(outputBuilder.toString());
-                        textView2.setText(outputBuilder2.toString());
-                        textView3.setText(outputBuilder3.toString());
-                        textView4.setText(outputBuilder4.toString());
+//                        textView.setText(".");
+//                        textView1.setText(outputBuilder.toString());
+//                        textView2.setText(outputBuilder2.toString());
+//                        textView3.setText(outputBuilder3.toString());
+//                        textView4.setText(outputBuilder4.toString());
                         System.out.println("\n\nnew info - \n" + info + "\n - end info\n\n");
 
                         AllProductInformation finalInfo = info;
@@ -275,13 +310,22 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
                         mongoThread.start();
 
+                        textView.setText("Collected Results. \nPress Dropdown to View.");
+
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
+
+
+
                 });
 
                 thread.start();
+
+
             }
         }
+
+
     }
 }
