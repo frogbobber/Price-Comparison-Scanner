@@ -17,6 +17,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.pricecomparisonscanner.R;
+import com.example.pricecomparisonscanner.ui.activities.AboutActivity;
 import com.example.pricecomparisonscanner.ui.BarcodeActivity;
 import com.example.pricecomparisonscanner.ui.activities.HomeActivity;
 import com.example.pricecomparisonscanner.ui.activities.ResultsActivity;
@@ -152,6 +153,10 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
                 break;
             case R.id.nav_results:
                 intent = new Intent(this, ResultsActivity.class);
+                createBackStack(intent);
+                break;
+            case R.id.nav_about:
+                intent = new Intent(this, AboutActivity.class);
                 createBackStack(intent);
                 break;
             /*case R.id.nav_generate:

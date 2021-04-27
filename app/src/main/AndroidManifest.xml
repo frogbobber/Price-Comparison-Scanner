@@ -49,6 +49,11 @@
             android:label="@string/analytics"
             android:parentActivityName=".ui.activities.HomeActivity" />
 
+        <activity
+            android:name=".ui.activities.AboutActivity"
+            android:label="@string/about"
+            android:parentActivityName=".ui.activities.HomeActivity" />
+
     </application>
 
 

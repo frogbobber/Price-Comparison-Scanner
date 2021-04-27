@@ -20,9 +20,9 @@
     <string name="about_author">Authors: </string>
     <string name="about_author_names" translatable="false">Christopher Beckmann, Bassel Hanna, Philipp Rack</string>
     <string name="about_author_string">%s and contributors.</string>
-    <string name="about_affiliation">In affiliation with</string>
-    <string name="privacy_friendly">This application belongs to the group of PRIVACY FRIENDLY Apps developed by Technische Universität Darmstadt. Sourcecode licensed under GPLv3. Images copyright TU Darmstadt and Google Inc.</string>
-    <string name="more_info">More information can be found on:</string>
+    <string name="about_affiliation">A</string>
+    <string name="privacy_friendly">A</string>
+    <string name="more_info">A</string>
     <string name="github" translatable="false"><a href="https://github.com/SecUSo/privacy-friendly-qr-scanner">Github-Repo</a></string>
     <string name="url_secuso" translatable="false"><a href="https://www.secuso.org/pfa">SECUSO-Website</a></string>
     <string name="about_libraries">Used libraries:</string>
@@ -51,13 +51,14 @@
 
 
     <!--###HELP###-->
+    <string name="about_authors">Authors</string>
+    <string name="about_authors_answers">Brandon Montano, Corey Dotson, Jiwan Chong, John Leonard, Orion Nassaux</string>
     <string name="help_whatis">Walmart Listings</string>
     <string name="help_whatis_answer">These are the Walmart listings.</string>
     <string name="help_usability">Amazon Listings</string>
     <string name="help_usability_answer">These are the Amazon listings.</string>
-    <string name="help_privacy">What makes the app privacy-friendly?</string>
-    <string name="help_privacy_answer">Privacy Friendly App Example does not require any permission. It further does not include any tracking mechanisms or advertisement.</string>
     <string name="help_permission">Target Listings</string>
     <string name="help_permission_answer">These are the Target listings.</string>
     <string name="logo2">logo2</string>
+    <string name="logo">logo</string>
 </resources>
