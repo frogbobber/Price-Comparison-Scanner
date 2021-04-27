@@ -5,12 +5,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-    <ExpandableListView
-        android:divider="@android:color/darker_gray"
-        android:dividerHeight="0.5dp"
-        android:id="@+id/generalExpandableListView"
-        android:indicatorLeft="?android:attr/expandableListPreferredItemIndicatorLeft"
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content" />
+    <com.github.mikephil.charting.charts.LineChart
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:id="@+id/lineChart"></com.github.mikephil.charting.charts.LineChart>
 
 </RelativeLayout>

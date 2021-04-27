@@ -20,6 +20,8 @@ public class AllProductInformation {
         return downloadTime;
     }
 
+    public void setDownloadTime(long time) {this.downloadTime = time;}
+
     public ArrayList<ProductInformation> getAmazonProducts() {
         return amazonProducts;
     }

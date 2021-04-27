@@ -130,7 +130,7 @@ public class DataProcessor {
                 if (i == 0) {
                     currentMin = currentPrice;
                 } else {
-                    System.out.println(doublify(listings.get(i).getPrice()));
+                    //System.out.println(doublify(listings.get(i).getPrice()));
                     if (currentMin > currentPrice) {
                         currentMin = currentPrice;
                         bestLoc = i;
@@ -153,7 +153,7 @@ public class DataProcessor {
                         currentMin = currentPrice;
                     }
                 } else {
-                    System.out.println(doublify(listings.get(i).getPrice()));
+                    //System.out.println(doublify(listings.get(i).getPrice()));
                     if (currentMin > currentPrice && !(isOutlier(currentPrice))) {
                         currentMin = currentPrice;
                         bestLoc = i;
