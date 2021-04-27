@@ -1,12 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<!--using linear layout for our project-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
+    android:orientation="vertical"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    tools:openDrawer="start">
+    tools:context=".MainActivity">
+    <!--    creating spinner-->
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_margin="25dp"
+        android:id="@+id/Spinner"
+        android:spinnerMode="dropdown"
+        android:entries="@array/weeks"/>
+    <!--    textview to print our output-->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="35dp"
+        android:textSize="25sp"
+        android:id="@+id/textview"
+        android:textColor="@color/black"/>
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="ScanButton"
+        android:text="Scan" />
+
+
+</LinearLayout>
+
+
+<!-- <?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:gravity="top"
+android:padding='20dp'
+android:orientation="vertical"
+tools:context=".MainActivity">
+
+<com.google.android.material.textfield.TextInputLayout
+    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:hint="Stores Available to View"
+    app:startIconDrawable="@drawable/amazon">
+
+    <AutoCompleteTextView
+        android:id="@+id/autoCompleteText"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:enabled="false"
+        android:inputType="none"
+        android:textColor="#000" />
+
+
+</com.google.android.material.textfield.TextInputLayout>
+
+<TextView
+    android:id="@+id/textView"
+    android:layout_width="match_parent"
+    android:layout_height="602dp"
+    android:text="TextView" />
+
+
+</LinearLayout>
+
+
+
+
+
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:id="@+id/drawer_layout"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:fitsSystemWindows="true"
+tools:openDrawer="start">
+
+
+
 
 
     <include
@@ -22,7 +104,7 @@
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/nav_header_main"
         app:menu="@menu/activity_main_drawer" />
-<!--
+
     <Button
         android:id="@+id/button"
         android:layout_width="100dp"
@@ -39,7 +121,8 @@
         android:layout_height="60dp"
         android:onClick="ViewAnalytics"
         android:text="@string/viewAnalytics" />
--->
+
+
     <TextView
         android:id="@+id/resultsTextView1"
         android:layout_width="202dp"
@@ -82,11 +165,20 @@
         android:translationY="326dp"
         app:autoSizeTextType="none"></TextView>
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="412dp"
-        android:layout_height="550dp"
-        android:textSize="24sp"
-        android:translationY="50dp" />
+
+
+
+<TextView
+    android:id="@+id/textView"
+    android:layout_width="412dp"
+    android:layout_height="550dp"
+    android:textSize="24sp"
+    android:translationY="50dp" />
 
 </androidx.drawerlayout.widget.DrawerLayout>
+
+-->
+
+
+
+

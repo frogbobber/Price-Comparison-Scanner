@@ -6,9 +6,24 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ScrollView;
+import android.widget.SpinnerAdapter;
 import android.widget.TextView;
+import androidx.appcompat.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -29,7 +44,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
 
     private ScrollView scrollView;
     private TextView textView;
@@ -39,20 +54,61 @@ public class MainActivity extends AppCompatActivity {
     private TextView textView4;
     private Button button;
     private AllProductInformation allProductInformation;
+    AutoCompleteTextView autocompleteTextView;
+    private int Spinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+
+       //textView = findViewById(R.id.textView);
+       // textView1 = findViewById(R.id.resultsTextView1);
+       // textView2 = findViewById(R.id.resultsTextView2);
+       // textView3 = findViewById(R.id.resultsTextView3);
+       // textView4 = findViewById(R.id.resultsTextView4);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        textView = findViewById(R.id.textView);
-        textView1 = findViewById(R.id.resultsTextView1);
-        textView2 = findViewById(R.id.resultsTextView2);
-        textView3 = findViewById(R.id.resultsTextView3);
-        textView4 = findViewById(R.id.resultsTextView4);
-
+        Spinner spinner=findViewById(R.id.Spinner);
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, PackageManager.PERMISSION_GRANTED);
+
+        //initializing the adapter with our weeks array
+        ArrayAdapter<CharSequence> adapter=ArrayAdapter.createFromResource(this,R.array.weeks, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter); //giving adapter to the spinner
+        spinner.setOnItemSelectedListener(this);
     }
+//+ allProductInformation.getAmazonProducts().get(0).getName() + " Prices " + allProductInformation.getAmazonProducts().get(0).getPrice()
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        TextView textView=findViewById(R.id.textview);
+        if(position==0)
+        {
+            textView.setText("Amazon Prices") ;
+        }
+        else if(position==1)
+        {
+            textView.setText("Walmart Prices");
+        }
+        else if(position==2)
+        {
+            textView.setText("Target Prices");
+        }
+        else if(position==3)
+        {
+            textView.setText("BestBuy Prices");
+        }
+        else if(position==4)
+        {
+            textView.setText("BroadSweep DataBase Prices");
+        }
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
+    }
+
 
     public void ScanButton(View view) {
         IntentIntegrator intentIntegrator = new IntentIntegrator(this);
