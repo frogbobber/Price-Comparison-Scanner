@@ -5,8 +5,56 @@
     <string name="viewAnalytics">View Analytics</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="qr_scanner">QR Scanner</string>
+    <string name="qr_scanner">Camera</string>
     <string name="title_activity_qrscanner">QR Scanner</string>
     <string name="title_activity_qr_scanner">QR Scanner</string>
     <string name="QRScanner">QR Scanner</string>
+    <string name="qrbc_scan">QR/Barcode Scanner</string>
+    <string name="analytics">Analytics</string>
+    <string name="results">View Results</string>
+
+
+    <!--###ABOUT###-->
+    <string name="about">About</string>
+    <string name="about_author">Authors: </string>
+    <string name="about_author_names" translatable="false">Christopher Beckmann, Bassel Hanna, Philipp Rack</string>
+    <string name="about_author_string">%s and contributors.</string>
+    <string name="about_affiliation">In affiliation with</string>
+    <string name="privacy_friendly">This application belongs to the group of PRIVACY FRIENDLY Apps developed by Technische Universität Darmstadt. Sourcecode licensed under GPLv3. Images copyright TU Darmstadt and Google Inc.</string>
+    <string name="more_info">More information can be found on:</string>
+    <string name="github" translatable="false"><a href="https://github.com/SecUSo/privacy-friendly-qr-scanner">Github-Repo</a></string>
+    <string name="url_secuso" translatable="false"><a href="https://www.secuso.org/pfa">SECUSO-Website</a></string>
+    <string name="about_libraries">Used libraries:</string>
+    <string name="lib_url" translatable="false"><a href="https://github.com/zxing">ZXing</a></string>
+    <string name="app_name_long">Privacy Friendly QR Scanner</string>
+    <string name="version_number">Version v%s</string>
+    <string name="delete_items">Delete items</string>
+    <string name="copy_right" translatable="false">Copyrights © %1$d</string>
+
+    <string name="slide1_heading">Welcome!</string>
+    <string name="slide1_text">Welcome to privacy friendly QR scanner. This tutorial will cover the most important things you need to know.</string>
+    <string name="slide2_heading">what is there?</string>
+    <string name="text_slide2">You either scan QR code by using QR Scanner or generate QR code by using QR Generator.</string>
+    <string name="slide3_heading">More features</string>
+    <string name="text_slide3">The QR code you scanned can be saved in History. Furthermore you can share it or copy it.</string>
+    <string name="wecome">welcome</string>
+    <string name="skip">Skip</string>
+    <string name="next">Next</string>
+    <string name="help_">Help</string>
+    <string name="okay">Okay</string>
+    <string name="tutorial">Tutorial</string>
+
+    <string name="activity_scanner_permission_needed_explanation">The app needs the camera permission in order to scan QR codes.</string>
+
+
+
+    <!--###HELP###-->
+    <string name="help_whatis">Walmart Listings</string>
+    <string name="help_whatis_answer">These are the Walmart listings.</string>
+    <string name="help_usability">Amazon Listings</string>
+    <string name="help_usability_answer">These are the Amazon listings.</string>
+    <string name="help_privacy">What makes the app privacy-friendly?</string>
+    <string name="help_privacy_answer">Privacy Friendly App Example does not require any permission. It further does not include any tracking mechanisms or advertisement.</string>
+    <string name="help_permission">Target Listings</string>
+    <string name="help_permission_answer">These are the Target listings.</string>
 </resources>

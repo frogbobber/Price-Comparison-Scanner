@@ -3,44 +3,52 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
-    <group android:id="@+id/nav_group_main"
-        android:checkableBehavior="all">
-        
-        <item
-            android:id="@+id/nav_scan"
-            android:icon="@drawable/qqr"
-            android:title="@string/qr_scanner" />
-        <!--
-        <item
-            android:id="@+id/nav_generate"
-            android:icon="@drawable/gnrr"
-            android:title="@string/qr_generator" />
-            -->
-    </group>
-<!--
+        <group android:id="@+id/nav_group_main"
+            android:checkableBehavior="all">
+
+            <item
+                android:id="@+id/nav_scan"
+                android:icon="@drawable/qqr"
+                android:title="@string/qr_scanner" />
+    <!--
+                <item
+                    android:id="@+id/nav_generate"
+                    android:icon="@drawable/gnrr"
+                    android:title="@string/qr_generator" />
+-->
+        </group>
+
     <group android:id="@+id/nav_group_add"
         android:checkableBehavior="all">
         <item
-            android:id="@+id/nav_history"
-            android:icon="@drawable/ic_action_view_as_list"
-            android:title="@string/history" />
+            android:id="@+id/nav_barcode"
+            android:icon="@drawable/ic_qrbc"
+            android:title="@string/qrbc_scan" />
         <item
-            android:id="@+id/nav_settings"
-            android:icon="@drawable/ic_settings_black_48dp"
-            android:title="@string/settings" />
+            android:id="@+id/nav_analytics"
+            android:icon="@drawable/dataanal"
+            android:title="@string/viewAnalytics" />
         <item
             android:id="@+id/nav_tutorial"
             android:icon="@drawable/ic_menu_tutorial"
             android:title="@string/tutorial" />
         <item
-            android:id="@+id/nav_help"
-            android:icon="@drawable/ic_menu_help"
-            android:title="@string/help" />
+            android:id="@+id/nav_results"
+            android:icon="@drawable/ic_results"
+            android:title="@string/results"/>
 
-        <item
-            android:id="@+id/nav_about"
-            android:icon="@drawable/ic_menu_info"
-            android:title="@string/about" />
-    </group>
+
+    <!--<item
+        android:id="@+id/nav_history"
+        android:icon="@drawable/ic_action_view_as_list"
+        android:title="@string/history" />
+    <item
+        android:id="@+id/nav_settings"
+        android:icon="@drawable/ic_settings_black_48dp"
+        android:title="@string/settings" />
 -->
+
+
+</group>
+
 </menu>

@@ -13,13 +13,36 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PriceComparisonScanner">
         <activity android:name=".Activity2"></activity>
-        <activity android:name=".MainActivity">
+        <activity
+            android:name=".ui.activities.SplashActivity"
+            android:label="SCANAMOS">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".ui.activities.ScannerActivity"
+            android:label="@string/app_name"
+            android:clearTaskOnLaunch="true"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ui.activities.ResultsActivity"
+            android:label="@string/results"
+            android:parentActivityName=".ui.activities.ScannerActivity" />
+        <activity
+            android:name=".ui.activities.TutorialActivity"
+            android:parentActivityName=".ui.activities.ScannerActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".ui.activities.AnalyticsActivity"
+            android:label="@string/analytics"
+            android:parentActivityName=".ui.activities.ScannerActivity" />
+        <activity
+            android:name=".ui.BarcodeActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
+
 
 </manifest>
