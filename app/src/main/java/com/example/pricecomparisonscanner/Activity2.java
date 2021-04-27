@@ -1,11 +1,8 @@
 package com.example.pricecomparisonscanner;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
-import android.view.View;
 
-import com.google.zxing.integration.android.IntentIntegrator;
+import androidx.appcompat.app.AppCompatActivity;
 
 public class Activity2 extends AppCompatActivity {
 

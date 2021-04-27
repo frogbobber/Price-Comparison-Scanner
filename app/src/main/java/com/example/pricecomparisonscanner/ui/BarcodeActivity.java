@@ -1,4 +1,4 @@
-package com.example.pricecomparisonscanner;
+package com.example.pricecomparisonscanner.ui;
 
 import android.Manifest;
 import android.content.Intent;
@@ -6,7 +6,6 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -14,10 +13,12 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
-import com.example.pricecomparisonscanner.Database.ConnectionHelper;
+import com.example.pricecomparisonscanner.R;
+import com.example.pricecomparisonscanner.WebScraper;
 import com.example.pricecomparisonscanner.analysis.DataProcessor;
 import com.example.pricecomparisonscanner.information.AllProductInformation;
 import com.example.pricecomparisonscanner.information.ProductInformation;
+import com.example.pricecomparisonscanner.ui.activities.ScannerActivity;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
@@ -29,7 +30,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class MainActivity extends AppCompatActivity {
+public class BarcodeActivity extends AppCompatActivity {
 
     private ScrollView scrollView;
     private TextView textView;
@@ -37,7 +38,6 @@ public class MainActivity extends AppCompatActivity {
     private TextView textView2;
     private TextView textView3;
     private TextView textView4;
-    private Button button;
     private AllProductInformation allProductInformation;
 
     @Override
@@ -170,8 +170,8 @@ public class MainActivity extends AppCompatActivity {
                         for (int i = 0; i < products.size(); i++) {
                             outputBuilder.append(
                                     products.get(i).getName().substring(0, Math.min(products.get(i).getName().length(), 20)) + "\n" +
-                                    products.get(i).getPrice().substring(0, Math.min(products.get(i).getPrice().length(), 20)) + "  " +
-                                    products.get(i).getUrl().substring(0, Math.min(products.get(i).getUrl().length(), 16)) + "\n\n"
+                                            products.get(i).getPrice().substring(0, Math.min(products.get(i).getPrice().length(), 20)) + "  " +
+                                            products.get(i).getUrl().substring(0, Math.min(products.get(i).getUrl().length(), 16)) + "\n\n"
                             );
                         }
 
@@ -180,8 +180,8 @@ public class MainActivity extends AppCompatActivity {
                         for (int i = 0; i < products.size(); i++) {
                             outputBuilder2.append(
                                     products.get(i).getName().substring(0, Math.min(products.get(i).getName().length(), 20)) + "\n" +
-                                    products.get(i).getPrice().substring(0, Math.min(products.get(i).getPrice().length(), 20)) + "  " +
-                                    products.get(i).getUrl().substring(0, Math.min(products.get(i).getUrl().length(), 16)) + "\n\n"
+                                            products.get(i).getPrice().substring(0, Math.min(products.get(i).getPrice().length(), 20)) + "  " +
+                                            products.get(i).getUrl().substring(0, Math.min(products.get(i).getUrl().length(), 16)) + "\n\n"
                             );
                         }
 
@@ -227,5 +227,12 @@ public class MainActivity extends AppCompatActivity {
                 thread.start();
             }
         }
+    }
+
+    public void onBackPressed() {
+        Intent intent = new Intent(BarcodeActivity.this, ScannerActivity.class);
+        startActivity(intent);
+        finish();
+        super.onBackPressed();
     }
 }

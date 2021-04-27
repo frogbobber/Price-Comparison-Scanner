@@ -1,13 +1,13 @@
 package com.example.pricecomparisonscanner.analysis;
+
 import com.example.pricecomparisonscanner.information.AllProductInformation;
 import com.example.pricecomparisonscanner.information.ProductInformation;
 
-import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
-import java.util.List;
+
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 public class DataProcessor {
     private ProductInformation bestListing;
