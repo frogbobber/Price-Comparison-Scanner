@@ -19,6 +19,7 @@ import com.example.pricecomparisonscanner.analysis.DataProcessor;
 import com.example.pricecomparisonscanner.information.AllProductInformation;
 import com.example.pricecomparisonscanner.information.ProductInformation;
 import com.example.pricecomparisonscanner.ui.activities.ScannerActivity;
+import com.google.android.material.navigation.NavigationView;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
@@ -30,7 +31,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class BarcodeActivity extends AppCompatActivity {
+public class BarcodeActivity extends com.example.pricecomparisonscanner.ui.helpers.BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private ScrollView scrollView;
     private TextView textView;
@@ -227,6 +228,28 @@ public class BarcodeActivity extends AppCompatActivity {
                 thread.start();
             }
         }
+    }
+
+    @Override
+    protected int getNavigationDrawerID() {
+        return R.id.nav_barcode;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 
     public void onBackPressed() {

@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.pricecomparisonscanner.R;
 import com.example.pricecomparisonscanner.helpers.PrefManager;
+import com.example.pricecomparisonscanner.ui.BarcodeActivity;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -26,7 +27,7 @@ public class SplashActivity extends AppCompatActivity {
 
                 Intent mainIntent;
 
-                mainIntent = new Intent(SplashActivity.this, ScannerActivity.class);
+                mainIntent = new Intent(SplashActivity.this, HomeActivity.class);
 
                 /*if(firstStartPref.isFirstTimeLaunch()) {
                     mainIntent = new Intent(SplashActivity.this, TutorialActivity.class);

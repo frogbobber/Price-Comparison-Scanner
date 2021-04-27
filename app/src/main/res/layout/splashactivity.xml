@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/colorAccent">
+    android:background="@color/colorPrimary">
 
     <ImageView
         android:layout_width="300dp"
@@ -11,5 +11,17 @@
         android:layout_gravity="center"
         android:src="@drawable/logo"
         android:layout_marginTop="100dp"/>
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="83dp"
+        android:layout_gravity="bottom|center"
+        android:layout_marginTop="150dp"
+        android:text="SCANAMOS"
+        android:textColor="#FFFFFF"
+        android:textSize="48sp"
+        android:textStyle="bold"
+        android:visibility="invisible" />
 
 </LinearLayout>

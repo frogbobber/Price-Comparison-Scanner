@@ -12,6 +12,7 @@
     <string name="qrbc_scan">QR/Barcode Scanner</string>
     <string name="analytics">Analytics</string>
     <string name="results">View Results</string>
+    <string name="home">Home</string>
 
 
     <!--###ABOUT###-->
@@ -31,13 +32,14 @@
     <string name="delete_items">Delete items</string>
     <string name="copy_right" translatable="false">Copyrights © %1$d</string>
 
-    <string name="slide1_heading">Welcome!</string>
-    <string name="slide1_text">Welcome to privacy friendly QR scanner. This tutorial will cover the most important things you need to know.</string>
-    <string name="slide2_heading">what is there?</string>
-    <string name="text_slide2">You either scan QR code by using QR Scanner or generate QR code by using QR Generator.</string>
-    <string name="slide3_heading">More features</string>
-    <string name="text_slide3">The QR code you scanned can be saved in History. Furthermore you can share it or copy it.</string>
-    <string name="wecome">welcome</string>
+
+    <string name="slide1_heading">Welcome to SCANAMOS!</string>
+    <string name="slide1_text">SCANAMOS is an app that helps users find the best prices for a product with a simple scan.</string>
+    <string name="slide2_heading">What can I do?</string>
+    <string name="text_slide2">You can scan any product code to view its price and compare it with other retailers.</string>
+    <string name="slide3_heading">Additional features</string>
+    <string name="text_slide3">SCANAMOS also allows you to view analytics of the products.</string>
+    <string name="wecome">Welcome to SCANAMOS!</string>
     <string name="skip">Skip</string>
     <string name="next">Next</string>
     <string name="help_">Help</string>
@@ -57,4 +59,5 @@
     <string name="help_privacy_answer">Privacy Friendly App Example does not require any permission. It further does not include any tracking mechanisms or advertisement.</string>
     <string name="help_permission">Target Listings</string>
     <string name="help_permission_answer">These are the Target listings.</string>
+    <string name="logo2">logo2</string>
 </resources>

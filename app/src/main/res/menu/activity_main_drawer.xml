@@ -7,35 +7,35 @@
             android:checkableBehavior="all">
 
             <item
+                android:id="@+id/nav_home"
+                android:icon="@drawable/ic_home"
+                android:title="@string/home" />
+            <item
                 android:id="@+id/nav_scan"
                 android:icon="@drawable/qqr"
                 android:title="@string/qr_scanner" />
-    <!--
-                <item
-                    android:id="@+id/nav_generate"
-                    android:icon="@drawable/gnrr"
-                    android:title="@string/qr_generator" />
--->
+
+            <item
+                android:id="@+id/nav_barcode"
+                android:icon="@drawable/ic_qrbc"
+                android:title="@string/qrbc_scan" />
         </group>
 
     <group android:id="@+id/nav_group_add"
         android:checkableBehavior="all">
-        <item
-            android:id="@+id/nav_barcode"
-            android:icon="@drawable/ic_qrbc"
-            android:title="@string/qrbc_scan" />
+
         <item
             android:id="@+id/nav_analytics"
             android:icon="@drawable/dataanal"
             android:title="@string/viewAnalytics" />
         <item
-            android:id="@+id/nav_tutorial"
-            android:icon="@drawable/ic_menu_tutorial"
-            android:title="@string/tutorial" />
-        <item
             android:id="@+id/nav_results"
             android:icon="@drawable/ic_results"
             android:title="@string/results"/>
+        <item
+            android:id="@+id/nav_tutorial"
+            android:icon="@drawable/ic_menu_tutorial"
+            android:title="@string/tutorial" />
 
 
     <!--<item

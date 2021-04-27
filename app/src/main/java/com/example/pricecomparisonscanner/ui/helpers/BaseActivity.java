@@ -18,6 +18,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.pricecomparisonscanner.R;
 import com.example.pricecomparisonscanner.ui.BarcodeActivity;
+import com.example.pricecomparisonscanner.ui.activities.HomeActivity;
 import com.example.pricecomparisonscanner.ui.activities.ResultsActivity;
 import com.example.pricecomparisonscanner.ui.activities.ScannerActivity;
 import com.example.pricecomparisonscanner.ui.activities.TutorialActivity;
@@ -134,6 +135,10 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
                 integrator.setBeepEnabled(false);
                 integrator.setOrientationLocked(false);
                 integrator.initiateScan();
+                break;
+            case R.id.nav_home:
+                intent = new Intent(this, HomeActivity.class);
+                createBackStack(intent);
                 break;
             case R.id.nav_tutorial:
                 intent = new Intent(this, TutorialActivity.class);
