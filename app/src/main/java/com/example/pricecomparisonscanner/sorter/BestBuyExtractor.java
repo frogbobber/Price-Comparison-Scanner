@@ -14,8 +14,6 @@ public class BestBuyExtractor extends ProductExtractor{
 
         Elements elements = document.select("li[class*=sku-item]");//class="sg-col-inner"
 
-        System.out.println(elements.size());
-
         elements.forEach(e -> {
             products.add(new ProductInformation(
                     e.select("h4[class*=sku-header]").select("a").attr("abs:href"), // get the url
@@ -23,6 +21,7 @@ public class BestBuyExtractor extends ProductExtractor{
                     e.select("div[class*=priceView-hero-price priceView-customer-price]").select("span").first().html() // price
             ));
         });
+        System.out.println("Sorted BestBuy");
         //System.out.println(products);
         return products;
     }

@@ -12,7 +12,6 @@ public class WalmartExtractor extends ProductExtractor{
     public ArrayList<ProductInformation> extractProducts(Document document) {
         ArrayList<ProductInformation> products = new ArrayList<>();
 
-        System.out.println(products);
         Elements elements = document.select("div[class*=search-result-gridview-item clearfix arrange-fill]");//search-result-listview-item Grid
 
         elements.forEach(e -> {
