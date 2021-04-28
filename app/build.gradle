@@ -46,6 +46,8 @@ repositories {
 dependencies {
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
     implementation files('C:\\Program Files\\Java\\jsoup-1.13.1.jar')
+    implementation files('D:\\School\\2020-2021\\CSE 326\\GroupProject\\app\\libs\\gson-2.8.6.jar')
+    implementation files('D:\\School\\2020-2021\\CSE 326\\GroupProject\\app\\libs\\mongo-java-driver-3.4.0-SNAPSHOT.jar')
     testImplementation 'junit:junit:4.+'
     implementation 'com.journeyapps:zxing-android-embedded:4.0.2'
     implementation fileTree(dir: 'libs', include: ['*.jar'])

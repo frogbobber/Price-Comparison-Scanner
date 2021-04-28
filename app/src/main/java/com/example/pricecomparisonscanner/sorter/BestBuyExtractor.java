@@ -7,15 +7,14 @@ import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
 
-public class TargetExtractor extends ProductExtractor{
+public class BestBuyExtractor extends ProductExtractor{
     @Override
     public ArrayList<ProductInformation> extractProducts(Document document) { // actually for bestbuy
         ArrayList<ProductInformation> products = new ArrayList<>();
 
-        Elements elements = document.getElementsByTag("script");//document.select("li[class*=sku-item]");//class="sg-col-inner"
+        Elements elements = document.select("li[class*=sku-item]");//class="sg-col-inner"
 
-        System.out.println("size " + elements.size());
-        System.out.println(elements);
+        System.out.println(elements.size());
 
         elements.forEach(e -> {
             products.add(new ProductInformation(
@@ -24,7 +23,7 @@ public class TargetExtractor extends ProductExtractor{
                     e.select("div[class*=priceView-hero-price priceView-customer-price]").select("span").first().html() // price
             ));
         });
-        //System.out.println(document);
+        //System.out.println(products);
         return products;
     }
 }

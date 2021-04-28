@@ -213,8 +213,8 @@ public class MainActivity extends AppCompatActivity {
 
                         AllProductInformation finalInfo = info;
                         Thread mongoThread = new Thread(() -> {
-                            com.example.pricecomparisonscanner.Database.ConnectionHelper.sendPrices(finalInfo);
-                            System.out.println(com.example.pricecomparisonscanner.Database.ConnectionHelper.retrievePrices(upc));
+                            ConnectionHelper.sendPrices(finalInfo);
+                            System.out.println(ConnectionHelper.retrievePrices(upc));
                         });
 
                         mongoThread.start();
