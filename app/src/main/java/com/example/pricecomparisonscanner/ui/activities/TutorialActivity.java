@@ -21,6 +21,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.example.pricecomparisonscanner.R;
 import com.example.pricecomparisonscanner.helpers.PrefManager;
+import com.example.pricecomparisonscanner.ui.BarcodeActivity;
 
 
 public class TutorialActivity extends AppCompatActivity {
@@ -143,7 +144,7 @@ public class TutorialActivity extends AppCompatActivity {
 
     private void launchHomeScreen() {
         prefManager.setFirstTimeLaunch(false);
-        Intent intent = new Intent(this, ScannerActivity.class);
+        Intent intent = new Intent(this, BarcodeActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
         finish();

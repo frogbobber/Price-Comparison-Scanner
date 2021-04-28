@@ -6,7 +6,10 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ScrollView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -18,7 +21,8 @@ import com.example.pricecomparisonscanner.WebScraper;
 import com.example.pricecomparisonscanner.analysis.DataProcessor;
 import com.example.pricecomparisonscanner.information.AllProductInformation;
 import com.example.pricecomparisonscanner.information.ProductInformation;
-import com.example.pricecomparisonscanner.ui.activities.ScannerActivity;
+//import com.example.pricecomparisonscanner.ui.activities.ScannerActivity;
+import com.google.android.material.navigation.NavigationView;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
@@ -30,14 +34,14 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class BarcodeActivity extends AppCompatActivity {
+public class BarcodeActivity extends com.example.pricecomparisonscanner.ui.helpers.BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private ScrollView scrollView;
-    private TextView textView;
-    private TextView textView1;
-    private TextView textView2;
-    private TextView textView3;
-    private TextView textView4;
+//    private TextView textView;
+//    private TextView textView1;
+//    private TextView textView2;
+//    private TextView textView3;
+//    private TextView textView4;
     private AllProductInformation allProductInformation;
 
     @Override
@@ -45,11 +49,132 @@ public class BarcodeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        textView = findViewById(R.id.textView);
-        textView1 = findViewById(R.id.resultsTextView1);
-        textView2 = findViewById(R.id.resultsTextView2);
-        textView3 = findViewById(R.id.resultsTextView3);
-        textView4 = findViewById(R.id.resultsTextView4);
+//        textView = findViewById(R.id.textView);
+//        textView1 = findViewById(R.id.resultsTextView1);
+//        textView2 = findViewById(R.id.resultsTextView2);
+//        textView3 = findViewById(R.id.resultsTextView3);
+//        textView4 = findViewById(R.id.resultsTextView4);
+        setContentView(R.layout.activity_main);
+        Spinner spinner = findViewById(R.id.Spinner);
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, PackageManager.PERMISSION_GRANTED);
+
+        //initializing the adapter with our weeks array
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.weeks, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter); //giving adapter to the spinner
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                TextView textView = findViewById(R.id.textview6);
+                if (allProductInformation == null) {
+                    return;
+                }
+                StringBuilder outputBuilder = new StringBuilder();
+                if(position==0)
+                {
+                    try {
+                        try {
+                            outputBuilder.append(allProductInformation.getAmazonProducts().get(0).getName() + " " + allProductInformation.getAmazonProducts().get(0).getPrice() + "\n\n");
+                        } catch (Exception e) {}
+                        try {
+                            outputBuilder.append(allProductInformation.getWalmartProducts().get(0).getName() + " " + allProductInformation.getWalmartProducts().get(0).getPrice() + "\n\n");
+                        } catch (Exception e) {}
+                        try {
+                            outputBuilder.append(allProductInformation.getTargetProducts().get(0).getName() + " " + allProductInformation.getTargetProducts().get(0).getPrice() + "\n\n");
+                        } catch (Exception e) {}
+                        try {
+                            outputBuilder.append(allProductInformation.getBestBuyProducts().get(0).getName() + " " + allProductInformation.getTargetProducts().get(0).getPrice() + "\n\n");
+                        } catch (Exception e) {}
+                        try {
+                            outputBuilder.append(allProductInformation.getUpciteProducts().get(0).getName() + " " + allProductInformation.getUpciteProducts().get(0).getPrice() + "\n\n");
+                        } catch (Exception e) {}
+                    } catch (Exception e) {
+                        textView.setText("No Overview Information, please try another source.");
+                    }
+                }
+                else if(position==1)
+                {
+                    try {
+                        ArrayList<ProductInformation> products = allProductInformation.getAmazonProducts();
+                        for (int i = 0; i < products.size() && i < 14; i++) {
+                            outputBuilder.append(
+                                    products.get(i).getName().substring(0, Math.min(products.get(i).getName().length(), 20)) + " " +
+                                            products.get(i).getPrice().substring(0, Math.min(products.get(i).getPrice().length(), 20)) + "\n"
+                            );
+                        }
+                    } catch (Exception e) {
+                        textView.setText("No Amazon Information, please try another source.");
+                    }
+                }
+                else if(position==1)
+                {
+                    try {
+                        ArrayList<ProductInformation> products = allProductInformation.getWalmartProducts();
+                        for (int i = 0; i < products.size() && i < 14; i++) {
+                            outputBuilder.append(
+                                    products.get(i).getName().substring(0, Math.min(products.get(i).getName().length(), 20)) + " " +
+                                            products.get(i).getPrice().substring(0, Math.min(products.get(i).getPrice().length(), 20)) + "\n"
+                            );
+                        }
+                    } catch (Exception e) {
+                        textView.setText("No Walmart Information, please try another source.");
+                    }
+                }
+                else if(position==2)
+                {
+                    try {
+                        ArrayList<ProductInformation> products = allProductInformation.getTargetProducts();
+                        for (int i = 0; i < products.size() && i < 14; i++) {
+                            outputBuilder.append(
+                                    products.get(i).getName().substring(0, Math.min(products.get(i).getName().length(), 20)) + " " +
+                                            products.get(i).getPrice().substring(0, Math.min(products.get(i).getPrice().length(), 20)) + "\n"
+                            );
+                        }
+                    } catch (Exception e) {
+                        textView.setText("No Target Information, please try another source.");
+                    }
+                }
+                else if(position==3)
+                {
+                    try {
+                        ArrayList<ProductInformation> products = allProductInformation.getBestBuyProducts();
+                        for (int i = 0; i < products.size() && i < 14; i++) {
+                            outputBuilder.append(
+                                    products.get(i).getName().substring(0, Math.min(products.get(i).getName().length(), 20)) + " " +
+                                            products.get(i).getPrice().substring(0, Math.min(products.get(i).getPrice().length(), 20)) + "\n"
+                            );
+                        }
+                    } catch (Exception e) {
+                        textView.setText("No BestBuy Information, please try another source.");
+                    }
+                }
+                else if(position==4)
+                {
+                    try {
+                        ArrayList<ProductInformation> products = allProductInformation.getUpciteProducts();
+                        for (int i = 0; i < products.size() && i < 14; i++) {
+                            outputBuilder.append(
+                                    products.get(i).getName().substring(0, Math.min(products.get(i).getName().length(), 20)) + " " +
+                                            products.get(i).getPrice().substring(0, Math.min(products.get(i).getPrice().length(), 20)) + "\n"
+                            );
+                        }
+                    } catch (Exception e) {
+                        textView.setText("No Broad Sweep Information, please try another source.");
+                    }
+                }
+                textView.setText(outputBuilder.toString());
+                if (textView.getText().equals(" ") || textView.getText().equals("")) {
+                    textView.setText("Collecting Information, \nPlease try again in a few seconds.");
+                }
+                System.out.println(" position " + position);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+        spinner.setEnabled(false);
 
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, PackageManager.PERMISSION_GRANTED);
     }
@@ -65,11 +190,11 @@ public class BarcodeActivity extends AppCompatActivity {
         try {
             if (allProductInformation != null) {
                 DataProcessor dp = new DataProcessor(allProductInformation);
-                textView.setText("");
-                textView1.setText("");
-                textView2.setText("");
-                textView3.setText("");
-                textView4.setText("");
+//                textView.setText("");
+//                textView1.setText("");
+//                textView2.setText("");
+//                textView3.setText("");
+//                textView4.setText("");
 
                 StringBuilder builder = new StringBuilder();
 
@@ -79,13 +204,13 @@ public class BarcodeActivity extends AppCompatActivity {
                 builder.append("Median Price: " + dp.getMedian() + "\n");
                 builder.append("Variance: " + dp.getVariance() + "\n");
 
-                textView.setText(builder.toString());
+//                textView.setText(builder.toString());
             } else {
-                textView.setText("   Please scan a barcode first.");
-                textView1.setText("");
-                textView2.setText("");
-                textView3.setText("");
-                textView4.setText("");
+//                textView.setText("   Please scan a barcode first.");
+//                textView1.setText("");
+//                textView2.setText("");
+//                textView3.setText("");
+//                textView4.setText("");
             }
 
         } catch (Exception e) {
@@ -100,21 +225,29 @@ public class BarcodeActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         IntentResult intentResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
 
-        textView.setText("");
-        textView1.setText("");
-        textView2.setText("");
-        textView3.setText("");
-        textView4.setText("");
-        textView1.setMovementMethod(new ScrollingMovementMethod());
-        textView2.setMovementMethod(new ScrollingMovementMethod());
-        textView3.setMovementMethod(new ScrollingMovementMethod());
-        textView4.setMovementMethod(new ScrollingMovementMethod());
+
+        TextView textView = findViewById(R.id.textview6);
+        textView.setText("Retreving Information...");
+
+
+        Spinner spinner = findViewById(R.id.Spinner);
+        spinner.setEnabled(true);
+
+//        textView.setText("");
+//        textView1.setText("");
+//        textView2.setText("");
+//        textView3.setText("");
+//        textView4.setText("");
+//        textView1.setMovementMethod(new ScrollingMovementMethod());
+//        textView2.setMovementMethod(new ScrollingMovementMethod());
+//        textView3.setMovementMethod(new ScrollingMovementMethod());
+//        textView4.setMovementMethod(new ScrollingMovementMethod());
 
         if (intentResult != null) {
             if (intentResult.getContents() == null) {
-                textView.setText("Cancelled");
+//                textView.setText("Cancelled");
             } else {
-                textView.setText(intentResult.getContents());
+//                textView.setText(intentResult.getContents());
 
                 Thread thread = new Thread(() -> {
                     try {
@@ -125,14 +258,14 @@ public class BarcodeActivity extends AppCompatActivity {
 
                         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                         conn.setRequestMethod("GET");
-                        textView.setText("Connecting");
+//                        textView.setText("Connecting");
                         conn.connect();
 
                         int responseCode = conn.getResponseCode();
                         JSONObject jsonObject = null;
 
                         if (responseCode != 200) {
-                            textView.setText(responseCode + "");
+//                            textView.setText(responseCode + "");
                         } else {
                             Scanner scanner = new Scanner(url.openStream());
                             StringBuilder builder = new StringBuilder();
@@ -143,7 +276,7 @@ public class BarcodeActivity extends AppCompatActivity {
                             inline = builder.toString();
                             scanner.close();
 
-                            textView.setText("Received Response: ");
+//                            textView.setText("Received Response: ");
 
                             jsonObject = new JSONObject(inline);
                             JSONArray jsonArray = jsonObject.getJSONArray("items").getJSONObject(0).getJSONArray("offers");
@@ -167,7 +300,7 @@ public class BarcodeActivity extends AppCompatActivity {
 
                         outputBuilder.append("Broad Sweep Database: \n");
                         ArrayList<ProductInformation> products = info.getUpciteProducts();
-                        for (int i = 0; i < products.size(); i++) {
+                        for (int i = 0; i < products.size() && i < 14; i++) {
                             outputBuilder.append(
                                     products.get(i).getName().substring(0, Math.min(products.get(i).getName().length(), 20)) + "\n" +
                                             products.get(i).getPrice().substring(0, Math.min(products.get(i).getPrice().length(), 20)) + "  " +
@@ -177,7 +310,7 @@ public class BarcodeActivity extends AppCompatActivity {
 
                         outputBuilder2.append("Top Walmart Listings: \n");
                         products = info.getWalmartProducts();
-                        for (int i = 0; i < products.size(); i++) {
+                        for (int i = 0; i < products.size() && i < 14; i++) {
                             outputBuilder2.append(
                                     products.get(i).getName().substring(0, Math.min(products.get(i).getName().length(), 20)) + "\n" +
                                             products.get(i).getPrice().substring(0, Math.min(products.get(i).getPrice().length(), 20)) + "  " +
@@ -187,7 +320,7 @@ public class BarcodeActivity extends AppCompatActivity {
 
                         outputBuilder3.append("Top Amazon Listings: \n");
                         products = info.getAmazonProducts();
-                        for (int i = 0; i < products.size(); i++) {
+                        for (int i = 0; i < products.size() && i < 14; i++) {
                             outputBuilder3.append( "\n" +
                                     products.get(i).getName().substring(0, Math.min(products.get(i).getName().length(), 20)) + "\n" +
                                     products.get(i).getPrice().substring(0, Math.min(products.get(i).getPrice().length(), 20)) + "  " +
@@ -197,18 +330,18 @@ public class BarcodeActivity extends AppCompatActivity {
 
                         outputBuilder4.append("Top Best Buy Listings: \n");
                         products = info.getTargetProducts();
-                        for (int i = 0; i < products.size(); i++) {
+                        for (int i = 0; i < products.size() && i < 14; i++) {
                             outputBuilder4.append( "\n" +
                                     products.get(i).getName().substring(0, Math.min(products.get(i).getName().length(), 20)) + "\n" +
                                     products.get(i).getPrice().substring(0, Math.min(products.get(i).getPrice().length(), 20)) + "  " +
                                     products.get(i).getUrl().substring(0, Math.min(products.get(i).getUrl().length(), 16)) + "\n\n"
                             );
                         }
-                        textView.setText(".");
-                        textView1.setText(outputBuilder.toString());
-                        textView2.setText(outputBuilder2.toString());
-                        textView3.setText(outputBuilder3.toString());
-                        textView4.setText(outputBuilder4.toString());
+//                        textView.setText(".");
+//                        textView1.setText(outputBuilder.toString());
+//                        textView2.setText(outputBuilder2.toString());
+//                        textView3.setText(outputBuilder3.toString());
+//                        textView4.setText(outputBuilder4.toString());
                         System.out.println("\n\nnew info - \n" + info + "\n - end info\n\n");
 
                         AllProductInformation finalInfo = info;
@@ -218,6 +351,28 @@ public class BarcodeActivity extends AppCompatActivity {
                         });
 
                         mongoThread.start();
+
+                        textView.setText("Information Collected");
+
+                        StringBuilder s = new StringBuilder();
+
+                        try {
+                            s.append(allProductInformation.getAmazonProducts().get(0).getName() + " " + allProductInformation.getAmazonProducts().get(0).getPrice() + "\n\n");
+                        } catch (Exception e) {}
+                        try {
+                            s.append(allProductInformation.getWalmartProducts().get(0).getName() + " " + allProductInformation.getWalmartProducts().get(0).getPrice() + "\n\n");
+                        } catch (Exception e) {}
+                        try {
+                            s.append(allProductInformation.getTargetProducts().get(0).getName() + " " + allProductInformation.getTargetProducts().get(0).getPrice() + "\n\n");
+                        } catch (Exception e) {}
+                        try {
+                            s.append(allProductInformation.getBestBuyProducts().get(0).getName() + " " + allProductInformation.getTargetProducts().get(0).getPrice() + "\n\n");
+                        } catch (Exception e) {}
+                        try {
+                            s.append(allProductInformation.getUpciteProducts().get(0).getName() + " " + allProductInformation.getUpciteProducts().get(0).getPrice() + "\n\n");
+                        } catch (Exception e) {}
+
+                        textView.setText(s.toString());
 
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -229,10 +384,25 @@ public class BarcodeActivity extends AppCompatActivity {
         }
     }
 
-    public void onBackPressed() {
-        Intent intent = new Intent(BarcodeActivity.this, ScannerActivity.class);
-        startActivity(intent);
-        finish();
-        super.onBackPressed();
+    @Override
+    protected int getNavigationDrawerID() {
+        return R.id.nav_barcode;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 }

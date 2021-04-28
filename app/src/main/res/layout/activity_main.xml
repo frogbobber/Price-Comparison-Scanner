@@ -14,32 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <com.google.android.material.navigation.NavigationView
-        android:id="@+id/nav_view"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        android:fitsSystemWindows="true"
-        app:headerLayout="@layout/nav_header_main"
-        app:menu="@menu/activity_main_drawer" />
-<!--
-    <Button
-        android:id="@+id/button"
-        android:layout_width="100dp"
-        android:layout_height="60dp"
-        android:layout_marginStart="150dp"
-        android:layout_marginTop="600dp"
-        android:onClick="ScanButton"
-        android:text="@string/scan"
-        app:iconTint="#DC0C0C" />
-
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="100dp"
-        android:layout_height="60dp"
-        android:onClick="ViewAnalytics"
-        android:text="@string/viewAnalytics" />
--->
+    <!--
     <TextView
         android:id="@+id/resultsTextView1"
         android:layout_width="202dp"
@@ -88,5 +63,15 @@
         android:layout_height="550dp"
         android:textSize="24sp"
         android:translationY="50dp" />
+        -->
+
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:fitsSystemWindows="true"
+        app:headerLayout="@layout/nav_header_main"
+        app:menu="@menu/activity_main_drawer" />
 
 </androidx.drawerlayout.widget.DrawerLayout>
