@@ -66,6 +66,7 @@ public class BarcodeActivity extends com.example.pricecomparisonscanner.ui.helpe
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 TextView textView = findViewById(R.id.textview6);
+                textView.setMovementMethod(new ScrollingMovementMethod());
                 if (allProductInformation == null) {
                     return;
                 }
@@ -74,19 +75,19 @@ public class BarcodeActivity extends com.example.pricecomparisonscanner.ui.helpe
                 {
                     try {
                         try {
-                            outputBuilder.append(allProductInformation.getAmazonProducts().get(0).getName() + " " + allProductInformation.getAmazonProducts().get(0).getPrice() + "\n\n");
+                            outputBuilder.append(allProductInformation.getAmazonProducts().get(0).getPrice() + " " + allProductInformation.getAmazonProducts().get(0).getName() + "\n\n");
                         } catch (Exception e) {}
                         try {
-                            outputBuilder.append(allProductInformation.getWalmartProducts().get(0).getName() + " " + allProductInformation.getWalmartProducts().get(0).getPrice() + "\n\n");
+                            outputBuilder.append(allProductInformation.getWalmartProducts().get(0).getPrice() + " " + allProductInformation.getWalmartProducts().get(0).getName() + "\n\n");
                         } catch (Exception e) {}
                         try {
-                            outputBuilder.append(allProductInformation.getTargetProducts().get(0).getName() + " " + allProductInformation.getTargetProducts().get(0).getPrice() + "\n\n");
+                            outputBuilder.append(allProductInformation.getTargetProducts().get(0).getPrice() + " " + allProductInformation.getTargetProducts().get(0).getName() + "\n\n");
                         } catch (Exception e) {}
                         try {
-                            outputBuilder.append(allProductInformation.getBestBuyProducts().get(0).getName() + " " + allProductInformation.getTargetProducts().get(0).getPrice() + "\n\n");
+                            outputBuilder.append(allProductInformation.getBestBuyProducts().get(0).getPrice() + " " + allProductInformation.getBestBuyProducts().get(0).getName() + "\n\n");
                         } catch (Exception e) {}
                         try {
-                            outputBuilder.append(allProductInformation.getUpciteProducts().get(0).getName() + " " + allProductInformation.getUpciteProducts().get(0).getPrice() + "\n\n");
+                            outputBuilder.append(allProductInformation.getUpciteProducts().get(0).getPrice() + " " + allProductInformation.getUpciteProducts().get(0).getName() + "\n\n");
                         } catch (Exception e) {}
                     } catch (Exception e) {
                         textView.setText("No Overview Information, please try another source.");
@@ -96,67 +97,93 @@ public class BarcodeActivity extends com.example.pricecomparisonscanner.ui.helpe
                 {
                     try {
                         ArrayList<ProductInformation> products = allProductInformation.getAmazonProducts();
-                        for (int i = 0; i < products.size() && i < 14; i++) {
-                            outputBuilder.append(
-                                    products.get(i).getName().substring(0, Math.min(products.get(i).getName().length(), 20)) + " " +
-                                            products.get(i).getPrice().substring(0, Math.min(products.get(i).getPrice().length(), 20)) + "\n"
-                            );
+                        for (int i = 0; i < products.size() && i < 20; i++) {
+                            if (!products.get(i).getPrice().trim().equals("") && !products.get(i).getName().trim().equals("")) {
+                                outputBuilder.append(
+                                        products.get(i).getPrice() + " " +
+                                                products.get(i).getName() + "\n\n"
+                                );
+                            }
+                        }
+                        if (products.size() == 0) {
+                            outputBuilder = new StringBuilder("No information available from this provider.");
                         }
                     } catch (Exception e) {
                         textView.setText("No Amazon Information, please try another source.");
                     }
                 }
-                else if(position==1)
+                else if(position==2)
                 {
                     try {
                         ArrayList<ProductInformation> products = allProductInformation.getWalmartProducts();
                         for (int i = 0; i < products.size() && i < 14; i++) {
-                            outputBuilder.append(
-                                    products.get(i).getName().substring(0, Math.min(products.get(i).getName().length(), 20)) + " " +
-                                            products.get(i).getPrice().substring(0, Math.min(products.get(i).getPrice().length(), 20)) + "\n"
-                            );
+                            if (!products.get(i).getPrice().trim().equals("") && !products.get(i).getName().trim().equals("")) {
+                                outputBuilder.append(
+                                        products.get(i).getPrice() + " " +
+                                                products.get(i).getName() + "\n\n"
+                                );
+                            }
+                        }
+                        if (products.size() == 0) {
+                            outputBuilder = new StringBuilder("No information available from this provider.");
                         }
                     } catch (Exception e) {
                         textView.setText("No Walmart Information, please try another source.");
                     }
                 }
-                else if(position==2)
+                else if(position==3)
                 {
                     try {
                         ArrayList<ProductInformation> products = allProductInformation.getTargetProducts();
+                        System.out.println("Products" + products);
                         for (int i = 0; i < products.size() && i < 14; i++) {
-                            outputBuilder.append(
-                                    products.get(i).getName().substring(0, Math.min(products.get(i).getName().length(), 20)) + " " +
-                                            products.get(i).getPrice().substring(0, Math.min(products.get(i).getPrice().length(), 20)) + "\n"
-                            );
+                            if (!products.get(i).getPrice().trim().equals("") && !products.get(i).getName().trim().equals("")) {
+                                outputBuilder.append(
+                                        products.get(i).getPrice() + " " +
+                                                products.get(i).getName() + "\n\n"
+                                );
+                            }
+                        }
+                        if (products.size() == 0) {
+                            outputBuilder = new StringBuilder("No information available from this provider.");
                         }
                     } catch (Exception e) {
                         textView.setText("No Target Information, please try another source.");
                     }
                 }
-                else if(position==3)
+                else if(position==4)
                 {
                     try {
                         ArrayList<ProductInformation> products = allProductInformation.getBestBuyProducts();
                         for (int i = 0; i < products.size() && i < 14; i++) {
-                            outputBuilder.append(
-                                    products.get(i).getName().substring(0, Math.min(products.get(i).getName().length(), 20)) + " " +
-                                            products.get(i).getPrice().substring(0, Math.min(products.get(i).getPrice().length(), 20)) + "\n"
-                            );
+                            if (!products.get(i).getPrice().trim().equals("") && !products.get(i).getName().trim().equals("")) {
+                                outputBuilder.append(
+                                        products.get(i).getPrice() + " " +
+                                                products.get(i).getName() + "\n\n"
+                                );
+                            }
+                        }
+                        if (products.size() == 0) {
+                            outputBuilder = new StringBuilder("No information available from this provider.");
                         }
                     } catch (Exception e) {
                         textView.setText("No BestBuy Information, please try another source.");
                     }
                 }
-                else if(position==4)
+                else if(position==5)
                 {
                     try {
                         ArrayList<ProductInformation> products = allProductInformation.getUpciteProducts();
                         for (int i = 0; i < products.size() && i < 14; i++) {
-                            outputBuilder.append(
-                                    products.get(i).getName().substring(0, Math.min(products.get(i).getName().length(), 20)) + " " +
-                                            products.get(i).getPrice().substring(0, Math.min(products.get(i).getPrice().length(), 20)) + "\n"
-                            );
+                            if (!products.get(i).getPrice().trim().equals("") && !products.get(i).getName().trim().equals("")) {
+                                outputBuilder.append(
+                                        products.get(i).getPrice() + " " +
+                                                products.get(i).getName() + "\n\n"
+                                );
+                            }
+                        }
+                        if (products.size() == 0) {
+                            outputBuilder = new StringBuilder("No information available from this provider.");
                         }
                     } catch (Exception e) {
                         textView.setText("No Broad Sweep Information, please try another source.");
@@ -354,25 +381,28 @@ public class BarcodeActivity extends com.example.pricecomparisonscanner.ui.helpe
 
                         textView.setText("Information Collected");
 
+                        /*
                         StringBuilder s = new StringBuilder();
 
                         try {
-                            s.append(allProductInformation.getAmazonProducts().get(0).getName() + " " + allProductInformation.getAmazonProducts().get(0).getPrice() + "\n\n");
+                            s.append(allProductInformation.getAmazonProducts().get(0).getPrice() + " " + allProductInformation.getAmazonProducts().get(0).getName() + "\n\n");
                         } catch (Exception e) {}
                         try {
-                            s.append(allProductInformation.getWalmartProducts().get(0).getName() + " " + allProductInformation.getWalmartProducts().get(0).getPrice() + "\n\n");
+                            s.append(allProductInformation.getWalmartProducts().get(0).getPrice() + " " + allProductInformation.getWalmartProducts().get(0).getName() + "\n\n");
                         } catch (Exception e) {}
                         try {
-                            s.append(allProductInformation.getTargetProducts().get(0).getName() + " " + allProductInformation.getTargetProducts().get(0).getPrice() + "\n\n");
+                            s.append(allProductInformation.getTargetProducts().get(0).getPrice() + " " + allProductInformation.getTargetProducts().get(0).getName() + "\n\n");
                         } catch (Exception e) {}
                         try {
-                            s.append(allProductInformation.getBestBuyProducts().get(0).getName() + " " + allProductInformation.getTargetProducts().get(0).getPrice() + "\n\n");
+                            s.append(allProductInformation.getBestBuyProducts().get(0).getPrice() + " " + allProductInformation.getBestBuyProducts().get(0).getName() + "\n\n");
                         } catch (Exception e) {}
                         try {
-                            s.append(allProductInformation.getUpciteProducts().get(0).getName() + " " + allProductInformation.getUpciteProducts().get(0).getPrice() + "\n\n");
+                            s.append(allProductInformation.getUpciteProducts().get(0).getPrice() + " " + allProductInformation.getUpciteProducts().get(0).getName() + "\n\n");
                         } catch (Exception e) {}
 
-                        textView.setText(s.toString());
+                         */
+
+                        textView.setText("Select from Dropdown Menu Above");
 
                     } catch (Exception e) {
                         e.printStackTrace();

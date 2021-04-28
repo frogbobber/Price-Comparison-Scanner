@@ -17,13 +17,23 @@
         android:spinnerMode="dropdown"
         android:entries="@array/weeks"/>
 
-    <TextView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="35dp"
-        android:textSize="25sp"
-        android:id="@+id/textview6"
-        android:textColor="@color/black"/>
+        android:layout_height="500dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHeight_max="wrap"
+            android:textSize="25sp"
+            android:id="@+id/textview6"
+            android:scrollbars="vertical"
+            android:textColor="@color/black"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 
     <Button
         android:id="@+id/btScan"
