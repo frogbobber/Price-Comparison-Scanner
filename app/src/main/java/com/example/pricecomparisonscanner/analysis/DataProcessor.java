@@ -90,6 +90,14 @@ public class DataProcessor {
             }
         }
 
+        i = allProductInformation.getBestBuyProducts().iterator();
+        while(i.hasNext()){
+            ProductInformation p = i.next();
+            if(tp.isMultiCount(p.getName())){
+                i.remove();
+            }
+        }
+
         System.out.println("END: " + allProductInformation.toString());
 
     }
@@ -223,6 +231,7 @@ public class DataProcessor {
         combinedList.addAll(allProductInformation.getWalmartProducts());
         combinedList.addAll(allProductInformation.getTargetProducts());
         combinedList.addAll(allProductInformation.getUpciteProducts());
+        combinedList.addAll(allProductInformation.getBestBuyProducts());
         return combinedList;
 
     }
