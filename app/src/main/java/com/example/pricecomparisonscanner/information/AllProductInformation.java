@@ -7,7 +7,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
-public class AllProductInformation {
+public class AllProductInformation implements Cloneable {
 
     private long downloadTime;
     private ArrayList<ProductInformation> amazonProducts;
@@ -15,6 +15,11 @@ public class AllProductInformation {
     private ArrayList<ProductInformation> targetProducts;
     private ArrayList<ProductInformation> upciteProducts;
     private String upc;
+
+    public Object clone() throws CloneNotSupportedException
+    {
+        return super.clone();
+    }
 
     public long getDownloadTime() {
         return downloadTime;

@@ -5,9 +5,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
+    <TextView
+        android:id="@+id/resultsTitle"
+        android:layout_width="404dp"
+        android:layout_height="276dp"
+        android:scrollbars="vertical"
+        android:textSize="20sp"
+        android:translationY="50dp"
+        android:translationX="2dp"
+        app:autoSizeTextType="none"></TextView>
+
     <com.github.mikephil.charting.charts.LineChart
         android:layout_width="match_parent"
         android:layout_height="400dp"
+        android:translationY="126dp"
         android:id="@+id/lineChart"></com.github.mikephil.charting.charts.LineChart>
 
 </RelativeLayout>

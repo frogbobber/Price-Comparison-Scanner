@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.widget.ExpandableListView;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -35,6 +36,7 @@ public class ResultsActivity extends AppCompatActivity {
 
     LineChart lineChart;
     ArrayList<String> arr;
+    TextView title;
 
     @SuppressLint("RestrictedApi")
     @Override
@@ -44,6 +46,7 @@ public class ResultsActivity extends AppCompatActivity {
         getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
 
         lineChart = (LineChart) findViewById(R.id.lineChart);
+        title = (TextView) findViewById(R.id.resultsTitle);
         setTitle("Price History");
         String jsonString = "{\"_id\" : ObjectId(\"60845e960c0998fb88d9614a\"),\"amazonProducts\" : [ {\"name\" : \"Jell-o Sugar-free Instant Pudding &amp; Pie Filling, White Chocolate,1 Ounce (Pack of 4)\",\"price\" : \"$8.31\",\"url\" : \"https://www.amazon.com/Jell-Sugar-free-Instant-Pudding-Chocolate/dp/B00CK8T1HS/ref=sr_1_1?dchild=1&keywords=Jell-O+Chocolate+Instant+Pudding&qid=1619287700&sr=8-1\" }, {\"name\" : \"Jell-O Instant Chocolate Fudge Pudding &amp; Pie Filling (3.9 oz Boxes, Pack of 6)\",\"price\" : \"$12.39\",\"url\" : \"https://www.amazon.com/JELL-Chocolate-Instant-Pudding-Filling/dp/B00JD788AK/ref=sr_1_2?dchild=1&keywords=Jell-O+Chocolate+Instant+Pudding&qid=1619287700&sr=8-2\" }, {\"name\" : \"JELLO Instant Chocolate Pudding Mix (3.9oz Boxes, Pack of 6)\",\"price\" : \"$13.34\",\"url\" : \"https://www.amazon.com/Jell-Chocolate-Instant-Pudding-Ounce/dp/B00K0PRD2S/ref=sr_1_3?dchild=1&keywords=Jell-O+Chocolate+Instant+Pudding&qid=1619287700&sr=8-3\" }, {\"name\" : \"\",\"price\" : \"$23.52\",\"url\" : \"https://aax-us-east.amazon-adsystem.com/x/c/Qua1s7wm-lfTZt-hfuzIuhMAAAF5BRF0pAEAAAH2AWp3I4o/https://www.amazon.com/dp/B000E1HVF2?pd_rd_i=B000E1HVF2&pd_rd_w=0Jpez&pf_rd_p=3465d0d7-4e28-4692-b633-326c458deaa4&pd_rd_wg=nrzBv&pf_rd_r=N048FD7MERGPD6QCQD06&pd_rd_r=d5acbddb-46d1-46f4-bf0a-0d057b7c74af\" }, {\"name\" : \"Jell-O Instant Chocolate Fudge Pudding &amp; Pie Filling (5.9 oz Boxes, Pack of 24)\", \"price\" : \"$30.96\", \"url\" : \"https://www.amazon.com/JELL-Instant-Chocolate-Pudding-Filling/dp/B00HQKRSWU/ref=sr_1_4?dchild=1&keywords=Jell-O+Chocolate+Instant+Pudding&qid=1619287700&sr=8-4\" }, {\"name\" : \"Jell-O Instant Chocolate Fudge Sugar-Free Fat Free Pudding &amp; Pie Filling (1.4 oz Boxes, Pack of 24)\",\"price\" : \"$23.76\",\"url\" : \"https://www.amazon.com/Jell-Sugar-Free-Instant-Chocolate-1-4-Ounce/dp/B000E1BLMG/ref=sr_1_5?dchild=1&keywords=Jell-O+Chocolate+Instant+Pudding&qid=1619287700&sr=8-5\" }, {\"name\" : \"Jell-O Instant Chocolate Pudding &amp; Pie Filling (3.9 oz Boxes, Pack of 24)\",\"price\" : \"$23.76\",\"url\" : \"https://www.amazon.com/JELL-Instant-Chocolate-Pudding-Filling/dp/B000E1DSFE/ref=sr_1_6?dchild=1&keywords=Jell-O+Chocolate+Instant+Pudding&qid=1619287700&sr=8-6\" }, {\"name\" : \"Jell-O Instant White Chocolate Pudding &amp; Pie Filling (3.3 oz Boxes, Pack of 6)\",\"price\" : \"$13.68\",\"url\" : \"https://www.amazon.com/JELL-Chocolate-Instant-Pudding-Filling/dp/B00GJN7H4O/ref=sr_1_7?dchild=1&keywords=Jell-O+Chocolate+Instant+Pudding&qid=1619287700&sr=8-7\" }, {\"name\" : \"JELL-O Jello Instant Pudding and Pie Filling 4 Boxes (Chocolate Fudge)\",\"price\" : \"$10.99\",\"url\" : \"https://www.amazon.com/JELL-Instant-Pudding-Filling-Chocolate/dp/B00AB40CIU/ref=sr_1_8?dchild=1&keywords=Jell-O+Chocolate+Instant+Pudding&qid=1619287700&sr=8-8\" }, {\"name\" : \"Jell-O Chocolate Instant Pudding &amp; Pie Filling (4-Pack)\",\"price\" : \"$9.63\",\"url\" : \"https://www.amazon.com/Jell-Chocolate-Instant-Pudding-Filling/dp/B00GQCC0WM/ref=sr_1_9?dchild=1&keywords=Jell-O+Chocolate+Instant+Pudding&qid=1619287700&sr=8-9\" }],\"downloadTime\" : \"1619287702621\",\"targetProducts\" : [ ],\"upc\" : \"043000204313\",\"upciteProducts\" : [ {\"name\" : \"Jell-O Chocolate Instant Pudding & Pie Filling - 3.9 Ounces\",\"price\" : \"1.29\",\"url\" : \"https://www.upcitemdb.com/norob/alink/?id=x2x253t213y2e484v2&tid=1&seq=1619287699&plt=a4c21fc2d983f6dde0723d62f5563e9d\" }, {\"name\" : \"Jello 4113 Pudding & Pie Filling - Instant Chocolate Case Of 24\",\"price\" : \"37.0\",\"url\" : \"https://www.upcitemdb.com/norob/alink/?id=u2t253z2v2y2f4c4z2&tid=1&seq=1619287699&plt=19a954d15ab93055df834fee14560b1b\" }, {\"name\" : \"Jell-O Instant Pudding and Pie Filling - Chocolate - 1 Box (3.9 oz)\",\"price\" : \"1.03\",\"url\" : \"https://www.upcitemdb.com/norob/alink/?id=v2q2z213x2z2e4c4&tid=1&seq=1619287699&plt=928de5b77e82786b88ffc5f585b49d68\" }, {\"name\" : \"Instant Chocolate Pudding & Pie Filling 3.9 OZ BOX\",\"price\" : \"1.19\",\"url\" : \"https://www.upcitemdb.com/norob/alink/?id=u2r2632303x26454q2&tid=1&seq=1619287699&plt=7e2c55c07c795c58903b8e1721bdd7ea\" }, {\"name\" : \"Jell-O Chocolate Instant Pudding Mix, 3.9 oz Box\",\"price\" : \"0.92\",\"url\" : \"https://www.upcitemdb.com/norob/alink/?id=y2r26313030394b4&tid=1&seq=1619287699&plt=90b8542043684cd0133d2fde11c93372\" }, {\"name\" : \"Jell-O Instant Chocolate Pudding & Pie Filling - 3.9oz\",\"price\" : \"0.99\",\"url\" : \"https://www.upcitemdb.com/norob/alink/?id=23w2x2v2x213c4b4&tid=1&seq=1619287699&plt=cc3558b3edf66b1b784498c516efbf7d\" }, {\"name\" : \"Jell-O - Pudding & Pie Filling - Instant Chocolate 3.90 oz\",\"price\" : \"0.0\",\"url\" : \"https://www.upcitemdb.com/norob/alink/?id=v2q2330303037474y2&tid=1&seq=1619287699&plt=ef3414724de3a37e7e089df0bd364a71\" }],\"walmartProducts\" : [ ] }";
         String jsonString2 = "{\"_id\" : ObjectId(\"60845e960c0998fb88d9614a\"),\"amazonProducts\" : [ {\"name\" : \"Jell-o Sugar-free Instant Pudding &amp; Pie Filling, White Chocolate,1 Ounce (Pack of 4)\",\"price\" : \"$8.31\",\"url\" : \"https://www.amazon.com/Jell-Sugar-free-Instant-Pudding-Chocolate/dp/B00CK8T1HS/ref=sr_1_1?dchild=1&keywords=Jell-O+Chocolate+Instant+Pudding&qid=1619287700&sr=8-1\" }, {\"name\" : \"Jell-O Instant Chocolate Fudge Pudding &amp; Pie Filling (3.9 oz Boxes, Pack of 6)\",\"price\" : \"$12.39\",\"url\" : \"https://www.amazon.com/JELL-Chocolate-Instant-Pudding-Filling/dp/B00JD788AK/ref=sr_1_2?dchild=1&keywords=Jell-O+Chocolate+Instant+Pudding&qid=1619287700&sr=8-2\" }, {\"name\" : \"JELLO Instant Chocolate Pudding Mix (3.9oz Boxes, Pack of 6)\",\"price\" : \"$13.34\",\"url\" : \"https://www.amazon.com/Jell-Chocolate-Instant-Pudding-Ounce/dp/B00K0PRD2S/ref=sr_1_3?dchild=1&keywords=Jell-O+Chocolate+Instant+Pudding&qid=1619287700&sr=8-3\" }, {\"name\" : \"\",\"price\" : \"$23.52\",\"url\" : \"https://aax-us-east.amazon-adsystem.com/x/c/Qua1s7wm-lfTZt-hfuzIuhMAAAF5BRF0pAEAAAH2AWp3I4o/https://www.amazon.com/dp/B000E1HVF2?pd_rd_i=B000E1HVF2&pd_rd_w=0Jpez&pf_rd_p=3465d0d7-4e28-4692-b633-326c458deaa4&pd_rd_wg=nrzBv&pf_rd_r=N048FD7MERGPD6QCQD06&pd_rd_r=d5acbddb-46d1-46f4-bf0a-0d057b7c74af\" }, {\"name\" : \"Jell-O Instant Chocolate Fudge Pudding &amp; Pie Filling (5.9 oz Boxes, Pack of 24)\", \"price\" : \"$30.96\", \"url\" : \"https://www.amazon.com/JELL-Instant-Chocolate-Pudding-Filling/dp/B00HQKRSWU/ref=sr_1_4?dchild=1&keywords=Jell-O+Chocolate+Instant+Pudding&qid=1619287700&sr=8-4\" }, {\"name\" : \"Jell-O Instant Chocolate Fudge Sugar-Free Fat Free Pudding &amp; Pie Filling (1.4 oz Boxes, Pack of 24)\",\"price\" : \"$23.76\",\"url\" : \"https://www.amazon.com/Jell-Sugar-Free-Instant-Chocolate-1-4-Ounce/dp/B000E1BLMG/ref=sr_1_5?dchild=1&keywords=Jell-O+Chocolate+Instant+Pudding&qid=1619287700&sr=8-5\" }, {\"name\" : \"Jell-O Instant Chocolate Pudding &amp; Pie Filling (3.9 oz Boxes, Pack of 24)\",\"price\" : \"$23.76\",\"url\" : \"https://www.amazon.com/JELL-Instant-Chocolate-Pudding-Filling/dp/B000E1DSFE/ref=sr_1_6?dchild=1&keywords=Jell-O+Chocolate+Instant+Pudding&qid=1619287700&sr=8-6\" }, {\"name\" : \"Jell-O Instant White Chocolate Pudding &amp; Pie Filling (3.3 oz Boxes, Pack of 6)\",\"price\" : \"$13.68\",\"url\" : \"https://www.amazon.com/JELL-Chocolate-Instant-Pudding-Filling/dp/B00GJN7H4O/ref=sr_1_7?dchild=1&keywords=Jell-O+Chocolate+Instant+Pudding&qid=1619287700&sr=8-7\" }, {\"name\" : \"JELL-O Jello Instant Pudding and Pie Filling 4 Boxes (Chocolate Fudge)\",\"price\" : \"$10.99\",\"url\" : \"https://www.amazon.com/JELL-Instant-Pudding-Filling-Chocolate/dp/B00AB40CIU/ref=sr_1_8?dchild=1&keywords=Jell-O+Chocolate+Instant+Pudding&qid=1619287700&sr=8-8\" }, {\"name\" : \"Jell-O Chocolate Instant Pudding &amp; Pie Filling (4-Pack)\",\"price\" : \"$9.63\",\"url\" : \"https://www.amazon.com/Jell-Chocolate-Instant-Pudding-Filling/dp/B00GQCC0WM/ref=sr_1_9?dchild=1&keywords=Jell-O+Chocolate+Instant+Pudding&qid=1619287700&sr=8-9\" }],\"downloadTime\" : \"1619645844000\",\"targetProducts\" : [ ],\"upc\" : \"043000204313\",\"upciteProducts\" : [ {\"name\" : \"Jell-O Chocolate Instant Pudding & Pie Filling - 3.9 Ounces\",\"price\" : \"1.29\",\"url\" : \"https://www.upcitemdb.com/norob/alink/?id=x2x253t213y2e484v2&tid=1&seq=1619287699&plt=a4c21fc2d983f6dde0723d62f5563e9d\" }, {\"name\" : \"Jello 4113 Pudding & Pie Filling - Instant Chocolate Case Of 24\",\"price\" : \"37.0\",\"url\" : \"https://www.upcitemdb.com/norob/alink/?id=u2t253z2v2y2f4c4z2&tid=1&seq=1619287699&plt=19a954d15ab93055df834fee14560b1b\" }, {\"name\" : \"Jell-O Instant Pudding and Pie Filling - Chocolate - 1 Box (3.9 oz)\",\"price\" : \"1.03\",\"url\" : \"https://www.upcitemdb.com/norob/alink/?id=v2q2z213x2z2e4c4&tid=1&seq=1619287699&plt=928de5b77e82786b88ffc5f585b49d68\" }, {\"name\" : \"Instant Chocolate Pudding & Pie Filling 3.9 OZ BOX\",\"price\" : \"1.19\",\"url\" : \"https://www.upcitemdb.com/norob/alink/?id=u2r2632303x26454q2&tid=1&seq=1619287699&plt=7e2c55c07c795c58903b8e1721bdd7ea\" }, {\"name\" : \"Jell-O Chocolate Instant Pudding Mix, 3.9 oz Box\",\"price\" : \"0.92\",\"url\" : \"https://www.upcitemdb.com/norob/alink/?id=y2r26313030394b4&tid=1&seq=1619287699&plt=90b8542043684cd0133d2fde11c93372\" }, {\"name\" : \"Jell-O Instant Chocolate Pudding & Pie Filling - 3.9oz\",\"price\" : \"1.44\",\"url\" : \"https://www.upcitemdb.com/norob/alink/?id=23w2x2v2x213c4b4&tid=1&seq=1619287699&plt=cc3558b3edf66b1b784498c516efbf7d\" }, {\"name\" : \"Jell-O - Pudding & Pie Filling - Instant Chocolate 3.90 oz\",\"price\" : \"0.0\",\"url\" : \"https://www.upcitemdb.com/norob/alink/?id=v2q2330303037474y2&tid=1&seq=1619287699&plt=ef3414724de3a37e7e089df0bd364a71\" }],\"walmartProducts\" : [ ] }";
@@ -64,7 +67,7 @@ public class ResultsActivity extends AppCompatActivity {
         try {
             ArrayList<AllProductInformation> api = JSONtoAllProductInformation(arr);
             setData(api);
-        } catch (JSONException e) {
+        } catch (JSONException | CloneNotSupportedException e) {
             e.printStackTrace();
         }
     }
@@ -79,6 +82,12 @@ public class ResultsActivity extends AppCompatActivity {
 
         for(int i = 0; i < data.size(); i++){
             JSONObject obj = new JSONObject(data.get(i));
+            if(i == 0){
+                String t = obj.getString("_id");
+                t = t.replace("ObjectId(\"", "");
+                t = t.replace("\")", "");
+                title.setText(t + " Price History");
+            }
             JSONArray amazonProducts = obj.getJSONArray("amazonProducts");
             JSONArray targetProducts = obj.getJSONArray("targetProducts");
             JSONArray walmartProducts = obj.getJSONArray("walmartProducts");
@@ -102,7 +111,6 @@ public class ResultsActivity extends AppCompatActivity {
                 upciteArr.add(new ProductInformation(amazonProducts.getJSONObject(j).getString("url"),
                         amazonProducts.getJSONObject(j).getString("name"), amazonProducts.getJSONObject(j).getString("price")));
             }
-
             Long time = obj.getLong("downloadTime");
 
             allProductInformation.add(new AllProductInformation(amazonArr, targetArr, walmartArr, upciteArr, "ignore"));
@@ -111,12 +119,12 @@ public class ResultsActivity extends AppCompatActivity {
         return allProductInformation;
     }
 
-    private void setData(ArrayList<AllProductInformation> data) throws JSONException {
+    private void setData(ArrayList<AllProductInformation> data) throws JSONException, CloneNotSupportedException {
         ArrayList<String> xAXES = new ArrayList<>();
         ArrayList<Entry> yAXES = new ArrayList<>();
         int i = 0;
         for(AllProductInformation instance: data){
-            DataProcessor dp = new DataProcessor(instance);
+            DataProcessor dp = new DataProcessor(instance, false, false, false);
             Date date = new Date(instance.getDownloadTime());
             DateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
             format.setTimeZone(TimeZone.getTimeZone("Etc/UTC"));
