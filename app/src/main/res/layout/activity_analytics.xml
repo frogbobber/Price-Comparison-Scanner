@@ -10,7 +10,7 @@
         android:layout_width="450dp"
         android:layout_height="276dp"
         android:scrollbars="vertical"
-        android:textSize="24sp"
+        android:textSize="22sp"
         android:translationY="75dp"
         app:autoSizeTextType="none"></TextView>
 
@@ -21,18 +21,18 @@
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="2dp"
         android:scrollbars="vertical"
-        android:textSize="24sp"
+        android:textSize="22sp"
         android:translationY="150dp"
         app:autoSizeTextType="none"></TextView>
 
     <TextView
         android:id="@+id/resultsTextView3"
-        android:layout_width="450dp"
+        android:layout_width="600dp"
         android:layout_height="276dp"
         android:layout_alignParentEnd="true"
-        android:layout_marginEnd="206dp"
+        android:layout_marginEnd="75dp"
         android:scrollbars="vertical"
-        android:textSize="24sp"
+        android:textSize="22sp"
         android:translationY="225dp"
         app:autoSizeTextType="none"></TextView>
 
@@ -41,9 +41,9 @@
         android:layout_width="450dp"
         android:layout_height="276dp"
         android:layout_alignParentEnd="true"
-        android:layout_marginEnd="0dp"
+        android:layout_marginEnd="75dp"
         android:scrollbars="vertical"
-        android:textSize="24sp"
+        android:textSize="22sp"
         android:translationY="300dp"
         app:autoSizeTextType="none"></TextView>
 

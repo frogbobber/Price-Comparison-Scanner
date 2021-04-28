@@ -38,7 +38,7 @@ public class AboutDataDump {
         LinkedHashMap<String, List<String>> expandableListDetail = new LinkedHashMap<String, List<String>>();
 
         List<String> general = new ArrayList<String>();
-        general.add(context.getResources().getString(R.string.about_authors));
+        general.add(context.getResources().getString(R.string.about_authors_answers));
 
         expandableListDetail.put(context.getResources().getString(R.string.about_authors), general);
 

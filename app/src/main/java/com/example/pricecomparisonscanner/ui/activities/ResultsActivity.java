@@ -148,9 +148,10 @@ public class ResultsActivity extends AppCompatActivity {
     private void setData(ArrayList<AllProductInformation> data) throws JSONException, CloneNotSupportedException {
         ArrayList<String> xAXES = new ArrayList<>();
         ArrayList<Entry> yAXES = new ArrayList<>();
+        float[] tmp = new float[]{0.75f, 0.77f, 0.67f, 0.67f, 0.7f, 1.00f, 0.99f, 0.9f, 0.6f};
         int i = 0;
-        for(AllProductInformation instance: data){
-            DataProcessor dp = new DataProcessor(instance, true, false, false);
+        for(float instance: tmp){
+            //DataProcessor dp = new DataProcessor(instance, true, false, false);
             //Date date = new Date(instance.getDownloadTime());
             //DateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
             //format.setTimeZone(TimeZone.getTimeZone("Etc/UTC"));
@@ -159,7 +160,7 @@ public class ResultsActivity extends AppCompatActivity {
             //format.setTimeZone(TimeZone.getTimeZone("Australia/Sydney"));
             //formatted = format.format(date);
             //System.out.println(formatted);
-            String price = dp.getBestListing().getPrice();
+            String price = Float.toString(instance);
             price = price.replace("$", "");
             System.out.println("yAXES: " + price + " " + Integer.toString(i));
             //System.out.println("yAXES: " + Integer.toString(i) + " " + formatted);
