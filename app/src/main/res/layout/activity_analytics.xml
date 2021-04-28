@@ -5,12 +5,54 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-    <ExpandableListView
-        android:divider="@android:color/darker_gray"
-        android:dividerHeight="0.5dp"
-        android:id="@+id/generalExpandableListView"
-        android:indicatorLeft="?android:attr/expandableListPreferredItemIndicatorLeft"
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content" />
+    <TextView
+        android:id="@+id/resultsTextView1"
+        android:layout_width="450dp"
+        android:layout_height="276dp"
+        android:scrollbars="vertical"
+        android:textSize="24sp"
+        android:translationY="75dp"
+        app:autoSizeTextType="none"></TextView>
+
+    <TextView
+        android:id="@+id/resultsTextView2"
+        android:layout_width="450dp"
+        android:layout_height="276dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="2dp"
+        android:scrollbars="vertical"
+        android:textSize="24sp"
+        android:translationY="150dp"
+        app:autoSizeTextType="none"></TextView>
+
+    <TextView
+        android:id="@+id/resultsTextView3"
+        android:layout_width="450dp"
+        android:layout_height="276dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="206dp"
+        android:scrollbars="vertical"
+        android:textSize="24sp"
+        android:translationY="225dp"
+        app:autoSizeTextType="none"></TextView>
+
+    <TextView
+        android:id="@+id/resultsTextView4"
+        android:layout_width="450dp"
+        android:layout_height="276dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="0dp"
+        android:scrollbars="vertical"
+        android:textSize="24sp"
+        android:translationY="300dp"
+        app:autoSizeTextType="none"></TextView>
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="412dp"
+        android:layout_height="550dp"
+        android:textSize="30sp"
+        android:translationY="10dp" />
+    -->
 
 </RelativeLayout>

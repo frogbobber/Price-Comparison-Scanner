@@ -66,13 +66,11 @@ public class ResultsActivity extends AppCompatActivity {
     }
 
     public void UPCtoChart(String upc){
-        AtomicReference<ArrayList<String>> a = null;
         Thread mongoThread = new Thread(() -> {
-            ConnectionHelper.retrievePrices(upc);
+            setChartData(ConnectionHelper.retrievePrices(upc));
         });
         mongoThread.start();
 
-        setChartData(a.get());
     }
 
     public void setChartData(ArrayList<String> arr){
@@ -84,7 +82,6 @@ public class ResultsActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
-
 
     private ArrayList<AllProductInformation> JSONtoAllProductInformation(ArrayList<String> data) throws JSONException {
         ArrayList<AllProductInformation> allProductInformation = new ArrayList<AllProductInformation>();
@@ -98,9 +95,12 @@ public class ResultsActivity extends AppCompatActivity {
             JSONObject obj = new JSONObject(data.get(i));
             if(i == 0){
                 String t = obj.getString("_id");
-                t = t.replace("ObjectId(\"", "");
-                t = t.replace("\")", "");
-                title.setText(t + " Price History");
+                t = t.replace("{", "");
+                t = t.replace("\"}", "");
+                t = t.replace("\"", "");
+                t = t.replace("$oid", "");
+                t = t.replace(":", "");
+                title.setText("Price History of:\nUPC: " + t);
             }
             if(obj.has("amazonProducts")){
                 JSONArray amazonProducts = obj.getJSONArray("amazonProducts");
@@ -139,10 +139,8 @@ public class ResultsActivity extends AppCompatActivity {
                 }
             }
 
-            Long time = obj.getLong("downloadTime");
-
             allProductInformation.add(new AllProductInformation(amazonArr, targetArr, walmartArr, upciteArr, bestbuyArr, "ignore"));
-            allProductInformation.get(i).setDownloadTime(time);
+            //allProductInformation.get(i).setDownloadTime(t);
         }
         return allProductInformation;
     }
@@ -152,21 +150,21 @@ public class ResultsActivity extends AppCompatActivity {
         ArrayList<Entry> yAXES = new ArrayList<>();
         int i = 0;
         for(AllProductInformation instance: data){
-            DataProcessor dp = new DataProcessor(instance, false, false, false);
-            Date date = new Date(instance.getDownloadTime());
-            DateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-            format.setTimeZone(TimeZone.getTimeZone("Etc/UTC"));
-            String formatted = format.format(date);
+            DataProcessor dp = new DataProcessor(instance, true, false, false);
+            //Date date = new Date(instance.getDownloadTime());
+            //DateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+            //format.setTimeZone(TimeZone.getTimeZone("Etc/UTC"));
+            //String formatted = format.format(date);
             //System.out.println(formatted);
-            format.setTimeZone(TimeZone.getTimeZone("Australia/Sydney"));
-            formatted = format.format(date);
+            //format.setTimeZone(TimeZone.getTimeZone("Australia/Sydney"));
+            //formatted = format.format(date);
             //System.out.println(formatted);
             String price = dp.getBestListing().getPrice();
             price = price.replace("$", "");
             System.out.println("yAXES: " + price + " " + Integer.toString(i));
-            System.out.println("yAXES: " + Integer.toString(i) + " " + formatted);
+            //System.out.println("yAXES: " + Integer.toString(i) + " " + formatted);
             yAXES.add(new Entry(i, Float.parseFloat(price)));
-            xAXES.add(i, formatted);
+            //xAXES.add(i, formatted);
             i++;
         }
 
@@ -178,8 +176,12 @@ public class ResultsActivity extends AppCompatActivity {
 
         ArrayList<ILineDataSet> lineDataSet = new ArrayList<>();
         LineDataSet line = new LineDataSet(yAXES, "History");
+        line.setLineWidth(2f);
         line.setDrawCircles(false);
-        line.setColor(Color.BLUE);
+        line.setColor(Color.parseColor("#ff5722"));
+        line.setFillAlpha(65);
+        line.setFillColor(Color.parseColor("#ff5722"));
+        line.setHighLightColor(Color.rgb(244, 117, 117));
 
         lineDataSet.add(line);
 

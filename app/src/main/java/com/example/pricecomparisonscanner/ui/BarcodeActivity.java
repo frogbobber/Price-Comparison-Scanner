@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.widget.AdapterView;
@@ -22,6 +23,8 @@ import com.example.pricecomparisonscanner.analysis.DataProcessor;
 import com.example.pricecomparisonscanner.information.AllProductInformation;
 import com.example.pricecomparisonscanner.information.ProductInformation;
 //import com.example.pricecomparisonscanner.ui.activities.ScannerActivity;
+import com.example.pricecomparisonscanner.ui.activities.AnalyticsActivity;
+import com.example.pricecomparisonscanner.ui.activities.ResultsActivity;
 import com.google.android.material.navigation.NavigationView;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
@@ -43,12 +46,19 @@ public class BarcodeActivity extends com.example.pricecomparisonscanner.ui.helpe
 //    private TextView textView3;
 //    private TextView textView4;
     private AllProductInformation allProductInformation;
+    static BarcodeActivity INSTANCE;
+    public static double[] stats;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        INSTANCE = this;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        if (android.os.Build.VERSION.SDK_INT > 9)
+        {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+        }
 //        textView = findViewById(R.id.textView);
 //        textView1 = findViewById(R.id.resultsTextView1);
 //        textView2 = findViewById(R.id.resultsTextView2);
@@ -216,7 +226,7 @@ public class BarcodeActivity extends com.example.pricecomparisonscanner.ui.helpe
 
         try {
             if (allProductInformation != null) {
-                DataProcessor dp = new DataProcessor(allProductInformation);
+                DataProcessor dp = new DataProcessor(allProductInformation, false, true, false);
 //                textView.setText("");
 //                textView1.setText("");
 //                textView2.setText("");
@@ -254,7 +264,7 @@ public class BarcodeActivity extends com.example.pricecomparisonscanner.ui.helpe
 
 
         TextView textView = findViewById(R.id.textview6);
-        textView.setText("Retreving Information...");
+        textView.setText("Retrieving Information...");
 
 
         Spinner spinner = findViewById(R.id.Spinner);
@@ -372,12 +382,19 @@ public class BarcodeActivity extends com.example.pricecomparisonscanner.ui.helpe
                         System.out.println("\n\nnew info - \n" + info + "\n - end info\n\n");
 
                         AllProductInformation finalInfo = info;
-                        Thread mongoThread = new Thread(() -> {
-                            com.example.pricecomparisonscanner.Database.ConnectionHelper.sendPrices(finalInfo);
-                            System.out.println(com.example.pricecomparisonscanner.Database.ConnectionHelper.retrievePrices(upc));
-                        });
+                        try {
+                            Thread mongoThread = new Thread(() -> {
+                                com.example.pricecomparisonscanner.Database.ConnectionHelper.sendPrices(finalInfo);
+                                System.out.println(com.example.pricecomparisonscanner.Database.ConnectionHelper.retrievePrices(upc));
+                            });
 
-                        mongoThread.start();
+                            mongoThread.start();
+                        } catch (Exception e){
+                            e.printStackTrace();
+                        }
+
+                        DataProcessor dp = new DataProcessor(finalInfo);
+                        stats = new double[]{dp.getMean(), dp.getMedian(), dp.getStandardDeviation(), dp.getVariance(), Double.parseDouble(dp.getBestListing().getPrice().replace("$", ""))};
 
                         textView.setText("Information Collected");
 
@@ -402,7 +419,7 @@ public class BarcodeActivity extends com.example.pricecomparisonscanner.ui.helpe
 
                          */
 
-                        textView.setText("Select from Dropdown Menu Above");
+                        textView.setText("Success!\n\n" + "Best price was: " + dp.getBestListing().getPrice() + " at " + dp.getBestListing().getUrl() + "\n\n" + "Select from Dropdown Menu Above to check individual retailers");
 
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -412,6 +429,14 @@ public class BarcodeActivity extends com.example.pricecomparisonscanner.ui.helpe
                 thread.start();
             }
         }
+    }
+
+    public static BarcodeActivity getActivityInstance(){
+        return INSTANCE;
+    }
+
+    public double[] getStats(){
+        return stats;
     }
 
     @Override
