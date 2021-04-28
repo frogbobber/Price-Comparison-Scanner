@@ -14,6 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
+    <!--
     <TextView
         android:id="@+id/resultsTextView1"
         android:layout_width="202dp"
@@ -62,6 +63,7 @@
         android:layout_height="550dp"
         android:textSize="24sp"
         android:translationY="50dp" />
+        -->
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/nav_view"

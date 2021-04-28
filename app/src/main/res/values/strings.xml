@@ -48,6 +48,15 @@
 
     <string name="activity_scanner_permission_needed_explanation">The app needs the camera permission in order to scan QR codes.</string>
 
+    <string-array name="weeks">
+        <item>Overview</item>
+        <item>Amazon</item>
+        <item>Walmart</item>
+        <item>Target</item>
+        <item>Best Buy</item>
+        <item>Broad Sweep Database</item>
+    </string-array>
+
 
 
     <!--###HELP###-->
