@@ -40,7 +40,7 @@ public class AboutDataDump {
         List<String> general = new ArrayList<String>();
         general.add(context.getResources().getString(R.string.about_authors));
 
-        expandableListDetail.put(context.getResources().getString(R.string.about_authors_answers), general);
+        expandableListDetail.put(context.getResources().getString(R.string.about_authors), general);
 
         return expandableListDetail;
     }

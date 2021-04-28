@@ -21,6 +21,9 @@ public class WalmartExtractor extends ProductExtractor{
                     e.select("span[class*=price display-inline-block arrange-fit price price-main]").select("span[class*=visuallyhidden]").html() // price
             ));
         });
+
+        System.out.println("Sorted Walmart");
+
         //System.out.println("Test"+products);
         return products;
     }

@@ -21,15 +21,11 @@ import com.example.pricecomparisonscanner.ui.activities.AboutActivity;
 import com.example.pricecomparisonscanner.ui.BarcodeActivity;
 import com.example.pricecomparisonscanner.ui.activities.HomeActivity;
 import com.example.pricecomparisonscanner.ui.activities.ResultsActivity;
-import com.example.pricecomparisonscanner.ui.activities.ScannerActivity;
+//import com.example.pricecomparisonscanner.ui.activities.ScannerActivity;
 import com.example.pricecomparisonscanner.ui.activities.TutorialActivity;
 import com.example.pricecomparisonscanner.ui.activities.AnalyticsActivity;
 import com.google.android.material.navigation.NavigationView;
 import com.google.zxing.integration.android.IntentIntegrator;
-/*
-import com.example.pricecomparisonscanner.ui.HistoryActivity;
-import com.qr.code.generate.ui.activities.SettingsActivity;
-import com.qr.code.generate.ui.activities.generator.QrGeneratorOverviewActivity;*/
 
 public abstract class BaseActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -130,15 +126,15 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
                 intent = new Intent(this, BarcodeActivity.class);
                 createBackStack(intent);
                 break;
-            case R.id.nav_scan:
+            /*case R.id.nav_scan:
                 IntentIntegrator integrator = new IntentIntegrator(this);
                 integrator.setCaptureActivity(ScannerActivity.class);
                 integrator.setBeepEnabled(false);
                 integrator.setOrientationLocked(false);
                 integrator.initiateScan();
-                break;
+                break;*/
             case R.id.nav_home:
-                intent = new Intent(this, HomeActivity.class);
+                intent = new Intent(this, BarcodeActivity.class);
                 createBackStack(intent);
                 break;
             case R.id.nav_tutorial:

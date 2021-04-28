@@ -10,10 +10,12 @@
                 android:id="@+id/nav_home"
                 android:icon="@drawable/ic_home"
                 android:title="@string/home" />
+            <!--
             <item
                 android:id="@+id/nav_scan"
                 android:icon="@drawable/qqr"
                 android:title="@string/qr_scanner" />
+                -->
 
             <item
                 android:id="@+id/nav_barcode"

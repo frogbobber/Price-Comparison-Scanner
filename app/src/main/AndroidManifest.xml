@@ -25,13 +25,14 @@
         </activity>
         <activity
             android:name=".ui.BarcodeActivity"
-            android:parentActivityName=".ui.activities.ScannerActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
+        <!--
         <activity
             android:name=".ui.activities.ScannerActivity"
             android:label="SCANAMOS"
             android:clearTaskOnLaunch="true"
             android:theme="@style/AppTheme.NoActionBar" />
+            -->
         <activity
             android:name=".ui.activities.HomeActivity"
             android:clearTaskOnLaunch="true"
@@ -39,20 +40,20 @@
         <activity
             android:name=".ui.activities.ResultsActivity"
             android:label="@string/results"
-            android:parentActivityName=".ui.activities.HomeActivity" />
+            android:parentActivityName=".ui.BarcodeActivity" />
         <activity
             android:name=".ui.activities.TutorialActivity"
-            android:parentActivityName=".ui.activities.HomeActivity"
+            android:parentActivityName=".ui.BarcodeActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".ui.activities.AnalyticsActivity"
             android:label="@string/analytics"
-            android:parentActivityName=".ui.activities.HomeActivity" />
+            android:parentActivityName=".ui.BarcodeActivity" />
 
         <activity
             android:name=".ui.activities.AboutActivity"
             android:label="@string/about"
-            android:parentActivityName=".ui.activities.HomeActivity" />
+            android:parentActivityName=".ui.BarcodeActivity" />
 
     </application>
 

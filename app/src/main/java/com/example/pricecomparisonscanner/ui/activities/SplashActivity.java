@@ -27,7 +27,7 @@ public class SplashActivity extends AppCompatActivity {
 
                 Intent mainIntent;
 
-                mainIntent = new Intent(SplashActivity.this, HomeActivity.class);
+                mainIntent = new Intent(SplashActivity.this, BarcodeActivity.class);
 
                 /*if(firstStartPref.isFirstTimeLaunch()) {
                     mainIntent = new Intent(SplashActivity.this, TutorialActivity.class);

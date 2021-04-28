@@ -21,7 +21,7 @@ import com.example.pricecomparisonscanner.WebScraper;
 import com.example.pricecomparisonscanner.analysis.DataProcessor;
 import com.example.pricecomparisonscanner.information.AllProductInformation;
 import com.example.pricecomparisonscanner.information.ProductInformation;
-import com.example.pricecomparisonscanner.ui.activities.ScannerActivity;
+//import com.example.pricecomparisonscanner.ui.activities.ScannerActivity;
 import com.google.android.material.navigation.NavigationView;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
@@ -69,10 +69,39 @@ public class BarcodeActivity extends com.example.pricecomparisonscanner.ui.helpe
                 if (allProductInformation == null) {
                     return;
                 }
+                StringBuilder outputBuilder = new StringBuilder();
                 if(position==0)
                 {
                     try {
-                        textView.setText(allProductInformation.getAmazonProducts().get(0).getName() + " " + allProductInformation.getAmazonProducts().get(0).getPrice());
+                        try {
+                            outputBuilder.append(allProductInformation.getAmazonProducts().get(0).getName() + " " + allProductInformation.getAmazonProducts().get(0).getPrice() + "\n\n");
+                        } catch (Exception e) {}
+                        try {
+                            outputBuilder.append(allProductInformation.getWalmartProducts().get(0).getName() + " " + allProductInformation.getWalmartProducts().get(0).getPrice() + "\n\n");
+                        } catch (Exception e) {}
+                        try {
+                            outputBuilder.append(allProductInformation.getTargetProducts().get(0).getName() + " " + allProductInformation.getTargetProducts().get(0).getPrice() + "\n\n");
+                        } catch (Exception e) {}
+                        try {
+                            outputBuilder.append(allProductInformation.getBestBuyProducts().get(0).getName() + " " + allProductInformation.getTargetProducts().get(0).getPrice() + "\n\n");
+                        } catch (Exception e) {}
+                        try {
+                            outputBuilder.append(allProductInformation.getUpciteProducts().get(0).getName() + " " + allProductInformation.getUpciteProducts().get(0).getPrice() + "\n\n");
+                        } catch (Exception e) {}
+                    } catch (Exception e) {
+                        textView.setText("No Overview Information, please try another source.");
+                    }
+                }
+                else if(position==1)
+                {
+                    try {
+                        ArrayList<ProductInformation> products = allProductInformation.getAmazonProducts();
+                        for (int i = 0; i < products.size() && i < 14; i++) {
+                            outputBuilder.append(
+                                    products.get(i).getName().substring(0, Math.min(products.get(i).getName().length(), 20)) + " " +
+                                            products.get(i).getPrice().substring(0, Math.min(products.get(i).getPrice().length(), 20)) + "\n"
+                            );
+                        }
                     } catch (Exception e) {
                         textView.setText("No Amazon Information, please try another source.");
                     }
@@ -80,7 +109,13 @@ public class BarcodeActivity extends com.example.pricecomparisonscanner.ui.helpe
                 else if(position==1)
                 {
                     try {
-                        textView.setText(allProductInformation.getWalmartProducts().get(0).getName() + " " + allProductInformation.getWalmartProducts().get(0).getPrice());
+                        ArrayList<ProductInformation> products = allProductInformation.getWalmartProducts();
+                        for (int i = 0; i < products.size() && i < 14; i++) {
+                            outputBuilder.append(
+                                    products.get(i).getName().substring(0, Math.min(products.get(i).getName().length(), 20)) + " " +
+                                            products.get(i).getPrice().substring(0, Math.min(products.get(i).getPrice().length(), 20)) + "\n"
+                            );
+                        }
                     } catch (Exception e) {
                         textView.setText("No Walmart Information, please try another source.");
                     }
@@ -88,7 +123,13 @@ public class BarcodeActivity extends com.example.pricecomparisonscanner.ui.helpe
                 else if(position==2)
                 {
                     try {
-                        textView.setText(allProductInformation.getTargetProducts().get(0).getName() + " " + allProductInformation.getTargetProducts().get(0).getPrice());
+                        ArrayList<ProductInformation> products = allProductInformation.getTargetProducts();
+                        for (int i = 0; i < products.size() && i < 14; i++) {
+                            outputBuilder.append(
+                                    products.get(i).getName().substring(0, Math.min(products.get(i).getName().length(), 20)) + " " +
+                                            products.get(i).getPrice().substring(0, Math.min(products.get(i).getPrice().length(), 20)) + "\n"
+                            );
+                        }
                     } catch (Exception e) {
                         textView.setText("No Target Information, please try another source.");
                     }
@@ -96,7 +137,13 @@ public class BarcodeActivity extends com.example.pricecomparisonscanner.ui.helpe
                 else if(position==3)
                 {
                     try {
-                        textView.setText(allProductInformation.getTargetProducts().get(0).getName() + " " + allProductInformation.getTargetProducts().get(0).getPrice());
+                        ArrayList<ProductInformation> products = allProductInformation.getBestBuyProducts();
+                        for (int i = 0; i < products.size() && i < 14; i++) {
+                            outputBuilder.append(
+                                    products.get(i).getName().substring(0, Math.min(products.get(i).getName().length(), 20)) + " " +
+                                            products.get(i).getPrice().substring(0, Math.min(products.get(i).getPrice().length(), 20)) + "\n"
+                            );
+                        }
                     } catch (Exception e) {
                         textView.setText("No BestBuy Information, please try another source.");
                     }
@@ -104,11 +151,18 @@ public class BarcodeActivity extends com.example.pricecomparisonscanner.ui.helpe
                 else if(position==4)
                 {
                     try {
-                        textView.setText(allProductInformation.getUpciteProducts().get(0).getName() + " " + allProductInformation.getUpciteProducts().get(0).getPrice());
+                        ArrayList<ProductInformation> products = allProductInformation.getUpciteProducts();
+                        for (int i = 0; i < products.size() && i < 14; i++) {
+                            outputBuilder.append(
+                                    products.get(i).getName().substring(0, Math.min(products.get(i).getName().length(), 20)) + " " +
+                                            products.get(i).getPrice().substring(0, Math.min(products.get(i).getPrice().length(), 20)) + "\n"
+                            );
+                        }
                     } catch (Exception e) {
                         textView.setText("No Broad Sweep Information, please try another source.");
                     }
                 }
+                textView.setText(outputBuilder.toString());
                 if (textView.getText().equals(" ") || textView.getText().equals("")) {
                     textView.setText("Collecting Information, \nPlease try again in a few seconds.");
                 }
@@ -170,6 +224,10 @@ public class BarcodeActivity extends com.example.pricecomparisonscanner.ui.helpe
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         IntentResult intentResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+
+
+        TextView textView = findViewById(R.id.textview6);
+        textView.setText("Retreving Information...");
 
 
         Spinner spinner = findViewById(R.id.Spinner);
@@ -242,7 +300,7 @@ public class BarcodeActivity extends com.example.pricecomparisonscanner.ui.helpe
 
                         outputBuilder.append("Broad Sweep Database: \n");
                         ArrayList<ProductInformation> products = info.getUpciteProducts();
-                        for (int i = 0; i < products.size(); i++) {
+                        for (int i = 0; i < products.size() && i < 14; i++) {
                             outputBuilder.append(
                                     products.get(i).getName().substring(0, Math.min(products.get(i).getName().length(), 20)) + "\n" +
                                             products.get(i).getPrice().substring(0, Math.min(products.get(i).getPrice().length(), 20)) + "  " +
@@ -252,7 +310,7 @@ public class BarcodeActivity extends com.example.pricecomparisonscanner.ui.helpe
 
                         outputBuilder2.append("Top Walmart Listings: \n");
                         products = info.getWalmartProducts();
-                        for (int i = 0; i < products.size(); i++) {
+                        for (int i = 0; i < products.size() && i < 14; i++) {
                             outputBuilder2.append(
                                     products.get(i).getName().substring(0, Math.min(products.get(i).getName().length(), 20)) + "\n" +
                                             products.get(i).getPrice().substring(0, Math.min(products.get(i).getPrice().length(), 20)) + "  " +
@@ -262,7 +320,7 @@ public class BarcodeActivity extends com.example.pricecomparisonscanner.ui.helpe
 
                         outputBuilder3.append("Top Amazon Listings: \n");
                         products = info.getAmazonProducts();
-                        for (int i = 0; i < products.size(); i++) {
+                        for (int i = 0; i < products.size() && i < 14; i++) {
                             outputBuilder3.append( "\n" +
                                     products.get(i).getName().substring(0, Math.min(products.get(i).getName().length(), 20)) + "\n" +
                                     products.get(i).getPrice().substring(0, Math.min(products.get(i).getPrice().length(), 20)) + "  " +
@@ -272,7 +330,7 @@ public class BarcodeActivity extends com.example.pricecomparisonscanner.ui.helpe
 
                         outputBuilder4.append("Top Best Buy Listings: \n");
                         products = info.getTargetProducts();
-                        for (int i = 0; i < products.size(); i++) {
+                        for (int i = 0; i < products.size() && i < 14; i++) {
                             outputBuilder4.append( "\n" +
                                     products.get(i).getName().substring(0, Math.min(products.get(i).getName().length(), 20)) + "\n" +
                                     products.get(i).getPrice().substring(0, Math.min(products.get(i).getPrice().length(), 20)) + "  " +
@@ -293,6 +351,28 @@ public class BarcodeActivity extends com.example.pricecomparisonscanner.ui.helpe
                         });
 
                         mongoThread.start();
+
+                        textView.setText("Information Collected");
+
+                        StringBuilder s = new StringBuilder();
+
+                        try {
+                            s.append(allProductInformation.getAmazonProducts().get(0).getName() + " " + allProductInformation.getAmazonProducts().get(0).getPrice() + "\n\n");
+                        } catch (Exception e) {}
+                        try {
+                            s.append(allProductInformation.getWalmartProducts().get(0).getName() + " " + allProductInformation.getWalmartProducts().get(0).getPrice() + "\n\n");
+                        } catch (Exception e) {}
+                        try {
+                            s.append(allProductInformation.getTargetProducts().get(0).getName() + " " + allProductInformation.getTargetProducts().get(0).getPrice() + "\n\n");
+                        } catch (Exception e) {}
+                        try {
+                            s.append(allProductInformation.getBestBuyProducts().get(0).getName() + " " + allProductInformation.getTargetProducts().get(0).getPrice() + "\n\n");
+                        } catch (Exception e) {}
+                        try {
+                            s.append(allProductInformation.getUpciteProducts().get(0).getName() + " " + allProductInformation.getUpciteProducts().get(0).getPrice() + "\n\n");
+                        } catch (Exception e) {}
+
+                        textView.setText(s.toString());
 
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -324,12 +404,5 @@ public class BarcodeActivity extends com.example.pricecomparisonscanner.ui.helpe
     public boolean onSupportNavigateUp() {
         onBackPressed();
         return true;
-    }
-
-    public void onBackPressed() {
-        Intent intent = new Intent(BarcodeActivity.this, ScannerActivity.class);
-        startActivity(intent);
-        finish();
-        super.onBackPressed();
     }
 }

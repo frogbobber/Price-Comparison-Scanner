@@ -33,7 +33,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
-public class ScannerActivity extends com.example.pricecomparisonscanner.ui.helpers.BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
+/*public class ScannerActivity extends com.example.pricecomparisonscanner.ui.helpers.BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
     private static final int PERMISSION_CAMERA_REQUEST = 0;
 
     // UI
@@ -209,4 +209,4 @@ public class ScannerActivity extends com.example.pricecomparisonscanner.ui.helpe
                 break;
         }
     }
-}
+}*/
