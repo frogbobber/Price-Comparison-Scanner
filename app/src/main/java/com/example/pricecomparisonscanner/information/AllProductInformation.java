@@ -5,6 +5,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class AllProductInformation implements Cloneable {
@@ -166,7 +167,6 @@ public class AllProductInformation implements Cloneable {
                 ", targetProducts=" + targetProducts +
                 ", bestBuyProducts=" + bestBuyProducts +
                 ", upciteProducts=" + upciteProducts +
-                ", downloadTime=" + this.downloadTime +
                 ", upc=" + this.upc +
                 "}\n";
     }
