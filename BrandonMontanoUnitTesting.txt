@@ -1,0 +1,6 @@
+Brandon Montano Unit Testing Procedure-
+While programming GUI.
+I performed unit testing to make sure the correct text views and correct action listeners were indeed listening to the correct things in the GUI.
+All unit tests are currently successful.
+No future Unit tests are needed for the GUI.
+The GUI is working under full functionality and we can continue to move on our future plans for the app. 
