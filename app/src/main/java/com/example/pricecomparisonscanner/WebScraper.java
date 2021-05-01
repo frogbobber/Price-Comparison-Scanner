@@ -4,15 +4,14 @@ import com.example.pricecomparisonscanner.Database.ConnectionHelper;
 import com.example.pricecomparisonscanner.information.AllProductInformation;
 import com.example.pricecomparisonscanner.information.ProductInformation;
 import com.example.pricecomparisonscanner.sorter.AmazonExtractor;
+import com.example.pricecomparisonscanner.sorter.BestBuyExtractor;
 import com.example.pricecomparisonscanner.sorter.TargetExtractor;
 import com.example.pricecomparisonscanner.sorter.WalmartExtractor;
 
-import org.jsoup.HttpStatusException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
 import java.io.IOException;
-import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 
 public class WebScraper {
@@ -21,7 +20,8 @@ public class WebScraper {
         AllProductInformation p = new AllProductInformation(
                 getAmazonProductInformation("https://www.amazon.com/s?k=" + name + "&ref=nb_sb_noss"),
                 getWalmartProductInformation("https://www.walmart.com/search/?cat_id=0&query=" + name),
-                getTargetProductInformation("https://www.bestbuy.com/site/searchpage.jsp?st=" + name),    // <-- actually best buy, Target Information: https://www.target.com/s?searchTerm=
+                getTargetProductInformation(name),
+                getBestBuyProductInformation("https://www.bestbuy.com/site/searchpage.jsp?st=" + name),    // <-- actually best buy, Target Information: https://www.target.com/s?searchTerm=
                 null,
                 upc
         );
@@ -61,20 +61,50 @@ public class WebScraper {
         }
     }
 
-    private static ArrayList<ProductInformation> getTargetProductInformation(String url) {
+    private static ArrayList<ProductInformation> getTargetProductInformation(String searchTerm) { //https://www.target.com/s?searchTerm=
         try {
-            System.out.println(url);
-            Document document = Jsoup.connect(url)
-                .header("Accept", "text/html,application/xhtml+xml,application/xml")
-                .header("Accept-Language", "en")
-                .header("Accept-Encoding", "gzip,deflate,sdch")
-                .header("Connection", "keep-alive")
-                .header("Upgrade-Insecure-Requests", "1")
-                .header("TE", "Trailers")
-                .userAgent("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.61 Safari/537.36")//Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36
-                .referrer("https://www.bestbuy.com/")
-                .get();
-            return new TargetExtractor().extractProducts(document);
+            String url = "https://www.target.com/s?searchTerm=" + searchTerm;
+            Document document = Jsoup.connect(url)//"https://www.bestbuy.com/site/searchpage.jsp?st=cat&_dyncharset=UTF-8&_dynSessConf=&id=pcat17071&type=page&sc=Global&cp=1&nrp=&sp=&qp=&list=n&af=true&iht=y&usc=All+Categories&ks=960&keys=keys")
+                    .ignoreContentType(true)
+                    .userAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.85 Safari/537.36")
+                    .header("authority", "www.walmart.com")
+                    .header("method", "GET")
+                    .header("path", "/search/?cat_id=0&query=walmart")
+                    .header("scheme", "https")
+                    .header("accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9")
+                    .header("accept-encoding", "gzip, deflate, br")
+                    .header("accept-language", "en-US,en;q=0.9")
+                    .header("cache-control", "max-age=0")
+                    .cookie("s_vi", "visitorId=01778DB72F770201821CD9EAB98CCD03")
+                    .cookie("sapphire", "1")
+                    .cookie("UserLocation", "33417|26.720|-80.120|FL|US")
+                    .cookie("fiatsCookie", "DSI_2427|DSN_West%20Palm%20Beach|DSZ_33401")
+                    .cookie("criteo", "{%22criteo%22:%22cZ9_fqR7f5VcN1zagvOko7LT1nTVpYG_%22}")
+                    .cookie("gcl_au", "1.1.308001801.1612990333")
+                    .cookie("cd_user_id", "1778db7480265e-0844626545548-33e3567-190140-1778db748039f5")
+                    .cookie("crl8.fpcuid", "a51406d3-3115-42b0-998a-0ba3f8605563")
+                    .cookie("TealeafAkaSid", "LCi4l5kvh-l3FeoNibAFz5nZMxZ0Rqfy")
+                    .cookie("brwsr", "652f7655-7c4c-11eb-8d47-42010a246c43")
+                    .cookie("kampyleUserSession", "1614795320057")
+                    .cookie("kampyleUserSessionsCount", "21")
+                    .cookie("kampyleSessionPageCounter", "1")
+                    .cookie("kampyleUserPercentile", "36.59870311425224")
+                    .cookie(" GuestLocation", "83350|42.760|-113.620|ID|US")
+                    .cookie(" adaptiveSessionId", "A6421968255")
+                    .cookie(" accessToken", "eyJraWQiOiJlYXMyIiwiYWxnIjoiUlMyNTYifQ.eyJzdWIiOiJjOWQ3ZjMwMi0zODQ0LTQ1ZGUtYmQ4NS1iZGMyNGM1NTZiN2QiLCJpc3MiOiJNSTYiLCJleHAiOjE2MTk0MDQ4NTQsImlhdCI6MTYxOTMxODQ1NCwianRpIjoiVEdULjhjZmYwMDg3N2YxZDRjNWJhMTQ3Y2E0Y2Y3NjMyNzMzLWwiLCJza3kiOiJlYXMyIiwic3V0IjoiRyIsImRpZCI6IjQwMWQ0YmI3ZDQ1ZmI4ODkzNjRiODYxZDBjNmQ0NmI4N2VhMDdiNTgzNWQwNjk2M2YxMzVjOTVjZmEwZmE1NDgiLCJzY28iOiJlY29tLm5vbmUsb3BlbmlkIiwiY2xpIjoiZWNvbS13ZWItMS4wLjAiLCJhc2wiOiJMIn0.aGf7zZ2QJSYHNhq3bK1Ko6ZKK42SSqwogEKKCWVscboM6_9WaFEGwSiFxcjO2bsQsiWAu060jOcXMyXkspLB9So-QjYgQYESqHgt8pQrZlep5UhT6qte7T9egQy9kYvZHeDRq-qvFQJtW-VxCe-IMFdp-m7VH4JDy5DmzgQOqHI2zcnKD50RCBdRF-okuAejszuqwVz_V2jXY5_7FQdfUMTSe2a1zRnRm3VwgyNr_X-8xM79Ig7XNCYcv1wtDaTPNSHVz3HocpdC9kHX3gYVkwC2490kcsH-JK2_W3J7vUU_wRGBbzot0cgwD0Kmrtzb3qk8b8GmLLT6IfbxJBIyRQ")
+                    .cookie(" idToken", "eyJhbGciOiJub25lIn0.eyJzdWIiOiJjOWQ3ZjMwMi0zODQ0LTQ1ZGUtYmQ4NS1iZGMyNGM1NTZiN2QiLCJpc3MiOiJNSTYiLCJleHAiOjE2MTk0MDQ4NTQsImlhdCI6MTYxOTMxODQ1NCwiYXNzIjoiTCIsInN1dCI6IkciLCJjbGkiOiJlY29tLXdlYi0xLjAuMCIsInBybyI6eyJmbiI6bnVsbCwiZW0iOm51bGwsInBoIjpmYWxzZSwibGVkIjpudWxsLCJsdHkiOmZhbHNlfX0.")
+                    .cookie(" refreshToken", "-zXoSo_WS67WgX8ERYDT-jC6PdZlgYBw4WrhdrMH4U2TVjumnHQaDBELX54i3Q-BzWV5Ooy07ARUm8uMeL1E_w")
+                    .cookie(" guestType", "G|1619318454000")
+                    .cookie(" tlThirdPartyIds", "%7B%22pt%22%3A%22v2%3A3a50b6c08d79dc69a1d49050efd5c8f28e37cfc3ffecc9deca262c05b4a1c3ca%7Cac0ddc84f8986b8d02ce27931e7fcc9c5b319f5e650a373a94f2a4a79beeea3a%22%2C%22adHubTS%22%3A%22Sat%20Apr%2024%202021%2020%3A40%3A56%20GMT-0600%20(Mountain%20Daylight%20Time)%22%7D")
+                    .cookie(" ci_pixmgr", "other")
+                    .cookie(" targetMobileCookie", "guestLogonId:null~guestDisplayName:null~guestHasVerifiedPhone:false")
+                    .cookie(" ffsession", "{%22sessionHash%22:%22c6e9d5b6e68ee1619318453653%22%2C%22sessionHit%22:26%2C%22prevPageType%22:%22search:%20search%20results%22%2C%22prevPageName%22:%22search:%20search%20results%22%2C%22prevPageUrl%22:%22https://www.target.com/s?searchTerm=cat+toy%22%2C%22prevSearchTerm%22:%22cat%20toy%22}")
+                    .referrer("http://www.walmart.com")
+                    .timeout(12000)
+                    .followRedirects(true)
+                    .execute()
+                    .parse();
+            return new TargetExtractor().extractProducts(document, searchTerm);
         } catch (Exception e) {
             e.printStackTrace();
             return new ArrayList<>();
@@ -83,7 +113,18 @@ public class WebScraper {
 
     private static ArrayList<ProductInformation> getBestBuyProductInformation(String url) {
         try {
-            return new ArrayList<>();
+            //System.out.println(url);
+            Document document = Jsoup.connect(url)
+                    .header("Accept", "text/html,application/xhtml+xml,application/xml")
+                    .header("Accept-Language", "en")
+                    .header("Accept-Encoding", "gzip,deflate,sdch")
+                    .header("Connection", "keep-alive")
+                    .header("Upgrade-Insecure-Requests", "1")
+                    .header("TE", "Trailers")
+                    .userAgent("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.61 Safari/537.36")//Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36
+                    .referrer("https://www.bestbuy.com/")
+                    .get();
+            return new BestBuyExtractor().extractProducts(document);
         } catch (Exception e) {
             e.printStackTrace();
             return new ArrayList<>();

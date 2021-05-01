@@ -8,20 +8,55 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:icon="@drawable/logo"
+        android:roundIcon="@drawable/logo"
+        android:label="SCANAMOS"
         android:supportsRtl="true"
         android:theme="@style/Theme.PriceComparisonScanner">
         <activity android:name=".Activity2"></activity>
-        <activity android:name=".MainActivity">
+        <activity
+            android:name=".ui.activities.SplashActivity"
+            android:label="SCANAMOS"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".ui.BarcodeActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <!--
+        <activity
+            android:name=".ui.activities.ScannerActivity"
+            android:label="SCANAMOS"
+            android:clearTaskOnLaunch="true"
+            android:theme="@style/AppTheme.NoActionBar" />
+            -->
+        <activity
+            android:name=".ui.activities.HomeActivity"
+            android:clearTaskOnLaunch="true"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".ui.activities.ResultsActivity"
+            android:label="@string/results"
+            android:parentActivityName=".ui.BarcodeActivity" />
+        <activity
+            android:name=".ui.activities.TutorialActivity"
+            android:parentActivityName=".ui.BarcodeActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".ui.activities.AnalyticsActivity"
+            android:label="@string/analytics"
+            android:parentActivityName=".ui.BarcodeActivity" />
+
+        <activity
+            android:name=".ui.activities.AboutActivity"
+            android:label="@string/about"
+            android:parentActivityName=".ui.BarcodeActivity" />
+
     </application>
 
-    <uses-permission android:name="android.permission.INTERNET" />
+
 </manifest>

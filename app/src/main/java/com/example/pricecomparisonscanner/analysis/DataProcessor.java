@@ -1,16 +1,18 @@
 package com.example.pricecomparisonscanner.analysis;
+
 import com.example.pricecomparisonscanner.information.AllProductInformation;
 import com.example.pricecomparisonscanner.information.ProductInformation;
 
-import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
-import java.util.List;
+
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
 
 public class DataProcessor {
     private ProductInformation bestListing;
+    private AllProductInformation allProductInformationNoMultiples;
     private double mean;
     private double standardDeviation;
     private double variance;
@@ -20,18 +22,29 @@ public class DataProcessor {
     private double q1;
     private double q3;
 
-    public DataProcessor(AllProductInformation allProductInformation) throws JSONException {
-        initStats(allProductInformation);
+    public DataProcessor(AllProductInformation allProductInformation) throws JSONException, CloneNotSupportedException {
+        initStats(allProductInformation, false);
         this.bestListing = calculateBestListing(allProductInformation);
     }
 
-    public DataProcessor(AllProductInformation allProductInformation, boolean includeOutliers, boolean includeShipping) throws JSONException {
-        initStats(allProductInformation);
+    public DataProcessor(AllProductInformation allProductInformation, boolean includeOutliers, boolean includeShipping) throws JSONException, CloneNotSupportedException {
+        initStats(allProductInformation, false);
         this.bestListing = calculateBestListing(allProductInformation, includeOutliers, includeShipping);
     }
 
-    private void initStats(AllProductInformation allProductInformation) throws JSONException {
-        this.priceArray = createPriceArray(allProductInformation);
+    public DataProcessor(AllProductInformation allProductInformation, boolean includeOutliers, boolean includeShipping, boolean removeMultiples) throws JSONException, CloneNotSupportedException {
+        initStats(allProductInformation, removeMultiples);
+        this.bestListing = calculateBestListing(allProductInformation, includeOutliers, includeShipping);
+    }
+
+    private void initStats(AllProductInformation allProductInformation, boolean removeMultiples) throws JSONException, CloneNotSupportedException {
+        if(removeMultiples) {
+            allProductInformationNoMultiples = (AllProductInformation) allProductInformation.clone();
+            removeMultiples(allProductInformationNoMultiples);
+            this.priceArray = createPriceArray(allProductInformationNoMultiples);
+        } else {
+            this.priceArray = createPriceArray(allProductInformation);
+        }
         this.mean = calculateMean();
         this.variance = calculateVariance();
         this.standardDeviation = Math.sqrt(variance);
@@ -40,6 +53,53 @@ public class DataProcessor {
         this.q3 = tmp[1];
         this.iqr = tmp[2];
         this.median = calculateMedian(priceArray);
+    }
+
+    public void removeMultiples(AllProductInformation allProductInformation){
+        System.out.println("Start: " + allProductInformation.toString());
+        TextProcessor tp = new TextProcessor();
+        Iterator<ProductInformation> i = allProductInformation.getAmazonProducts().iterator();
+        while(i.hasNext()){
+            ProductInformation p = i.next();
+            if(tp.isMultiCount(p.getName())){
+                i.remove();
+            }
+        }
+
+        i = allProductInformation.getTargetProducts().iterator();
+        while(i.hasNext()){
+            ProductInformation p = i.next();
+            if(tp.isMultiCount(p.getName())){
+                i.remove();
+            }
+        }
+
+        i = allProductInformation.getWalmartProducts().iterator();
+        while(i.hasNext()){
+            ProductInformation p = i.next();
+            if(tp.isMultiCount(p.getName())){
+                i.remove();
+            }
+        }
+
+        i = allProductInformation.getUpciteProducts().iterator();
+        while(i.hasNext()){
+            ProductInformation p = i.next();
+            if(tp.isMultiCount(p.getName())){
+                i.remove();
+            }
+        }
+
+        i = allProductInformation.getBestBuyProducts().iterator();
+        while(i.hasNext()){
+            ProductInformation p = i.next();
+            if(tp.isMultiCount(p.getName())){
+                i.remove();
+            }
+        }
+
+        System.out.println("END: " + allProductInformation.toString());
+
     }
 
     protected List<Double> createPriceArray(AllProductInformation allProductInformation) throws JSONException {
@@ -130,7 +190,7 @@ public class DataProcessor {
                 if (i == 0) {
                     currentMin = currentPrice;
                 } else {
-                    System.out.println(doublify(listings.get(i).getPrice()));
+                    //System.out.println(doublify(listings.get(i).getPrice()));
                     if (currentMin > currentPrice) {
                         currentMin = currentPrice;
                         bestLoc = i;
@@ -153,7 +213,7 @@ public class DataProcessor {
                         currentMin = currentPrice;
                     }
                 } else {
-                    System.out.println(doublify(listings.get(i).getPrice()));
+                    //System.out.println(doublify(listings.get(i).getPrice()));
                     if (currentMin > currentPrice && !(isOutlier(currentPrice))) {
                         currentMin = currentPrice;
                         bestLoc = i;
@@ -171,6 +231,7 @@ public class DataProcessor {
         combinedList.addAll(allProductInformation.getWalmartProducts());
         combinedList.addAll(allProductInformation.getTargetProducts());
         combinedList.addAll(allProductInformation.getUpciteProducts());
+        combinedList.addAll(allProductInformation.getBestBuyProducts());
         return combinedList;
 
     }

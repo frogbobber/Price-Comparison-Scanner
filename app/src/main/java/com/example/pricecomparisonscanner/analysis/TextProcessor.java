@@ -12,7 +12,7 @@ public class TextProcessor {
         Pattern pattern = Pattern.compile("[0-9] c(ou)?nt |[0-9](-| )pack|pack(-| )of(-| )[0-9]", Pattern.CASE_INSENSITIVE);
         Matcher matcher = pattern.matcher(input);
         boolean matchFound = matcher.find();
-        System.out.println(matchFound);
+        //System.out.println(matchFound);
         return matchFound;
     }
 

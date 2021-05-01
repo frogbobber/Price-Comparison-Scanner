@@ -5,20 +5,29 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
-public class AllProductInformation {
+public class AllProductInformation implements Cloneable {
 
     private long downloadTime;
     private ArrayList<ProductInformation> amazonProducts;
     private ArrayList<ProductInformation> walmartProducts;
     private ArrayList<ProductInformation> targetProducts;
+    private ArrayList<ProductInformation> bestBuyProducts;
     private ArrayList<ProductInformation> upciteProducts;
     private String upc;
+
+    public Object clone() throws CloneNotSupportedException
+    {
+        return super.clone();
+    }
 
     public long getDownloadTime() {
         return downloadTime;
     }
+
+    public void setDownloadTime(long time) {this.downloadTime = time;}
 
     public ArrayList<ProductInformation> getAmazonProducts() {
         return amazonProducts;
@@ -38,12 +47,22 @@ public class AllProductInformation {
     public void setTargetProducts(ArrayList<ProductInformation> targetProducts) {
         this.targetProducts = targetProducts;
     }
+
+    public ArrayList<ProductInformation> getBestBuyProducts() {
+        return bestBuyProducts;
+    }
+    public void setBestBuyProducts(ArrayList<ProductInformation> bestBuyProducts) {
+        this.upciteProducts = bestBuyProducts;
+    }
+
     public ArrayList<ProductInformation> getUpciteProducts() {
         return upciteProducts;
     }
     public void setUpciteProducts(ArrayList<ProductInformation> upciteProducts) {
         this.upciteProducts = upciteProducts;
     }
+
+
 
     public String getUpc() {
         return upc;
@@ -66,27 +85,30 @@ public class AllProductInformation {
         this.upciteProducts = products;
     }
 
-    public AllProductInformation(ArrayList<ProductInformation> amazonProducts, ArrayList<ProductInformation> walmartProducts, ArrayList<ProductInformation> targetProducts, ArrayList<ProductInformation> upciteProducts, String upc) {
+    public AllProductInformation(ArrayList<ProductInformation> amazonProducts, ArrayList<ProductInformation> walmartProducts, ArrayList<ProductInformation> targetProducts, ArrayList<ProductInformation> bestBuyProducts, ArrayList<ProductInformation> upciteProducts, String upc) {
         this.downloadTime = System.currentTimeMillis();
         this.amazonProducts = amazonProducts;
         this.walmartProducts = walmartProducts;
         this.targetProducts = targetProducts;
+        this.bestBuyProducts = bestBuyProducts;
         this.upciteProducts = upciteProducts;
         this.upc = upc;
     }
 
-    public AllProductInformation(int n, ArrayList<ProductInformation> amazonProducts, ArrayList<ProductInformation> walmartProducts, ArrayList<ProductInformation> targetProducts, ArrayList<ProductInformation> upciteProducts) {
+    public AllProductInformation(int n, ArrayList<ProductInformation> amazonProducts, ArrayList<ProductInformation> walmartProducts, ArrayList<ProductInformation> targetProducts, ArrayList<ProductInformation> bestBuyProducts, ArrayList<ProductInformation> upciteProducts, String upc) {
 
         this.downloadTime = System.currentTimeMillis();
 
         ArrayList<ProductInformation> nAmazon = (ArrayList<ProductInformation>) amazonProducts.stream().limit(n).collect(Collectors.toList());
         ArrayList<ProductInformation> nWalmart = (ArrayList<ProductInformation>) walmartProducts.stream().limit(n).collect(Collectors.toList());
         ArrayList<ProductInformation> nTarget = (ArrayList<ProductInformation>) targetProducts.stream().limit(n).collect(Collectors.toList());
+        ArrayList<ProductInformation> nBestBuy = (ArrayList<ProductInformation>) bestBuyProducts.stream().limit(n).collect(Collectors.toList());
         ArrayList<ProductInformation> nUpcite = (ArrayList<ProductInformation>) upciteProducts.stream().limit(n).collect(Collectors.toList());
 
         this.amazonProducts = nAmazon;
         this.walmartProducts = nWalmart;
         this.targetProducts = nTarget;
+        this.bestBuyProducts = nBestBuy;
         this.upciteProducts = nUpcite;
 
         this.upc = upc;
@@ -99,6 +121,7 @@ public class AllProductInformation {
         ArrayList<ProductInformation> nAmazon = new ArrayList();
         ArrayList<ProductInformation> nWalmart = new ArrayList();
         ArrayList<ProductInformation> nTarget = new ArrayList();
+        ArrayList<ProductInformation> nBestBuy = new ArrayList();
         ArrayList<ProductInformation> nUpcite = new ArrayList();
 
         if (productInformation.getAmazonProducts() != null) {
@@ -116,6 +139,11 @@ public class AllProductInformation {
                 nTarget.add(productInformation.getTargetProducts().get(i));
             }
         }
+        if (productInformation.getBestBuyProducts() != null) {
+            for (int i = 0; i < n && i < productInformation.getBestBuyProducts().size(); i++) {
+                nBestBuy.add(productInformation.getBestBuyProducts().get(i));
+            }
+        }
         if (productInformation.getUpciteProducts() != null) {
             for (int i = 0; i < n && i < productInformation.getUpciteProducts().size(); i++) {
                 nUpcite.add(productInformation.getUpciteProducts().get(i));
@@ -125,6 +153,7 @@ public class AllProductInformation {
         this.amazonProducts = nAmazon;
         this.walmartProducts = nWalmart;
         this.targetProducts = nTarget;
+        this.bestBuyProducts = nBestBuy;
         this.upciteProducts = nUpcite;
 
         this.upc = productInformation.getUpc();
@@ -136,8 +165,8 @@ public class AllProductInformation {
                 "amazonProducts=" + amazonProducts +
                 ", walmartProducts=" + walmartProducts +
                 ", targetProducts=" + targetProducts +
+                ", bestBuyProducts=" + bestBuyProducts +
                 ", upciteProducts=" + upciteProducts +
-                ", downloadTime=" + this.downloadTime +
                 ", upc=" + this.upc +
                 "}\n";
     }

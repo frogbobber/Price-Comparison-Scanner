@@ -1,0 +1,58 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:id="@+id/scrollojt"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+    <TextView
+        android:id="@+id/resultsTextView1"
+        android:layout_width="450dp"
+        android:layout_height="276dp"
+        android:scrollbars="vertical"
+        android:textSize="22sp"
+        android:translationY="75dp"
+        app:autoSizeTextType="none"></TextView>
+
+    <TextView
+        android:id="@+id/resultsTextView2"
+        android:layout_width="450dp"
+        android:layout_height="276dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="2dp"
+        android:scrollbars="vertical"
+        android:textSize="22sp"
+        android:translationY="150dp"
+        app:autoSizeTextType="none"></TextView>
+
+    <TextView
+        android:id="@+id/resultsTextView3"
+        android:layout_width="600dp"
+        android:layout_height="276dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="75dp"
+        android:scrollbars="vertical"
+        android:textSize="22sp"
+        android:translationY="225dp"
+        app:autoSizeTextType="none"></TextView>
+
+    <TextView
+        android:id="@+id/resultsTextView4"
+        android:layout_width="450dp"
+        android:layout_height="276dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="75dp"
+        android:scrollbars="vertical"
+        android:textSize="22sp"
+        android:translationY="300dp"
+        app:autoSizeTextType="none"></TextView>
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="412dp"
+        android:layout_height="550dp"
+        android:textSize="30sp"
+        android:translationY="10dp" />
+    -->
+
+</RelativeLayout>
